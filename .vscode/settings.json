@@ -1,0 +1,21 @@
+{
+    "python.pythonPath": "C:\\tools\\Anaconda3\\python.exe",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true
+    },
+    "diffEditor.ignoreTrimWhitespace": true,
+    "diffEditor.renderIndicators": true,
+    "editor.tabSize": 4,
+    "editor.trimAutoWhitespace": true,
+    "files.eol": "\n",
+    "files.encoding": "utf8",
+    "files.trimTrailingWhitespace": true,
+    "explorer.openEditors.visible": 0,
+    "update.showReleaseNotes": false,
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+}
