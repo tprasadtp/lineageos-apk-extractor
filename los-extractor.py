@@ -8,19 +8,29 @@ https://opensource.org/licenses/MIT
 """
 
 # Imports
-import os, shutil, hashlib, atexit, sys, re
+import os, shutil, hashlib, atexit, sys, platform
 import logging
 import logging.handlers
 from inspect import signature
+
+# Version Checks.
+# Latest backoff supports only 3.5 & above
+if int(str(sys.version_info.major) + str(sys.version_info.minor)) < 34:
+    raise Exception("Needs Python version 3.5 & above.")
 try:
     import requests, backoff
-    from requests import exceptions, HTTPError, ConnectionError, Timeout
+    from requests import (
+         exceptions,
+         HTTPError,
+         ConnectionError,
+         Timeout)
 except ImportError:
     raise SystemExit
 try:
     from bs4 import BeautifulSoup
 except ImportError:
     # Try importing if bs4 is installed from source
+#    raise SystemExit
     try:
         from BeautifulSoup import BeautifulSoup
     except ImportError:
@@ -34,7 +44,7 @@ LOG_FILE = "Lineage-APK-Extractor.logs"
 LOS_ZIP_FILE = "lineage.zip"
 LOS_SHA256_FILE = "lineage.sha256.txt"
 # Default max attempts to download a file
-MAX_GET_FILE_RETRIES = 3
+MAX_DL_RETRIES = 3
 # Use chunk size of 128K
 FILE_HASH_BUFFER = 131072
 
@@ -62,9 +72,6 @@ log_console_handler.setFormatter(logging.Formatter('[ {levelname:8s} ] - {messag
 log.addHandler(log_file_handler)
 log.addHandler(log_console_handler)
 
-logging.getLogger('backoff').addHandler(log_file_handler)
-logging.getLogger('backoff').setLevel(logging.ERROR)
-
 
 @atexit.register
 def __close_logs(exit_code):
@@ -78,15 +85,42 @@ def __close_logs(exit_code):
     if params == 1:
         sys.exit(exit_code)
     elif params > 1:
-        sys.exit(101)
+        raise Exception('__close_logs accepts only one int argument.')
+
+def backoff_hdlr(details):
+    log.debug("Attempt {tries} - Backing off {wait:0.1f} seconds."
+                "calling function {target} with args {args}")
+
+def giveup_hdlr(details):
+    log.debug("Giving up {target}. Failed after {tries}"
+                "calling function {target} with args {args}")
+def success_hdlr(details):
+    log.info ("Successfully retrieved file.")
+    log.debug('Attempt successful after %s. Calling function %s with args %s.', tries, target, args)
+
+
+# Add System Info
+def log_sysinfo():
+    """Logs Basic system info"""
+    log.debug('------------------------System Info------------------------------')
+    log.debug('Platform : %s, Version: %s', platform.system(), platform.version())
+    log.debug('Hostname: %s', platform.node())
+    log.debug('Python Version: %s', platform.python_version())
+    log.debug('Platform Arch: %s', platform.architecture())
+    log.debug('-----------------------------------------------------------------')
+
+
+
 
 @backoff.on_exception(backoff.expo,
                       (requests.exceptions.HTTPError,
                        requests.exceptions.ConnectionError,
                        requests.exceptions.TooManyRedirects,
                        requests.exceptions.Timeout),
-                      max_tries=3,
-                      max_time=300)
+                      max_tries = MAX_DL_RETRIES,
+                      on_backoff=backoff_hdlr,
+                      on_giveup=giveup_hdlr,
+                      on_success=success_hdlr)
 def __download_file(file_name, file_url):
     """
     Download the File from file_url, save it as output_file.
@@ -94,58 +128,31 @@ def __download_file(file_name, file_url):
     v2.19+. Older versions may not support `with` statement.
     Returns: True if error free or False if fails.
     """
-    if os.path.isfile(file_name):
-        log.info('%s exists.', file_name)
-        try:
-            os.remove(file_name)
-        except OSError as e:
-            log.critical('Failed to remove existing File : %s', file_name)
-            log.error('Error was %s', e.strerror)
-            __close_logs(2)
-    log.info('Downloading File: %s.', file_name)
     log.debug('From URL: %s', file_url)
-    try:
-        with requests.get(file_url, stream = True, timeout=10) as response:
-            log.debug('Response code is %s', response.status_code)
-            response.raise_for_status()
-            with open(file_name, 'wb') as f:
-                for chunk in response.iter_content(chunk_size=8192):
-                    f.write(chunk)
-    except requests.exceptions.HTTPError as err_http:
-        log.debug('Something went wrong while processing the request.. We got the response code below. Thats all we know.' )
-        log.debug('Error Code is : %s', err_http)
-        return False
-    except requests.exceptions.ConnectionError as err_conn:
-        log.debug('Failed to Get %s. Reason: %s', file_name, err_conn)
-    else:
-        return True
+    with requests.get(file_url, stream = True, timeout=10) as response:
+        log.debug('Response code is %s', response.status_code)
+        response.raise_for_status()
+        with open(file_name, 'wb') as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
 
-class FileDownloadResult(object):
-    """
-    File Download result class.
-    self.res for result
-    self.attempt last attempt.
-    """
-    __slots__ = ["res", "attempt"]
-    def __init__(self, res, attempt):
-        self.res = res
-        self.attempt = attempt
-
-def get_file(file_name, file_url, max_attempts = MAX_GET_FILE_RETRIES):
+def get_file(file_name, file_url):
     """
     Try to download the file with <max_attempts>
     Returns Class FileDownloadResult.
     """
-    log.info("Attempting to Download %s", file_name)
-    for download_counter in range (1, max_attempts+1, 1):
-        log.debug("Attempt %d, to get %s", download_counter, file_url )
-        download_file_result = __download_file(file_name, file_url)
-        if download_file_result:
-            log.debug("Success!. Retrieved from %s", file_url)
-            break
-        else:
-            log.debug("Failed to retrieve the file.%d attempts remaining", max_attempts-download_counter)
-    return FileDownloadResult(download_file_result, download_counter)
+    if os.path.isfile(file_name):
+        log.info('%s exists.', file_name)
+    try:
+        os.remove(file_name)
+    except OSError as e:
+        log.critical('Failed to remove existing File : %s', file_name)
+        log.error('Error was %s', e.strerror)
+        __close_logs(2)
+    log.info("Attempting to download : %(file_name)s")
+    log.info("From URL: %(file_url)s")
+    __download_file(file_name=file_name, file_url=file_url)
+
 
 def verify_sha256_checksum(file_name, checksum):
     """
@@ -192,22 +199,16 @@ def extract_checksum_from_file(file_name):
                        requests.exceptions.ConnectionError,
                        requests.exceptions.TooManyRedirects,
                        requests.exceptions.Timeout),
-                      max_tries=3,
-                      max_time=300)
-def scrap_los_download_page(device_name=marlin):
+                      max_tries = MAX_DL_RETRIES,
+                      on_backoff=backoff_hdlr,
+                      on_giveup=giveup_hdlr,
+                      on_success=success_hdlr)
+def extract_los_urls(device_name="marlin"):
     """
     Scrap Zip file URLs and data from lineage os download page.
     """
-    try:
-        log.debug('Getting Download Page for %s', device_name)
-        los_download_page = requests.get("https://download.lineageos.org/marlin")
-    except requests.exceptions.HTTPError as err_http:
-        log.debug('HTTP Error.')
-        log.debug('Error Code is : %s', err_http)
-        return False
-    except requests.exceptions.ConnectionError as err_conn:
-        log.debug('Failed to Connect. Reason: %s', err_conn)
-    log.info('Parsing download page...')
+    log.debug('Getting Download Page for %s', device_name)
+    los_download_page = requests.get("https://download.lineageos.org/"+device_name)
     soup = BeautifulSoup(los_download_page.content, features="lxml")
     table = soup.find('table')
     for tr in table.find_all('tr'):
@@ -228,26 +229,26 @@ def scrap_los_download_page(device_name=marlin):
     log.debug('----------------------------------------------------------')
     log.debug('----------------------------------------------------------')
 
-# Download Zip
-ZipDownloadResult = get_file(LOS_ZIP_FILE, los_zip_url, max_attempts=3)
-if ZipDownloadResult.res:
-    log.info("Successfully downloaded Lineage ZIP file")
-else:
-    log.error("Failed to download file, even after %s attempts.", ZipDownloadResult.attempt)
-    __close_logs(21)
-# Download Checksum
-ChecksumDownloadResult = get_file(LOS_SHA256_FILE, los_zip_sha256_url, max_attempts=3)
-if ChecksumDownloadResult.res:
-    log.info("Successfully downloaded Checksum file.")
-else:
-    log.error("Failed to download Checksum file, even after %s attempts.", ChecksumDownloadResult.attempt )
-    __close_logs(22)
 
-# Verify Checksums
-if verify_sha256_checksum(LOS_ZIP_FILE, extract_checksum_from_file(LOS_SHA256_FILE)):
-    log.info("File's Checksum matches.")
-else:
-    log.error("File is corrupt. Please try again.")
-    __close_logs(11)
+def main():
+    # Log Basic Info
+    log_sysinfo()
+    # Extract URLs
+    extract_los_urls(device_name="marlin")
+    # Download Zip
+    get_file(LOS_ZIP_FILE, LOS_REL_URL[0])
+    # Download Checksum
+    get_file(LOS_SHA256_FILE, LOS_REL_URL[0]+"?sha256")
+    # Verify Checksums
+    if verify_sha256_checksum(LOS_ZIP_FILE, extract_checksum_from_file(LOS_SHA256_FILE)):
+        log.info("File's Checksum matches.")
+    else:
+        log.error("File is corrupt. Please try again.")
+        __close_logs(11)
 
-__close_logs(0)
+    log.removeHandler(log_file_handler)
+    log.removeHandler(log_console_handler)
+    params = len(signature(__close_logs).parameters)
+
+if __name__ == '__main__':
+    main()
