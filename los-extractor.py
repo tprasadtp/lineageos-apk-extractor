@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Copyright 2018, Prasad Tengse
@@ -26,11 +27,7 @@ except ImportError:
 try:
     from bs4 import BeautifulSoup
 except ImportError:
-    # Try importing if bs4 is installed from source
-    try:
-        from BeautifulSoup import BeautifulSoup
-    except ImportError:
-        raise SystemExit
+    raise SystemExit
 
 # Settings
 DEVICE_NAME = "bullhead"
