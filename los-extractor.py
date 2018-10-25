@@ -22,12 +22,11 @@ if int(str(sys.version_info.major) + str(sys.version_info.minor)) < 34:
 try:
     import requests
 except ImportError:
-        raise SystemExit
+    raise SystemExit
 try:
     from bs4 import BeautifulSoup
 except ImportError:
     # Try importing if bs4 is installed from source
-#    raise SystemExit
     try:
         from BeautifulSoup import BeautifulSoup
     except ImportError:
@@ -35,12 +34,13 @@ except ImportError:
 
 # Settings
 DEVICE_NAME = "bullhead"
-RELEASE_NOTES = "release_notes.md"
+RELEASE_NOTES = "Release_Notes.md"
 RELEASE_JSON = "release.json"
 # Files
-LOG_FILE = "Lineage-APK-Extractor.logs"
+LOS_DL_PAGE = "LineageOS_Downlad_Page.html"
+LOG_FILE = "LineageOS_APK_Extractor.logs"
 LOS_ZIP_FILE = "LineageOS.zip"
-LOS_SHA256_FILE = "Lineage_ZIP_SHA256.txt"
+LOS_SHA256_FILE = "LineageOS_ZIP_SHA256.txt"
 
 # Default max attempts to download a file
 REQUESTS_MAX_TRIES = 3
@@ -56,7 +56,7 @@ LOS_REL_SIZE = []
 LOS_REL_DATE = []
 
 # Logs
-log = logging.getLogger('LOS_APK_Extractor')
+log = logging.getLogger()
 log.setLevel(logging.DEBUG)
 # Create Rotating file handler
 log_file_handler = logging.handlers.RotatingFileHandler(LOG_FILE, maxBytes=1000000, backupCount=3 )
@@ -66,7 +66,7 @@ log_file_handler.setLevel(logging.DEBUG)
 log_console_handler = logging.StreamHandler()
 log_console_handler.setLevel(logging.INFO)
 # Formatters
-log_file_handler.setFormatter(logging.Formatter('[ {asctime} ] [ {levelname:8s} ] - {message}', style='{'))
+log_file_handler.setFormatter(logging.Formatter('[ {asctime} ] - %(name)s - [ {levelname:8s} ] - {message}', style='{'))
 log_console_handler.setFormatter(logging.Formatter('[ {levelname:8s} ] - {message}', style='{'))
 # Add the handlers to the logger
 log.addHandler(log_file_handler)
@@ -149,11 +149,11 @@ def get_file(file_name, file_url):
     Returns Class FileDownloadResult.
     """
     if os.path.isfile(file_name):
-        log.info('%s exists.', file_name)
+        log.info('File %s already exists. It will be deleted.', file_name)
         try:
             os.remove(file_name)
         except OSError as e:
-            log.critical('Failed to remove existing File : %s', file_name)
+            log.critical('Failed to remove existing file : %s', file_name)
             log.error('Error was %s', e.strerror)
             __close_logs()
             raise OSError
@@ -168,7 +168,7 @@ def extract_checksum_from_file(file_name):
     Returns Checksum in HeX
     """
     if os.path.isfile(file_name):
-        log.debug("File %s is present on FS.", file_name)
+        log.debug("File %s present on FS.", file_name)
         with open(file_name, 'rt') as checksum_file:
             return checksum_file.readline().split(" ",1)[0]
     else:
@@ -193,9 +193,9 @@ def verify_sha256_checksum(file_name, checksum):
         log.debug('SHA256 hash for %s is : %s', file_name, sha256hash.hexdigest() )
         log.debug('SHA256 hash SHOULD BE : %s', checksum.lower())
     else:
-        log.critical('File not found.')
+        log.critical('OOOPS! File not found.')
         __close_logs()
-        raise Exception('File not found.')
+        SystemExit('ZIP File not Found.')
     if checksum.lower() == sha256hash.hexdigest():
         log.debug('File Hashes Match.')
         return True
@@ -209,10 +209,10 @@ def extract_los_urls(device_name="marlin"):
     Scrap Zip file URLs and data from lineage os download page.
     """
     log.debug('Getting Download Page for %s', device_name)
-    get_file(file_name="los-dl.html", file_url="https://download.lineageos.org/"+device_name)
-    if os.path.isfile("los-dl.html"):
+    get_file(file_name=LOS_DL_PAGE, file_url="https://download.lineageos.org/"+device_name)
+    if os.path.isfile(LOS_DL_PAGE):
         log.debug('los-dl.html file exists.')
-        with open("los-dl.html", encoding="utf-8") as los_dl_page:
+        with open(LOS_DL_PAGE, encoding="utf-8") as los_dl_page:
             log.info('Parsing HTML page...')
             soup = BeautifulSoup(los_dl_page.read(), features="lxml")
             table = soup.find('table')
@@ -235,8 +235,8 @@ def extract_los_urls(device_name="marlin"):
         log.debug('----------------------------------------------------------')
         log.debug('----------------------------------------------------------')
     else:
-        log.error('File los-dl.html not found.')
-        SystemExit('File los-dl.html is not found.')
+        log.error('File %s not found.', LOS_DL_PAGE)
+        SystemExit('File {LOS_DL_PAGE} not found.')
 
 
 def extract_zip_contents(zip_file, destination):
@@ -246,7 +246,7 @@ def extract_zip_contents(zip_file, destination):
         zip_file : path to Zipfile,
         destination:  directory to extract to
     """
-    if os.path.isfile("los-dl.html"):
+    if os.path.isfile(LOS_ZIP_FILE):
         with zipfile.ZipFile(zip_file,"r") as zip_ref:
           zip_ref.extractall(destination)
     else:
@@ -264,14 +264,14 @@ def purge(dir, pattern):
         p.unlink()
 
 
-def __delete_old_dat_files():
+def delete_old_files():
     log.info('Deleting old files if any....')
     shutil.rmtree('META-INF/', ignore_errors=True)
     shutil.rmtree('system/', ignore_errors=True)
     shutil.rmtree('install/',ignore_errors=True)
-    log.debug('Deleting DAT files...')
+    log.debug('Deleting old DAT files (if any)')
     purge(dir=os.getcwd(), pattern="system.*.*")
-    log.debug('Deleting *.img')
+    log.debug('Deleting old IMG file (if any)')
     purge(dir=os.getcwd(), pattern="*.img")
     purge(dir=os.getcwd(), pattern="*.bin")
 
@@ -280,14 +280,14 @@ def convert_dat_file():
     """
     Convert dat to img using sdat2img.py
     """
-    log.info('Converting DAT file to img file')
+    log.info('Converting DAT(.BR) file to IMG file')
     if os.path.isfile('sdat2img.py'):
-        import sdat2img
-        try:
-            sdat2img.main(TRANSFER_LIST_FILE="system.transfer.list", NEW_DATA_FILE="system.new.dat.br",OUTPUT_IMAGE_FILE="system.img")
-        except Exception:
-            log.critical('Failed to convert DAT file to image file')
-            SystemExit
+        from sdat2img import main as sdat
+        if sdat(TRANSFER_LIST_FILE="system.transfer.list", NEW_DATA_FILE="system.new.dat.br",OUTPUT_IMAGE_FILE="system.img"):
+            log.info("Converted DAT(.BR) file to IMG File.")
+        else:
+            log.critical("Failed to Convert DAT file to IMG")
+            SystemExit("Failed to convert DAT file.")
     else:
         log.error('sdat2img.py is not in current directory.')
         SystemExit('sdat2img.py is missing.')
@@ -295,17 +295,16 @@ def convert_dat_file():
 def generate_release_notes():
     """
     Release Notes Generator.
-    Use Extracted info to generate Relase notes.
+    Use Extracted info to generate Release notes.
     """
     if os.path.isfile(RELEASE_NOTES):
-        log.info('Release notes.txt exists')
+        log.info('%s exists.', RELEASE_NOTES)
         try:
-            log.debug('Deleting old release notes')
+            log.info('Deleting old release notes')
             os.remove(RELEASE_NOTES)
         except OSError as e:
             log.critical('Failed to remove existing release notes.')
             log.error('Error was %s', e.strerror)
-            __close_logs()
             raise OSError
     log.info('Generating Release Notes...')
     with open(RELEASE_NOTES, 'w+') as release_notes:
@@ -315,7 +314,8 @@ def generate_release_notes():
             release_notes.write('- Lineage OS Version : ' + LOS_REL_VERSION[0] + '\n')
             release_notes.write('- Lineage OS Type : ' + LOS_REL_TYPE[0] + '\n', )
             release_notes.write('- Zip file used : [ZIPfile]('+ LOS_REL_URL[0] + ')' + '\n')
-            release_notes.write('- LOS was built on : ' + LOS_REL_DATE[0] + '\n\n\n')
+            release_notes.write('- Lineage OS build date : ' + LOS_REL_DATE[0] + '\n\n\n')
+            release_notes.write('- Node : '+ platform.node() + '\n')
             release_notes.write('## Tags and Downloads\n')
             release_notes.write('- This is generated automatically.\n' +
                                 '- Tags correspond to build date.\n' +
@@ -329,31 +329,49 @@ def generate_json_metadata():
     Generate metadata
     Build Date, LOS_REL_VERSION
     """
+    if os.path.isfile(RELEASE_JSON):
+        log.info('%s exists.', RELEASE_JSON)
+        try:
+            log.info('Deleting old JSON file...')
+            os.remove(RELEASE_NOTES)
+        except OSError as e:
+            log.critical('Failed to remove existing release notes.')
+            log.error('Error was %s', e.strerror)
+            raise OSError
     log.info('Generating Metadata JSON for gh-pages')
     metadata = {}
     metadata.update({ 'version' : 1,
-                      'lineage_build_date' : LOS_REL_DATE[0],
-                      'last_build_passed' : "True",
-                      'lineage_version' : LOS_REL_VERSION[0],
-                      'release_tag' : LOS_REL_VERSION[0] + '-' + LOS_REL_DATE[0]
+                      'ci': {
+                            'build_passed' : "True",
+                            'build_date' :   int(time.time())
+                            },
+                      'lineage': {
+                          'build' : LOS_REL_DATE[0],
+                          'build_type' : LOS_REL_TYPE[0]
+                      },
+                      'release_tag' : LOS_REL_VERSION[0] + '.' + LOS_REL_DATE[0]
                     })
     with open(RELEASE_JSON, 'w+') as release_json:
-        release_json.write(json.dumps(metadata))
+        release_json.write(json.dumps(metadata, indent=4))
         log.debug('JSON Dump is : %s',json.dumps(metadata))
 
 def main():
-    # Log Basic Info
+
     os.chdir(os.path.dirname(__file__))
     log_sysinfo()
+
     # Extract URLs
     log.info('Getting LOS Download page for %s...', DEVICE_NAME)
     extract_los_urls(device_name=DEVICE_NAME)
+
     # Download Zip
     log.info('Downloading ZIP File...')
     get_file(LOS_ZIP_FILE, LOS_REL_URL[0])
+
     # Download Checksum
     log.info('Getting Checksum File...')
     get_file(LOS_SHA256_FILE, LOS_REL_URL[0]+"?sha256")
+
     # Verify Checksums
     log.info('Verifying Checksums...')
     if verify_sha256_checksum(LOS_ZIP_FILE, extract_checksum_from_file(LOS_SHA256_FILE)):
@@ -362,11 +380,18 @@ def main():
         log.error("File is corrupt. Please try again.")
         __close_logs()
         raise Exception('ZIP File is corrupt or modified')
+
     # Extract Files
     log.info('Extracting from ZIP File ....')
+
+    # Delete Files from Last Run
+    delete_old_files()
+
+    # Extract & Convert
     extract_zip_contents(zip_file=LOS_ZIP_FILE, destination=os.getcwd())
-    __delete_old_dat_files()
-    #convert_dat_file()
+    convert_dat_file()
+
+    # Release Notes & Metadata
     generate_release_notes()
     generate_json_metadata()
 

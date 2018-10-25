@@ -312,3 +312,6 @@ META-INF/**/**
 Lineage_ZIP_SHA256.txt
 release_notes.*
 release.json
+[Rr]lease[_-][Nn]otes.md
+*.html
+*.txt

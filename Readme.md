@@ -53,4 +53,4 @@ APKs cannot be updated till next build schedule.
 - Python icon by Freepik from flaticon.com
 - Original `sdat2img.py` by [Andrei Conache](https://github.com/xpirt/sdat2img).
 I have modified it a bit. Please note that licence information
-is missing from its repository.
+is missing from original repository.
