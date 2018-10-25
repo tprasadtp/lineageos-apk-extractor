@@ -5,22 +5,13 @@ Extract APKs from Lineage OS ZIPs automatically and regularly.
 [![license](https://img.shields.io/github/license/tprasadtp/lineageos-apk-extractor.svg?style=flat)](https://github.com/tprasadtp/ubuntu-post-install/blob/master/LICENSE)
 ![GitHub repo size in bytes](https://img.shields.io/github/repo-size/tprasadtp/lineageos-apk-extractor.svg?style=flat)
 
-## Language
-
 Use Python 3.6+
 
 [![Python](https://static.prasadt.com/logo64/python.png)](lineageos-apk-extractor)
 
-Python 2 is **NOT** supported. You can try but YMMV
-
-## Tested on
-
-![Ubuntu](https://static.prasadt.com/logo64/ubuntu.png)
-
-## Cron job releases the APKs Automatically every week.
-If latest APKs are not updated, please opn an issue.
-
 ## Details
+Cron job releases the APKs Automatically every week.
+If latest APKs are not updated, please open an issue.
 
 - APKs are extracted weekly from Pixel(Marlin) or Nexus 6P(Angler) devices.
 - Some APKs might depend on LOS framework and fail to install on AOSP or other builds.
