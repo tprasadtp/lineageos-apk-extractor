@@ -304,3 +304,11 @@ $RECYCLE.BIN/
 *.apk
 *.credentials.txt
 *.s3
+untitled*.py
+los-dl.html
+*.bin
+system/*
+META-INF/**/**
+Lineage_ZIP_SHA256.txt
+release_notes.*
+release.json

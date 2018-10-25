@@ -8,24 +8,21 @@ https://opensource.org/licenses/MIT
 """
 
 # Imports
-import os, shutil, hashlib, atexit, sys, platform
-import logging
-import logging.handlers
-from inspect import signature
+import os, shutil, hashlib, atexit
+import sys, platform, zipfile, subprocess, json
+from pathlib import Path
+import logging, logging.handlers
+# For Retries
+import time
+from functools import wraps
 
 # Version Checks.
-# Latest backoff supports only 3.5 & above
 if int(str(sys.version_info.major) + str(sys.version_info.minor)) < 34:
     raise Exception("Needs Python version 3.5 & above.")
 try:
-    import requests, backoff
-    from requests import (
-         exceptions,
-         HTTPError,
-         ConnectionError,
-         Timeout)
+    import requests
 except ImportError:
-    raise SystemExit
+        raise SystemExit
 try:
     from bs4 import BeautifulSoup
 except ImportError:
@@ -36,15 +33,18 @@ except ImportError:
     except ImportError:
         raise SystemExit
 
-# Define URLs
-#los_zip_url = "https://mirrorbits.lineageos.org/full/marlin/20181016/lineage-15.1-20181016-nightly-marlin-signed.zip"
-#los_zip_sha256_url = los_zip_url + "?sha256"
+# Settings
+DEVICE_NAME = "bullhead"
+RELEASE_NOTES = "release_notes.md"
+RELEASE_JSON = "release.json"
 # Files
 LOG_FILE = "Lineage-APK-Extractor.logs"
-LOS_ZIP_FILE = "lineage.zip"
-LOS_SHA256_FILE = "lineage.sha256.txt"
+LOS_ZIP_FILE = "LineageOS.zip"
+LOS_SHA256_FILE = "Lineage_ZIP_SHA256.txt"
+
 # Default max attempts to download a file
-MAX_DL_RETRIES = 3
+REQUESTS_MAX_TRIES = 3
+REQUESTS_BACKOFF = 2
 # Use chunk size of 128K
 FILE_HASH_BUFFER = 131072
 
@@ -74,34 +74,54 @@ log.addHandler(log_console_handler)
 
 
 @atexit.register
-def __close_logs(exit_code):
+def __close_logs():
     """
     Closes all Log Handlers.
     Exits with code.
     """
     log.removeHandler(log_file_handler)
     log.removeHandler(log_console_handler)
-    params = len(signature(__close_logs).parameters)
-    if params == 1:
-        sys.exit(exit_code)
-    elif params > 1:
-        raise Exception('__close_logs accepts only one int argument.')
 
-def backoff_hdlr(details):
-    log.debug("Attempt {tries} - Backing off {wait:0.1f} seconds."
-                "calling function {target} with args {args}")
+def retry(exceptions, tries=REQUESTS_MAX_TRIES, delay=3, backoff=REQUESTS_BACKOFF, logger=logging.getLogger('LOS_APK_Extractor')):
+    """
+    Retry calling the decorated function using an exponential backoff.
 
-def giveup_hdlr(details):
-    log.debug("Giving up {target}. Failed after {tries}"
-                "calling function {target} with args {args}")
-def success_hdlr(details):
-    log.info ("Successfully retrieved file.")
-    log.debug('Attempt successful after %s. Calling function %s with args %s.', tries, target, args)
+    Args:
+        exceptions: The exception to check. may be a tuple of
+            exceptions to check.
+        tries: Number of times to try (not retry) before giving up.
+        delay: Initial delay between retries in seconds.
+        backoff: Backoff multiplier (e.g. value of 2 will double the delay
+            each retry).
+        logger: Logger to use. If None, print.
+    """
+    def deco_retry(f):
 
+        @wraps(f)
+        def f_retry(*args, **kwargs):
+            mtries, mdelay = tries, delay
+            while mtries > 1:
+                try:
+                    return f(*args, **kwargs)
+                except exceptions as e:
+                    msg = '{}, Retrying in {} seconds...'.format(e, mdelay)
+                    if logger:
+                        logger.warning(msg)
+                    else:
+                        print(msg)
+                    time.sleep(mdelay)
+                    mtries -= 1
+                    mdelay *= backoff
+            return f(*args, **kwargs)
 
-# Add System Info
+        return f_retry  # true decorator
+
+    return deco_retry
+
 def log_sysinfo():
-    """Logs Basic system info"""
+    """
+    Logs Basic system info
+    """
     log.debug('------------------------System Info------------------------------')
     log.debug('Platform : %s, Version: %s', platform.system(), platform.version())
     log.debug('Hostname: %s', platform.node())
@@ -109,26 +129,13 @@ def log_sysinfo():
     log.debug('Platform Arch: %s', platform.architecture())
     log.debug('-----------------------------------------------------------------')
 
-
-
-
-@backoff.on_exception(backoff.expo,
-                      (requests.exceptions.HTTPError,
-                       requests.exceptions.ConnectionError,
-                       requests.exceptions.TooManyRedirects,
-                       requests.exceptions.Timeout),
-                      max_tries = MAX_DL_RETRIES,
-                      on_backoff=backoff_hdlr,
-                      on_giveup=giveup_hdlr,
-                      on_success=success_hdlr)
+@retry(Exception, tries=3, logger=log)
 def __download_file(file_name, file_url):
     """
     Download the File from file_url, save it as output_file.
-    If file already exists its deleted. Requires requests
-    v2.19+. Older versions may not support `with` statement.
-    Returns: True if error free or False if fails.
+    Requires requests v2.19+. Older versions may not support
+    `with` statement.
     """
-    log.debug('From URL: %s', file_url)
     with requests.get(file_url, stream = True, timeout=10) as response:
         log.debug('Response code is %s', response.status_code)
         response.raise_for_status()
@@ -143,44 +150,17 @@ def get_file(file_name, file_url):
     """
     if os.path.isfile(file_name):
         log.info('%s exists.', file_name)
-    try:
-        os.remove(file_name)
-    except OSError as e:
-        log.critical('Failed to remove existing File : %s', file_name)
-        log.error('Error was %s', e.strerror)
-        __close_logs(2)
-    log.info("Attempting to download : %(file_name)s")
-    log.info("From URL: %(file_url)s")
+        try:
+            os.remove(file_name)
+        except OSError as e:
+            log.critical('Failed to remove existing File : %s', file_name)
+            log.error('Error was %s', e.strerror)
+            __close_logs()
+            raise OSError
+    log.info("Attempting to download : %s", file_name)
+    log.info("From URL: %s", file_url)
     __download_file(file_name=file_name, file_url=file_url)
 
-
-def verify_sha256_checksum(file_name, checksum):
-    """
-    Verify checksum of a file.
-    Filename        : File to Verify
-    checksum        : SHA256SUM
-    Returns Boolean : True if matches, False if fails.
-    """
-    if os.path.isfile(file_name):
-        log.debug("File %s is present on FS.", file_name)
-        sha256hash = hashlib.sha256()
-        with open(file_name, 'rb') as f:
-            while True:
-                data = f.read(FILE_HASH_BUFFER)
-                if not data:
-                    break
-                sha256hash.update(data)
-        log.debug('SHA256 hash for %s is : %s', file_name, sha256hash.hexdigest() )
-        log.debug('SHA256 hash SHOULD BE : %s', checksum.lower())
-    else:
-        log.critical('File not found.')
-        __close_logs(3)
-    if checksum.lower() == sha256hash.hexdigest():
-        log.debug('File Hashes Match.')
-        return True
-    else:
-        log.debug('File hashes do not match.')
-        return False
 
 def extract_checksum_from_file(file_name):
     """
@@ -194,61 +174,206 @@ def extract_checksum_from_file(file_name):
     else:
         log.error("File %s not found.", file_name)
 
-@backoff.on_exception(backoff.expo,
-                      (requests.exceptions.HTTPError,
-                       requests.exceptions.ConnectionError,
-                       requests.exceptions.TooManyRedirects,
-                       requests.exceptions.Timeout),
-                      max_tries = MAX_DL_RETRIES,
-                      on_backoff=backoff_hdlr,
-                      on_giveup=giveup_hdlr,
-                      on_success=success_hdlr)
+def verify_sha256_checksum(file_name, checksum):
+    """
+    Verify checksum of a file.
+    Filename        : File to Verify
+    checksum        : SHA256SUM
+    Returns Boolean : True if matches, False if fails.
+    """
+    if os.path.isfile(file_name):
+        log.debug("File %s is present on the FS.", file_name)
+        sha256hash = hashlib.sha256()
+        with open(file_name, 'rb') as f:
+            while True:
+                data = f.read(FILE_HASH_BUFFER)
+                if not data:
+                    break
+                sha256hash.update(data)
+        log.debug('SHA256 hash for %s is : %s', file_name, sha256hash.hexdigest() )
+        log.debug('SHA256 hash SHOULD BE : %s', checksum.lower())
+    else:
+        log.critical('File not found.')
+        __close_logs()
+        raise Exception('File not found.')
+    if checksum.lower() == sha256hash.hexdigest():
+        log.debug('File Hashes Match.')
+        return True
+    else:
+        log.debug('File hashes do not match.')
+        return False
+
+
 def extract_los_urls(device_name="marlin"):
     """
     Scrap Zip file URLs and data from lineage os download page.
     """
     log.debug('Getting Download Page for %s', device_name)
-    los_download_page = requests.get("https://download.lineageos.org/"+device_name)
-    soup = BeautifulSoup(los_download_page.content, features="lxml")
-    table = soup.find('table')
-    for tr in table.find_all('tr'):
-        td = tr.find_all('td')
-        if len(td) == 5: # Making sure not to grab header
-            LOS_REL_TYPE.append(td[0].string)
-            LOS_REL_VERSION.append(td[1].string)
-            LOS_REL_URL.append((td[2].a).get('href'))
-            LOS_REL_SIZE.append(td[3].string)
-            LOS_REL_DATE.append(td[4].string)
-    log.debug('----------------------------------------------------------')
-    log.debug('------------------Parsed Variables------------------------')
-    log.debug('LOS_REL_TYPE = %s', LOS_REL_TYPE)
-    log.debug('LOS_REL_VERSION = %s', LOS_REL_VERSION)
-    log.debug('LOS_REL_URL = %s', LOS_REL_URL)
-    log.debug('LOS_REL_SIZE = %s', LOS_REL_SIZE)
-    log.debug('LOS_REL_DATE = %s', LOS_REL_DATE)
-    log.debug('----------------------------------------------------------')
-    log.debug('----------------------------------------------------------')
+    get_file(file_name="los-dl.html", file_url="https://download.lineageos.org/"+device_name)
+    if os.path.isfile("los-dl.html"):
+        log.debug('los-dl.html file exists.')
+        with open("los-dl.html", encoding="utf-8") as los_dl_page:
+            log.info('Parsing HTML page...')
+            soup = BeautifulSoup(los_dl_page.read(), features="lxml")
+            table = soup.find('table')
+            for tr in table.find_all('tr'):
+                td = tr.find_all('td')
+                if len(td) == 5: # Making sure not to grab header
+                    LOS_REL_TYPE.append(td[0].string)
+                    LOS_REL_VERSION.append(td[1].string)
+                    LOS_REL_URL.append((td[2].a).get('href'))
+                    LOS_REL_SIZE.append(td[3].string)
+                    LOS_REL_DATE.append(td[4].string)
+        # Debugging stuf
+        log.debug('----------------------------------------------------------')
+        log.debug('------------------Parsed Variables------------------------')
+        log.debug('LOS_REL_TYPE = %s', LOS_REL_TYPE)
+        log.debug('LOS_REL_VERSION = %s', LOS_REL_VERSION)
+        log.debug('LOS_REL_URL = %s', LOS_REL_URL)
+        log.debug('LOS_REL_SIZE = %s', LOS_REL_SIZE)
+        log.debug('LOS_REL_DATE = %s', LOS_REL_DATE)
+        log.debug('----------------------------------------------------------')
+        log.debug('----------------------------------------------------------')
+    else:
+        log.error('File los-dl.html not found.')
+        SystemExit('File los-dl.html is not found.')
 
+
+def extract_zip_contents(zip_file, destination):
+    """
+    Extract contents of Zip file
+    Arg:
+        zip_file : path to Zipfile,
+        destination:  directory to extract to
+    """
+    if os.path.isfile("los-dl.html"):
+        with zipfile.ZipFile(zip_file,"r") as zip_ref:
+          zip_ref.extractall(destination)
+    else:
+        log.error('%s not found.', zip_file)
+        SystemError('ZIP is not the filesystem.')
+
+def purge(dir, pattern):
+    """
+    Delete files in specified dir by pattern
+    Args:
+        dir : directory to scan
+        pattern : regex to match
+    """
+    for p in Path(dir).glob(pattern):
+        p.unlink()
+
+
+def __delete_old_dat_files():
+    log.info('Deleting old files if any....')
+    shutil.rmtree('META-INF/', ignore_errors=True)
+    shutil.rmtree('system/', ignore_errors=True)
+    shutil.rmtree('install/',ignore_errors=True)
+    log.debug('Deleting DAT files...')
+    purge(dir=os.getcwd(), pattern="system.*.*")
+    log.debug('Deleting *.img')
+    purge(dir=os.getcwd(), pattern="*.img")
+    purge(dir=os.getcwd(), pattern="*.bin")
+
+
+def convert_dat_file():
+    """
+    Convert dat to img using sdat2img.py
+    """
+    log.info('Converting DAT file to img file')
+    if os.path.isfile('sdat2img.py'):
+        import sdat2img
+        try:
+            sdat2img.main(TRANSFER_LIST_FILE="system.transfer.list", NEW_DATA_FILE="system.new.dat.br",OUTPUT_IMAGE_FILE="system.img")
+        except Exception:
+            log.critical('Failed to convert DAT file to image file')
+            SystemExit
+    else:
+        log.error('sdat2img.py is not in current directory.')
+        SystemExit('sdat2img.py is missing.')
+
+def generate_release_notes():
+    """
+    Release Notes Generator.
+    Use Extracted info to generate Relase notes.
+    """
+    if os.path.isfile(RELEASE_NOTES):
+        log.info('Release notes.txt exists')
+        try:
+            log.debug('Deleting old release notes')
+            os.remove(RELEASE_NOTES)
+        except OSError as e:
+            log.critical('Failed to remove existing release notes.')
+            log.error('Error was %s', e.strerror)
+            __close_logs()
+            raise OSError
+    log.info('Generating Release Notes...')
+    with open(RELEASE_NOTES, 'w+') as release_notes:
+            release_notes.write('# Release notes for Tag lineage -' + LOS_REL_DATE[0] + '\n\n')
+            ts = time.strftime('%I:%M %p %Z on %b %d, %Y')
+            release_notes.write('- Release notes generated on : ' + ts + '\n')
+            release_notes.write('- Lineage OS Version : ' + LOS_REL_VERSION[0] + '\n')
+            release_notes.write('- Lineage OS Type : ' + LOS_REL_TYPE[0] + '\n', )
+            release_notes.write('- Zip file used : [ZIPfile]('+ LOS_REL_URL[0] + ')' + '\n')
+            release_notes.write('- LOS was built on : ' + LOS_REL_DATE[0] + '\n\n\n')
+            release_notes.write('## Tags and Downloads\n')
+            release_notes.write('- This is generated automatically.\n' +
+                                '- Tags correspond to build date.\n' +
+                                '- Every release is tagged lineage-[lineage-version]-build-date\n\n')
+            release_notes.write('## Logs\n' +
+                                'Logs related to this Build are available as assets or available in logs folder in `metadata` branch.\n')
+    log.debug("Generated Release Notes")
+
+def generate_json_metadata():
+    """
+    Generate metadata
+    Build Date, LOS_REL_VERSION
+    """
+    log.info('Generating Metadata JSON for gh-pages')
+    metadata = {}
+    metadata.update({ 'version' : 1,
+                      'lineage_build_date' : LOS_REL_DATE[0],
+                      'last_build_passed' : "True",
+                      'lineage_version' : LOS_REL_VERSION[0],
+                      'release_tag' : LOS_REL_VERSION[0] + '-' + LOS_REL_DATE[0]
+                    })
+    with open(RELEASE_JSON, 'w+') as release_json:
+        release_json.write(json.dumps(metadata))
+        log.debug('JSON Dump is : %s',json.dumps(metadata))
 
 def main():
     # Log Basic Info
+    os.chdir(os.path.dirname(__file__))
     log_sysinfo()
     # Extract URLs
-    extract_los_urls(device_name="marlin")
+    log.info('Getting LOS Download page for %s...', DEVICE_NAME)
+    extract_los_urls(device_name=DEVICE_NAME)
     # Download Zip
+    log.info('Downloading ZIP File...')
     get_file(LOS_ZIP_FILE, LOS_REL_URL[0])
     # Download Checksum
+    log.info('Getting Checksum File...')
     get_file(LOS_SHA256_FILE, LOS_REL_URL[0]+"?sha256")
     # Verify Checksums
+    log.info('Verifying Checksums...')
     if verify_sha256_checksum(LOS_ZIP_FILE, extract_checksum_from_file(LOS_SHA256_FILE)):
         log.info("File's Checksum matches.")
     else:
         log.error("File is corrupt. Please try again.")
-        __close_logs(11)
+        __close_logs()
+        raise Exception('ZIP File is corrupt or modified')
+    # Extract Files
+    log.info('Extracting from ZIP File ....')
+    extract_zip_contents(zip_file=LOS_ZIP_FILE, destination=os.getcwd())
+    __delete_old_dat_files()
+    #convert_dat_file()
+    generate_release_notes()
+    generate_json_metadata()
 
-    log.removeHandler(log_file_handler)
-    log.removeHandler(log_console_handler)
-    params = len(signature(__close_logs).parameters)
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    finally:
+        log.removeHandler(log_file_handler)
+        log.removeHandler(log_console_handler)
