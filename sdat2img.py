@@ -119,24 +119,8 @@ def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
     print('Done! Output image: %s' % os.path.realpath(output_img.name))
 
 if __name__ == '__main__':
-    try:
-        TRANSFER_LIST_FILE = str(sys.argv[1])
-        NEW_DATA_FILE = str(sys.argv[2])
-    except IndexError:
-        print('\nUsage: sdat2img.py <transfer_list> <system_new_file> [system_img]\n')
-        print('    <transfer_list>: transfer list file')
-        print('    <system_new_file>: system new dat file')
-        print('    [system_img]: output system image\n\n')
-        print('Visit xda thread for more information.\n')
-        try:
-            input = raw_input
-        except NameError: pass
-        input('Press ENTER to exit...')
-        sys.exit()
-
-    try:
-        OUTPUT_IMAGE_FILE = str(sys.argv[3])
-    except IndexError:
-        OUTPUT_IMAGE_FILE = 'system.img'
+    TRANSFER_LIST_FILE = "system.transfer.list"
+    NEW_DATA_FILE = "system.new.dat.br"
+    OUTPUT_IMAGE_FILE = 'system.img'
 
     main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE)
