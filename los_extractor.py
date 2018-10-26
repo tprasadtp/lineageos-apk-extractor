@@ -9,7 +9,8 @@ https://opensource.org/licenses/MIT
 """
 
 # Imports
-import os, shutil, hashlib, atexit
+import os, shutil, hashlib
+import atexit
 import sys, platform, zipfile, json
 from pathlib import Path
 import logging, logging.handlers
@@ -148,7 +149,7 @@ def extract_los_urls(device_name="marlin"):
                     LOS_REL_URL.append((td[2].a).get('href'))
                     LOS_REL_SIZE.append(td[3].string)
                     LOS_REL_DATE.append(td[4].string)
-        # Debugging stuf
+        # Debugging stuff
         log.debug('----------------------------------------------------------')
         log.debug('------------------Parsed Variables------------------------')
         log.debug('LOS_REL_TYPE = %s', LOS_REL_TYPE)
@@ -265,7 +266,6 @@ def generate_json_metadata():
 
 def main():
 
-    os.chdir(os.path.dirname(__file__))
     log_sysinfo()
 
     # Extract URLs

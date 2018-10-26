@@ -16,12 +16,11 @@ install:
 - sudo apt-get install -y jshon python3-pip
 - sudo pip install -r requirements.txt
 script:
-- python los_extractor.py
-- ./los_extractor.py
-- python sdat2img.py system.transfer.list system.new.dat system.img
+- python3 los_extractor.py
+- python3 sdat2img.py system.transfer.list system.new.dat system.img
 - echo "Mounting Image"
 - sudo mount system.img /mnt/lineage
-- python copy_files.py
+- python3 copy_files.py
 - chmod +x ./flags.sh && source ./flags.sh
 before_deploy:
 -  ./pre-deploy.sh

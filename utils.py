@@ -8,7 +8,7 @@ you can find it at the link below.
 https://opensource.org/licenses/MIT
 """
 
-import os, atexit, time
+import os, time
 from pathlib import Path
 import logging, logging.handlers
 from functools import wraps
@@ -21,7 +21,6 @@ REQUESTS_MAX_TRIES = 3
 REQUESTS_BACKOFF = 2
 log = logging.getLogger()
 
-@atexit.register
 def retry(exceptions, tries=REQUESTS_MAX_TRIES, delay=3, backoff=REQUESTS_BACKOFF, logger=logging.getLogger('LOS_APK_Extractor')):
     """
     Retry calling the decorated function using an exponential backoff.
