@@ -1,0 +1,12 @@
+{
+    "version": 1,
+    "ci": {
+        "build_passed": "True",
+        "build_date": 1540511801
+    },
+    "lineage": {
+        "build": "2018-10-15",
+        "build_type": "nightly"
+    },
+    "release_tag": "15.1.2018-10-15"
+}
