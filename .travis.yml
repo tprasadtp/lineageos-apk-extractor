@@ -13,9 +13,10 @@ before_install:
 - rm -rf ./Metadata ./Releases
 - rm -f ./flags.sh
 install:
-- sudo apt-get install -y jshon
+- sudo apt-get install -y jshon python3-pip
+- sudo pip3 install -r requirements.txt
 script:
-- python3 los_exctractor.py
+- python3 los_extractor.py
 - python3 sdat2img.py system.transfer.list system.new.dat system.img
 - echo "Mounting Image"
 - sudo mount system.img /mnt/lineage
