@@ -10,7 +10,7 @@ before_install:
 - chmod +x ./*.py
 - chmod +x ./*.sh
 - sudo mkdir -p /mnt/lineage
-- rm -rf ./Metadata/ ./Releases/
+- rm -rf ./metadata/ ./releases/
 - rm -f ./flags.sh
 install:
 - sudo apt-get install -y jshon shellcheck
@@ -29,7 +29,7 @@ deploy:
 - provider: pages
   skip_cleanup: true
   deployment-file: false
-  local-dir: Metadata
+  local-dir: metadata
   skip-cleanup: true
   keep-history: true
   target-branch: metadata
@@ -42,7 +42,7 @@ deploy:
 - provider: release
   api_key: ${GH_TOKEN}
   file_glob: true
-  file: Releases/*
+  file: releases/*
   skip_cleanup: true
   prerelease: true
   name: ${TRAVIS_TAG}

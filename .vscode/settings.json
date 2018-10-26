@@ -19,7 +19,6 @@
     "telemetry.enableTelemetry": false,
     //Attempting to fix Memory hoggging by Language Server
     "python.analysis.watchSearchPaths": false,
-    "cSpell.language": "en,en-US",
     "python.venvPath": "",
     "python.formatting.provider": "black",
 }
