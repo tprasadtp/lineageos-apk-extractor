@@ -315,3 +315,6 @@ release.json
 [Rr]lease[_-][Nn]otes.md
 *.html
 *.txt
+test*
+flags.sh
+metadata.json
