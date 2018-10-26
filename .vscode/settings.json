@@ -21,4 +21,5 @@
     "python.analysis.watchSearchPaths": false,
     "cSpell.language": "en,en-US",
     "python.venvPath": "",
+    "python.formatting.provider": "black",
 }

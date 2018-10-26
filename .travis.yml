@@ -18,8 +18,7 @@ install:
 script:
 - ./los_extractor.py
 - ./sdat2img.py system.transfer.list system.new.dat.br system.img
-- echo "Mounting Image"
-- sudo mount system.img /mnt/lineage
+- sudo mount -t ext4 system.img /mnt/lineage
 - ./copy_files.py
 - chmod +x ./flags.sh && source ./flags.sh
 before_deploy:
