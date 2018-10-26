@@ -1,4 +1,4 @@
-# Extract APKs from Lineage OS ZIPs automatically and regularly.
+# Extract APKs from Lineage OS ZIPs automatically and upload to github releases regularly
 
 [![Build Status](https://travis-ci.org/tprasadtp/lineageos-apk-extractor.svg?branch=master)](https://travis-ci.org/tprasadtp/ubuntu-post-install)
 [![license](https://img.shields.io/github/license/tprasadtp/lineageos-apk-extractor.svg?style=flat)](https://github.com/tprasadtp/ubuntu-post-install/blob/master/LICENSE)
@@ -38,4 +38,4 @@ If you have a problems **other than** APKs being corrupt or not extracted proper
 ## Credits
 
 - Python icon by Freepik from flaticon.com
-- Original `sdat2img.py` by [Andrei Conache](https://github.com/xpirt/sdat2img). I have modified it a bit. Please note that licence information is missing from original repository.
+- Original `sdat2img.py` by [Andrei Conache](https://github.com/xpirt/sdat2img). Please note that licence information is missing from original repository.

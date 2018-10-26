@@ -13,14 +13,14 @@ before_install:
 - rm -rf ./Metadata ./Releases
 - rm -f ./flags.sh
 install:
-- apt-get install -y jshon
+- sudo apt-get install -y jshon
 script:
 - python3 los_exctractor.py
 - python3 sdat2img.py system.transfer.list system.new.dat system.img
 - echo "Mounting Image"
 - sudo mount system.img /mnt/lineage
 - python3 copy_files.py
-- source ./flags.sh
+- chmod +x ./flags.sh && source ./flags.sh
 before_deploy:
 -  ./pre-deploy.sh
 -  export RELEASES_BODY=$(jshon -s "$(cat Release_Notes.md)"))
