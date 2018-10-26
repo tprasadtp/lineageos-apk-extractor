@@ -7,22 +7,25 @@
 #====================================================
 
 import sys, os, errno
-import logging
-log = logging.getLogger(__name__)
+
 def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
     __version__ = '1.1'
 
     if sys.hexversion < 0x02070000:
-        log.critical ("Python 2.7 or newer is required.")
-        return False
+        print >> sys.stderr, "Python 2.7 or newer is required."
+        try:
+            input = raw_input
+        except NameError: pass
+        input('Press ENTER to exit...')
+        sys.exit(1)
     else:
-        log.debug('sdat2img binary - version: %s\n', __version__)
+        print('sdat2img binary - version: %s\n' % __version__)
 
     def rangeset(src):
         src_set = src.split(',')
         num_set =  [int(item) for item in src_set]
         if len(num_set) != num_set[0]+1:
-            log.info('Error on parsing following data to rangeset:\n%s' % src)
+            print('Error on parsing following data to rangeset:\n%s' % src)
             sys.exit(1)
 
         return tuple ([ (num_set[i], num_set[i+1]) for i in range(1, len(num_set), 2) ])
@@ -52,36 +55,36 @@ def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
             else:
                 # Skip lines starting with numbers, they are not commands anyway
                 if not cmd[0].isdigit():
-                    log.debug('Command "%s" is not valid.' % cmd)
+                    print('Command "%s" is not valid.' % cmd)
                     trans_list.close()
-                    return False
+                    sys.exit(1)
 
         trans_list.close()
         return version, new_blocks, commands
 
     BLOCK_SIZE = 4096
-
+    
     version, new_blocks, commands = parse_transfer_list_file(TRANSFER_LIST_FILE)
 
     if version == 1:
-        log.debug('Android Lollipop 5.0 detected!\n')
+        print('Android Lollipop 5.0 detected!\n')
     elif version == 2:
-        log.debug('Android Lollipop 5.1 detected!\n')
+        print('Android Lollipop 5.1 detected!\n')
     elif version == 3:
-        log.debug('Android Marshmallow 6.x detected!\n')
+        print('Android Marshmallow 6.x detected!\n')
     elif version == 4:
-        log.debug('Android Nougat 7.x / Oreo 8.x detected!\n')
+        print('Android Nougat 7.x / Oreo 8.x detected!\n')
     else:
-        log.warning('Unknown Android version!\n')
+        print('Unknown Android version!\n')
 
     # Don't clobber existing files to avoid accidental data loss
     try:
         output_img = open(OUTPUT_IMAGE_FILE, 'wb')
     except IOError as e:
         if e.errno == errno.EEXIST:
-            log.error('Error: the output file %s already exists', e.filename)
-            log.error('Remove it, rename it, or choose a different file name.')
-            return False
+            print('Error: the output file "{}" already exists'.format(e.filename))
+            print('Remove it, rename it, or choose a different file name.')
+            sys.exit(e.errno)
         else:
             raise
 
@@ -95,17 +98,17 @@ def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
                 begin = block[0]
                 end = block[1]
                 block_count = end - begin
-                log.debug('Copying %s blocks into position %s...', block_count, begin)
+                print('Copying {} blocks into position {}...'.format(block_count, begin))
 
                 # Position output file
                 output_img.seek(begin*BLOCK_SIZE)
-
+                
                 # Copy one block at a time
                 while(block_count > 0):
                     output_img.write(new_data_file.read(BLOCK_SIZE))
                     block_count -= 1
         else:
-            log.debug('Skipping command %s...' , command[0])
+            print('Skipping command %s...' % command[0])
 
     # Make file larger if necessary
     if(output_img.tell() < max_file_size):
@@ -113,28 +116,27 @@ def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
 
     output_img.close()
     new_data_file.close()
-    log.info('Done! Output image: %s' % os.path.realpath(output_img.name))
-    return True
+    print('Done! Output image: %s' % os.path.realpath(output_img.name))
 
 if __name__ == '__main__':
-    TRANSFER_LIST_FILE = "system.transfer.list"
-    NEW_DATA_FILE = "system.new,dat.br"
-    OUTPUT_IMAGE_FILE = "system.img"
-    LOG_FILE = "SD2IMG.logs"
-
-    log = logging.getLogger(__name__)
-    log.setLevel(logging.DEBUG)
-    l2_file_handler = logging.handlers.RotatingFileHandler(LOG_FILE, maxBytes=1000000, backupCount=3 )
-    l2_file_handler.setLevel(logging.DEBUG)
-    l2_console_handler = logging.StreamHandler()
-    l2_console_handler.setLevel(logging.INFO)
-    l2_file_handler.setFormatter(logging.Formatter('[ {asctime} ] [ {levelname:8s} ] - {message}', style='{'))
-    l2_console_handler.setFormatter(logging.Formatter('[ {levelname:8s} ] - {message}', style='{'))
-    log.addHandler(l2_file_handler)
-    log.addHandler(l2_console_handler)
-    # Try Main
     try:
-        main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE)
-    finally:
-        log.removeHandler(l2_file_handler)
-        log.removeHandler(l2_console_handler)
+        TRANSFER_LIST_FILE = str(sys.argv[1])
+        NEW_DATA_FILE = str(sys.argv[2])
+    except IndexError:
+        print('\nUsage: sdat2img.py <transfer_list> <system_new_file> [system_img]\n')
+        print('    <transfer_list>: transfer list file')
+        print('    <system_new_file>: system new dat file')
+        print('    [system_img]: output system image\n\n')
+        print('Visit xda thread for more information.\n')
+        try:
+            input = raw_input
+        except NameError: pass
+        input('Press ENTER to exit...')
+        sys.exit()
+
+    try:
+        OUTPUT_IMAGE_FILE = str(sys.argv[3])
+    except IndexError:
+        OUTPUT_IMAGE_FILE = 'system.img'
+
+    main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE)

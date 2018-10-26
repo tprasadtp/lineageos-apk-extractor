@@ -10,24 +10,21 @@ https://opensource.org/licenses/MIT
 
 # Imports
 import os, shutil, hashlib, atexit
-import sys, platform, zipfile, subprocess, json
+import sys, platform, zipfile, json
 from pathlib import Path
 import logging, logging.handlers
 # For Retries
 import time
-from functools import wraps
 
 # Version Checks.
 if int(str(sys.version_info.major) + str(sys.version_info.minor)) < 34:
     raise Exception("Needs Python version 3.5 & above.")
 try:
-    import requests
-except ImportError:
-    raise SystemExit
-try:
     from bs4 import BeautifulSoup
 except ImportError:
     raise SystemExit
+
+from utils import get_file as dl
 
 # Settings
 DEVICE_NAME = "bullhead"
@@ -39,9 +36,7 @@ LOG_FILE = "LineageOS_APK_Extractor.logs"
 LOS_ZIP_FILE = "LineageOS.zip"
 LOS_SHA256_FILE = "LineageOS_ZIP_SHA256.txt"
 
-# Default max attempts to download a file
-REQUESTS_MAX_TRIES = 3
-REQUESTS_BACKOFF = 2
+
 # Use chunk size of 128K
 FILE_HASH_BUFFER = 131072
 
@@ -79,42 +74,6 @@ def __close_logs():
     log.removeHandler(log_file_handler)
     log.removeHandler(log_console_handler)
 
-def retry(exceptions, tries=REQUESTS_MAX_TRIES, delay=3, backoff=REQUESTS_BACKOFF, logger=logging.getLogger('LOS_APK_Extractor')):
-    """
-    Retry calling the decorated function using an exponential backoff.
-
-    Args:
-        exceptions: The exception to check. may be a tuple of
-            exceptions to check.
-        tries: Number of times to try (not retry) before giving up.
-        delay: Initial delay between retries in seconds.
-        backoff: Backoff multiplier (e.g. value of 2 will double the delay
-            each retry).
-        logger: Logger to use. If None, print.
-    """
-    def deco_retry(f):
-
-        @wraps(f)
-        def f_retry(*args, **kwargs):
-            mtries, mdelay = tries, delay
-            while mtries > 1:
-                try:
-                    return f(*args, **kwargs)
-                except exceptions as e:
-                    msg = '{}, Retrying in {} seconds...'.format(e, mdelay)
-                    if logger:
-                        logger.warning(msg)
-                    else:
-                        print(msg)
-                    time.sleep(mdelay)
-                    mtries -= 1
-                    mdelay *= backoff
-            return f(*args, **kwargs)
-
-        return f_retry  # true decorator
-
-    return deco_retry
-
 def log_sysinfo():
     """
     Logs Basic system info
@@ -125,38 +84,6 @@ def log_sysinfo():
     log.debug('Python Version: %s', platform.python_version())
     log.debug('Platform Arch: %s', platform.architecture())
     log.debug('-----------------------------------------------------------------')
-
-@retry(Exception, tries=3, logger=log)
-def __download_file(file_name, file_url):
-    """
-    Download the File from file_url, save it as output_file.
-    Requires requests v2.19+. Older versions may not support
-    `with` statement.
-    """
-    with requests.get(file_url, stream = True, timeout=10) as response:
-        log.debug('Response code is %s', response.status_code)
-        response.raise_for_status()
-        with open(file_name, 'wb') as f:
-            for chunk in response.iter_content(chunk_size=8192):
-                f.write(chunk)
-
-def get_file(file_name, file_url):
-    """
-    Try to download the file with <max_attempts>
-    Returns Class FileDownloadResult.
-    """
-    if os.path.isfile(file_name):
-        log.info('File %s already exists. It will be deleted.', file_name)
-        try:
-            os.remove(file_name)
-        except OSError as e:
-            log.critical('Failed to remove existing file : %s', file_name)
-            log.error('Error was %s', e.strerror)
-            __close_logs()
-            raise OSError
-    log.info("Attempting to download : %s", file_name)
-    log.info("From URL: %s", file_url)
-    __download_file(file_name=file_name, file_url=file_url)
 
 
 def extract_checksum_from_file(file_name):
@@ -206,7 +133,7 @@ def extract_los_urls(device_name="marlin"):
     Scrap Zip file URLs and data from lineage os download page.
     """
     log.debug('Getting Download Page for %s', device_name)
-    get_file(file_name=LOS_DL_PAGE, file_url="https://download.lineageos.org/"+device_name)
+    dl(file_name=LOS_DL_PAGE, file_url="https://download.lineageos.org/"+device_name)
     if os.path.isfile(LOS_DL_PAGE):
         log.debug('los-dl.html file exists.')
         with open(LOS_DL_PAGE, encoding="utf-8") as los_dl_page:
@@ -272,22 +199,6 @@ def delete_old_files():
     purge(dir=os.getcwd(), pattern="*.img")
     purge(dir=os.getcwd(), pattern="*.bin")
 
-
-def convert_dat_file():
-    """
-    Convert dat to img using sdat2img.py
-    """
-    log.info('Converting DAT(.BR) file to IMG file')
-    if os.path.isfile('sdat2img.py'):
-        from sdat2img import main as sdat
-        if sdat(TRANSFER_LIST_FILE="system.transfer.list", NEW_DATA_FILE="system.new.dat.br",OUTPUT_IMAGE_FILE="system.img"):
-            log.info("Converted DAT(.BR) file to IMG File.")
-        else:
-            log.critical("Failed to Convert DAT file to IMG")
-            SystemExit("Failed to convert DAT file.")
-    else:
-        log.error('sdat2img.py is not in current directory.')
-        SystemExit('sdat2img.py is missing.')
 
 def generate_release_notes():
     """
@@ -363,11 +274,11 @@ def main():
 
     # Download Zip
     log.info('Downloading ZIP File...')
-    get_file(LOS_ZIP_FILE, LOS_REL_URL[0])
+    dl(LOS_ZIP_FILE, LOS_REL_URL[0])
 
     # Download Checksum
     log.info('Getting Checksum File...')
-    get_file(LOS_SHA256_FILE, LOS_REL_URL[0]+"?sha256")
+    dl(LOS_SHA256_FILE, LOS_REL_URL[0]+"?sha256")
 
     # Verify Checksums
     log.info('Verifying Checksums...')
@@ -384,9 +295,8 @@ def main():
     # Delete Files from Last Run
     delete_old_files()
 
-    # Extract & Convert
+    # Extract
     extract_zip_contents(zip_file=LOS_ZIP_FILE, destination=os.getcwd())
-    convert_dat_file()
 
     # Release Notes & Metadata
     generate_release_notes()

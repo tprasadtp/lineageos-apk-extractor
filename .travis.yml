@@ -1,0 +1,54 @@
+sudo: required
+language: python
+python:
+- '3.6'
+branches:
+  except:
+  - gh-pages
+  - metadata
+before_install:
+- chmod +x ./*.py
+- chmod +x ./*.sh
+- sudo mkdir -p /mnt/lineage
+- rm -rf ./Metadata ./Releases
+- rm -f ./flags.sh
+install:
+- apt-get install -y jshon
+script:
+- python3 los_exctractor.py
+- python3 sdat2img.py system.transfer.list system.new.dat system.img
+- echo "Mounting Image"
+- sudo mount system.img /mnt/lineage
+- python3 copy_files.py
+- source ./flags.sh
+before_deploy:
+-  ./pre-deploy.sh
+-  export RELEASES_BODY=$(jshon -s "$(cat Release_Notes.md)"))
+deploy:
+- provider: pages
+  skip_cleanup: true
+  deployment-file: false
+  local-dir: Metadata
+  skip-cleanup: true
+  keep-history: true
+  target-branch: metadata
+  email: ${GH_EMAIL}
+  name: valarie-ci-bot
+  github-token: ${GH_TOKEN}
+  on:
+    branch: master
+    condition: DEPLOY = true
+- provider: release
+  api_key: ${GH_TOKEN}
+  file_glob: true
+  file: Releases/*
+  skip_cleanup: true
+  prerelease: true
+  name: ${TRAVIS_TAG}
+  body: ${RELEASES_BODY}
+  overwrite: true
+  on:
+    branch: master
+    condition: DEPLOY = true
+notifications:
+  email: false
