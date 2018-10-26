@@ -63,7 +63,7 @@ def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
         return version, new_blocks, commands
 
     BLOCK_SIZE = 4096
-    
+
     version, new_blocks, commands = parse_transfer_list_file(TRANSFER_LIST_FILE)
 
     if version == 1:
@@ -102,7 +102,7 @@ def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
 
                 # Position output file
                 output_img.seek(begin*BLOCK_SIZE)
-                
+
                 # Copy one block at a time
                 while(block_count > 0):
                     output_img.write(new_data_file.read(BLOCK_SIZE))

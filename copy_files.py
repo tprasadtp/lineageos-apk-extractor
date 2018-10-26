@@ -113,7 +113,7 @@ def check_last_build():
         current_build_tag = current_metadata['release_tag']
         global TAG
         TAG = current_build_tag
-        log.info('Current Release Tag was %s',current_build_tag)
+        log.info('Current Release Tag is %s',current_build_tag)
         if current_build_date > last_build_date  and current_build_tag == last_build_tag:
             log.info("This release %s is New. GH Pages and GH Releases will be enabled if on MASTER")
             with open(FLAGS_SCRIPT, 'w+') as flag_file:
