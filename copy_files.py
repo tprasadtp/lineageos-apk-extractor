@@ -61,10 +61,15 @@ def define_tag_from_json():
             log.info('Reading json data from file.')
             with open(RELEASE_JSON) as r:
                 jsondata = json.loads(r.read())
-                global TAG
+                global TAG, GH_RELEASES_DEPLOY_FLAG
                 TAG = jsondata['release']['tag']
+                GH_RELEASES_DEPLOY_FLAG = jsondata['ci']['deployed']
+                print(f'Git Flag: <{GH_RELEASES_DEPLOY_FLAG}>')
                 if str(TAG) == "":
                     log.critical('TAG is empty!.')
+                    sys.exit(10)
+                if str(GH_RELEASES_DEPLOY_FLAG).lower() != "true" and str(GH_RELEASES_DEPLOY_FLAG).lower() != "false" :
+                    log.critical('Invalid deploy flag. It can either be <true> or <false>')
                     sys.exit(10)
         except Exception as e:
             log.critical('Failed to read from %s', RELEASE_JSON)
@@ -107,13 +112,16 @@ def copy_release_files():
                     log.error("Failed to Copy %s", app)
                     log.exception(e)
             # Copy Release Notes
-            log.info('Copying Release Notes...')
-            try:
-                shutil.copy2(RELEASE_NOTES, RELEASE_DIR / RELEASE_NOTES)
-            except Exception as e:
-                log.critical("Failed to copy Release Notes to upload folder.")
-                log.exception(e)
-                sys.exit(1)
+            if str(GH_RELEASES_DEPLOY_FLAG).lower() == "true":
+                log.info('Copying Release Notes...')
+                try:
+                    shutil.copy2(RELEASE_NOTES, RELEASE_DIR / RELEASE_NOTES)
+                except Exception as e:
+                    log.critical("Failed to copy Release Notes to upload folder.")
+                    log.exception(e)
+                    sys.exit(1)
+            else:
+                log.info("GH Releases is not enabled. Not Copying Release Notes.")
         else:
             log.critical("%s is not present. Cannot determine file list.", TRANSFER_JSON)
             sys.exit(1)

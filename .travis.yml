@@ -31,10 +31,9 @@ script:
 - ./copy_files.py
 - chmod +x ./flags.sh
 - source ./flags.sh
-- ./pre-deploy.sh
-- cat Release_Notes.md
 before_deploy:
-- export RELEASE_BODY=$(jshon -s "$(cat Release_Notes.md)")
+- ./pre-deploy.sh
+- export DATE="$(date)"
 deploy:
 - provider: pages
   skip_cleanup: true
@@ -55,7 +54,7 @@ deploy:
   skip_cleanup: true
   prerelease: true
   name: Lineage - ${BUILD_TAG}
-  body: ${RELEASE_BODY}
+  body: Automatically released on ${DATE}. For [Release Notes](https://github.com/tprasadtp/lineageos-apk-extractor/tree/metadata/release-notes) see [here](https://github.com/tprasadtp/lineageos-apk-extractor/tree/metadata/release-notes/Release-Notes-${BUILD_TAG}.md). Logs can be found [here](https://github.com/tprasadtp/lineageos-apk-extractor/tree/metadata/release-logs/LOS_APK_Extractor-${BUILD_TAG}.log).
   overwrite: true
   on:
     branch: master
