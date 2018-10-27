@@ -318,3 +318,4 @@ release.json
 test*
 flags.sh
 metadata.json
+*release.*

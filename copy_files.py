@@ -57,8 +57,10 @@ def define_tag_from_json():
                 if str(TAG) == "":
                     log.critical('TAG is empty!.')
                     sys.exit(2)
-        except Exception:
+        except Exception as e:
             log.critical('Failed to read from %s', RELEASE_JSON)
+            log.exception(e)
+            sys.exit(1)
     else:
         log.critical('%s is not found on the FS', RELEASE_JSON)
         sys.exit(1)
@@ -80,8 +82,9 @@ def copy_release_files():
         try:
             log.debug('Creating Releases Folder')
             os.makedirs(RELEASE_DIR)
-        except Exception:
+        except Exception as e:
             log.critical("Failed to create %s directory.", RELEASE_DIR)
+            log.exception(e)
             sys.exit(1)
         if os.path.isfile(TRANSFER_JSON):
             with open(TRANSFER_JSON) as t:
@@ -91,14 +94,16 @@ def copy_release_files():
                 try:
                     log.info("Copying %s from %s", app, path)
                     shutil.copy2(path, RELEASE_DIR / fname)
-                except Exception:
+                except Exception as e:
                     log.error("Failed to Copy %s", app)
+                    log.exception(e)
             # Copy Release Notes
             log.info('Copying Release Notes...')
             try:
                 shutil.copy2(RELEASE_NOTES, RELEASE_DIR / RELEASE_NOTES)
-            except:
+            except Exception as e:
                 log.critical("Failed to copy Release Notes to upload folder.")
+                log.exception(e)
                 sys.exit(1)
         else:
             log.critical("%s is not present. Cannot determine file list.", TRANSFER_JSON)
@@ -110,20 +115,23 @@ def copy_metadata_files():
         try:
             log.info("Deleting already existing folder..")
             shutil.rmtree(METADATA_DIR)
-        except Exception:
+        except Exception as e:
             log.critical("Failed to delete %s", METADATA_DIR)
+            log.exception(e)
             sys.exit(1)
     try:
         log.info("Creating Metadata Folder...")
         os.makedirs(METADATA_DIR)
-    except Exception:
+    except Exception as e:
         log.critical("Failed to create metadata directory.")
+        log.exception(e)
         sys.exit(1)
     try:
         log.info('Copying %s', RELEASE_JSON)
         shutil.copy2(RELEASE_JSON, METADATA_DIR / RELEASE_JSON)
-    except:
+    except Exception as e:
         log.critical("Failed to copy %s.", RELEASE_JSON)
+        log.exception(e)
         sys.exit(1)
 
 def main():

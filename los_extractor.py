@@ -212,7 +212,7 @@ def generate_release_notes():
             os.remove(RELEASE_NOTES)
         except OSError as e:
             log.critical('Failed to remove existing release notes.')
-            log.error('Error was %s', e.strerror)
+            log.exception(e)
             sys.exit(1)
     log.info('Generating Release Notes...')
     with open(RELEASE_NOTES, 'w+') as release_notes:
@@ -268,10 +268,15 @@ def set_flags_and_metadata():
     if os.path.isfile(OLD_RELEASE_JSON):
         with open(OLD_RELEASE_JSON, 'r') as oldjson:
             last_metadata = json.loads(oldjson.read())
-        last_build_date = last_metadata['ci']['build_date']
-        log.info('Last Build was %s', last_build_date)
-        last_build_tag = last_metadata['release']['tag']
-        log.info('Last Release Tag was %s', last_build_tag)
+        try:
+            last_build_date = last_metadata['ci']['build_date']
+            log.info('Last Build was %s', last_build_date)
+            last_build_tag = last_metadata['release']['tag']
+            log.info('Last Release Tag was %s', last_build_tag)
+        except KeyError as e:
+            log.critical('JSON file from Repository is Old. update it manually to latesest schema')
+            log.exception(e)
+            sys.exit(10)
         # If build timestamp for old build is less than current timestamp and
         # if tags are different, set ci.deployed to true. Also set DEPLOY=true
         # in flags script. Also generate Release Notes.
@@ -292,8 +297,9 @@ def set_flags_and_metadata():
                                     + 'export DEPLOY="true"\n'
                                     + 'export BUILD_TAG="' + REL_TAG + '"\n'
                                     + 'export LOGFILE_TS=' + utc_ts  + '"\n')
-            except Exception:
+            except Exception as e:
                 log.critical('Failed to write exporter script.')
+                log.exception(e)
                 sys.exit(1)
 
             ##################################################################
@@ -314,8 +320,9 @@ def set_flags_and_metadata():
                                     + 'export DEPLOY="false"\n'
                                     + 'export BUILD_TAG="' + REL_TAG + '"\n'
                                     + 'export LOGFILE_TS="' + utc_ts + '"\n')
-            except Exception:
+            except Exception as e:
                 log.critical('Failed to write exporter script.')
+                log.exception(e)
                 sys.exit(1)
         # Write METADATA to json
         log.info("Generating %s", RELEASE_JSON)
@@ -326,14 +333,15 @@ def set_flags_and_metadata():
                 shutil.rmtree(RELEASE_JSON)
             except OSError as e:
                 log.critical('Failed to remove existing %s.', RELEASE_JSON)
-                log.error('Error was %s', e.strerror)
+                log.exception(e)
                 sys.exit(1)
         try:
             with open(RELEASE_JSON, 'w+') as release_json:
                 release_json.write(json.dumps(METADATA, indent=4))
                 log.debug('JSON Dump is : %s', json.dumps(METADATA))
-        except Exception:
+        except Exception as e:
             log.critical("Failed to write %s.", RELEASE_JSON)
+            log.exception(e)
             sys.exit(1)
     else:
         log.critical('File %s which holds Metadata from previous build cannot be found. This will also result in %s not being generated.', OLD_RELEASE_JSON, RELEASE_JSON)
