@@ -41,6 +41,7 @@ if [ "${BUILD_TAG}" != "" ] || [ "${DEPLOY}" != "" ]; then
     fi
     echo "RSYNCING to gh-deploy"
     rsync -Eav ./gh-pages/ ./gh-deploy/
+    rsync -Eav ./metadata/ ./gh-deploy/
 else
     echo "BUILD_TAG and DEPLOY were not exported properly."
     exit 1
