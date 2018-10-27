@@ -17,6 +17,13 @@ git config --local user.email "${GH_EMAIL}"
 
 if [ "${BUILD_TAG}" != "" ] || [ "${DEPLOY}" != "" ]; then
     if [ "${DEPLOY}" == "true" ]; then
+        echo "Deploy to Github releases is Enabled."
+        if git show-ref --tags --quiet --verify -- "refs/tags/${BUILD_TAG}"
+            echo "Tag already present. Deleting it."
+            git tag -d "${BUILD_TAG}"
+            git push origin :refs/tags/"${BUILD_TAG}"
+        fi
+        echo "Creating Tag : ${BUILD_TAG}"
         git tag "${BUILD_TAG}"
         echo "Copying Release Logs"
         mkdir -p ./metadata/release-logs
