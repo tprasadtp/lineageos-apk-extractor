@@ -13,7 +13,7 @@
         "zip_file": "https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip"
     },
     "release": {
-        "tag": "15.1.2018-10-22",
+        "tag": "15.1.2018-10-00",
         "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2018-10-22"
     }
 }
