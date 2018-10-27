@@ -36,16 +36,8 @@ before_deploy:
 - ./pre-deploy.sh
 - export DATE="$(date)"
 deploy:
-- provider: pages
-  skip_cleanup: true
-  deployment-file: false
-  local-dir: metadata
-  skip-cleanup: true
-  keep-history: true
-  target-branch: metadata
-  email: ${GH_EMAIL}
-  name: valarie-ci-bot
-  github-token: ${GH_TOKEN}
+- provider: script
+  script: ./travis-deploy-metadata.sh
   on:
     branch: master
 - provider: releases
