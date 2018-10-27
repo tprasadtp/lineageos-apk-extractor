@@ -8,14 +8,15 @@ you can find it at the link below.
 https://opensource.org/licenses/MIT
 """
 
-import os, time
+import os, time, sys
 from pathlib import Path
 import logging, logging.handlers
 from functools import wraps
 try:
     import requests
 except ImportError:
-    raise SystemExit
+    sys.exit("Failed to import requests")
+
 # Default max attempts to download a file
 REQUESTS_MAX_TRIES = 3
 REQUESTS_BACKOFF = 2
@@ -84,7 +85,7 @@ def get_file(file_name, file_url):
         except OSError as e:
             log.critical('Failed to remove existing file : %s', file_name)
             log.error('Error was %s', e.strerror)
-            raise OSError
+            sys.exit(1)
     log.info("Attempting to download : %s", file_name)
     log.info("From URL: %s", file_url)
     __download_file(file_name=file_name, file_url=file_url)

@@ -18,11 +18,11 @@ import time
 
 # Version Checks.
 if int(str(sys.version_info.major) + str(sys.version_info.minor)) < 34:
-    raise Exception("Needs Python version 3.5 & above.")
+    sys.exit("Needs Python 3.5+")
 try:
     from bs4 import BeautifulSoup
 except ImportError:
-    raise SystemExit
+    sys.exit("Failed to import bs4")
 
 from utils import get_file as dl
 
