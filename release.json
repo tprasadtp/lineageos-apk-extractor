@@ -1,9 +1,9 @@
 {
     "version": 2,
     "ci": {
-        "build_date": 1540651083,
-        "build_ts": "02:38 PM UTC on Oct 27, 2018",
-        "node_name": "travis-job-251f9651-875d-448b-b790-4234cd149a9c",
+        "build_date": 1540652320,
+        "build_ts": "02:58 PM UTC on Oct 27, 2018",
+        "node_name": "travis-job-3777ea4a-7404-4031-8efc-ab92dd6de749",
         "deployed": "true"
     },
     "lineage": {
@@ -13,7 +13,7 @@
         "zip_file": "https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip"
     },
     "release": {
-        "tag": "15.1.2018-10-00",
+        "tag": "15.1.2018-10-22",
         "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2018-10-22"
     }
 }
