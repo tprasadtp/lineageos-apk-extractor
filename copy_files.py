@@ -21,7 +21,7 @@ METADATA_DIR = Path('metadata')
 LOG_FILE = "LineageOS_APK_Extractor.logs"
 RELEASES_JSON = "release.json"
 TRANSFER_JSON = "transfer.json"
-TRANSFER_JSON = "test_transfer.json"
+#TRANSFER_JSON = "test_transfer.json"
 FLAGS_SCRIPT = "flags.sh"
 
 log = logging.getLogger()
