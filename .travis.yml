@@ -51,7 +51,7 @@ deploy:
   file: releases/*
   skip_cleanup: true
   prerelease: true
-  name: ${TRAVIS_TAG}
+  name: ${BUILD_TAG}
   body: ${RELEASE_BODY}
   overwrite: true
   on:
