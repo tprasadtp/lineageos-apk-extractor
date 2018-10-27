@@ -45,7 +45,7 @@ deploy:
   on:
     branch: master
     condition: ${DEPLOY} = true
-- provider: release
+- provider: releases
   api_key: ${GH_TOKEN}
   file_glob: true
   file: releases/*
