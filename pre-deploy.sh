@@ -7,6 +7,7 @@
 set -e
 
 echo "DEPLOY is set to ${DEPLOY}"
+echo "BUILD_TAG is set to ${BUILD_TAG}"
 
 echo "Tagging Release...."
 

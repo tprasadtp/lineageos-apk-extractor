@@ -25,9 +25,11 @@ script:
 - ./sdat2img.py
 - sudo mount -t ext4 system.img /mnt/lineage
 - ./copy_files.py
-- chmod +x ./flags.sh && source ./flags.sh
-before_deploy:
+- chmod +x ./flags.sh
+- source ./flags.sh
 - ./pre-deploy.sh
+- cat Release_Notes.md
+before_deploy:
 - export RELEASE_BODY=$(jshon -s "$(cat Release_Notes.md)"))
 deploy:
 - provider: pages
