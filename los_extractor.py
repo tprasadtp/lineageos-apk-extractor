@@ -232,7 +232,7 @@ def generate_release_notes():
                                 + '[lineage-version].[build-date]\n\n')
             release_notes.write('## Logs\n' +
                                 'Logs related to this Build are available'
-                                + 'as assets or available in logs folder in `metadata` branch.\n')
+                                + 'as assets or available in logs folder in `gh-pages` branch.\n')
     log.debug("Generated Release Notes")
 
 def set_flags_and_metadata():
@@ -241,7 +241,7 @@ def set_flags_and_metadata():
     Also generate metadata json
     """
     log.info('Downloading OLD release.json')
-    dl(file_name=OLD_RELEASE_JSON, file_url="https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json")
+    dl(file_name=OLD_RELEASE_JSON, file_url="https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json")
     log.info('Preparing Metadata....')
     # Set Time Vars
     global utc_ts

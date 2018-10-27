@@ -6,16 +6,16 @@
 
 ### Lineage OS Details
 
-[![Lineage Version](https://img.shields.io/badge/dynamic/json.svg?label=Lineage%20Version&style=flat&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json&query=$.lineage.version)](https://github.com/tprasadtp/lineageos-apk-extractor/releases/latest)
-![Lineage Build Date](https://img.shields.io/badge/dynamic/json.svg?label=Build%20Date&style=flat&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json&query=$.lineage.build)
-![Lineage Build Type](https://img.shields.io/badge/dynamic/json.svg?label=Build%20Type&style=flat&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json&query=$.lineage.build_type)
+[![Lineage Version](https://img.shields.io/badge/dynamic/json.svg?label=Lineage%20Version&style=flat&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json&query=$.lineage.version)](https://github.com/tprasadtp/lineageos-apk-extractor/releases/latest)
+![Lineage Build Date](https://img.shields.io/badge/dynamic/json.svg?label=Build%20Date&style=flat&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json&query=$.lineage.build)
+![Lineage Build Type](https://img.shields.io/badge/dynamic/json.svg?label=Build%20Type&style=flat&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json&query=$.lineage.build_type)
 
 
 ### CI
 
-[![Last Built on](https://img.shields.io/badge/dynamic/json.svg?label=Last%20Build%20on&style=flat&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json&query=$.ci.build_ts&logo=travis&colorB=blue)](https://github.com/tprasadtp/lineageos-apk-extractor/releases/latest)
-[![Last Build Deployed](https://img.shields.io/badge/dynamic/json.svg?label=Last%20Build%20Deployed&style=flat&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json&query=$.ci.deployed&logo=travis)](https://github.com/tprasadtp/lineageos-apk-extractor/releases/latest)
-![Build Tag](https://img.shields.io/badge/dynamic/json.svg?label=Build%20Tag&style=flat&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json&query=release.tag&logo=github&link=$.release.tag)
+[![Last Built on](https://img.shields.io/badge/dynamic/json.svg?label=Last%20Build%20on&style=flat&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json&query=$.ci.build_ts&logo=travis&colorB=blue)](https://github.com/tprasadtp/lineageos-apk-extractor/releases/latest)
+[![Last Build Deployed](https://img.shields.io/badge/dynamic/json.svg?label=Last%20Build%20Deployed&style=flat&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json&query=$.ci.deployed&logo=travis)](https://github.com/tprasadtp/lineageos-apk-extractor/releases/latest)
+![Build Tag](https://img.shields.io/badge/dynamic/json.svg?label=Build%20Tag&style=flat&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json&query=release.tag&logo=github&link=$.release.tag)
 [![GitHub (pre-)release](https://img.shields.io/github/release/tprasadtp/lineageos-apk-extractor/all.svg?style=flat&logo=github&label=Release&colorB=blue)](https://github.com/tprasadtp/lineageos-apk-extractor/releases)
 
 
