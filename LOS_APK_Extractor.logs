@@ -1,0 +1,806 @@
+[ 2018-10-27 13:01:58,738 ] - [DEBUG   ] - root - ------------------------System Info------------------------------
+[ 2018-10-27 13:01:58,790 ] - [DEBUG   ] - root - Platform : Linux, Version: #285-Microsoft Thu Aug 30 17:31:00 PST 2018
+[ 2018-10-27 13:01:58,791 ] - [DEBUG   ] - root - Hostname : Bhoomi
+[ 2018-10-27 13:01:58,792 ] - [DEBUG   ] - root - Python Version : 3.6.6
+[ 2018-10-27 13:01:58,852 ] - [DEBUG   ] - root - Platform Arch : ('64bit', 'ELF')
+[ 2018-10-27 13:01:58,854 ] - [DEBUG   ] - root - -----------------------------------------------------------------
+[ 2018-10-27 13:01:58,854 ] - [INFO    ] - root - Getting LOS Download page for bullhead ...
+[ 2018-10-27 13:01:58,855 ] - [DEBUG   ] - root - Getting Download Page for bullhead
+[ 2018-10-27 13:01:58,856 ] - [INFO    ] - root - Attempting to download : LineageOS_Downlad_Page.html
+[ 2018-10-27 13:01:58,856 ] - [INFO    ] - root - From URL: https://download.lineageos.org/bullhead
+[ 2018-10-27 13:01:58,857 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:01:58,868 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): download.lineageos.org:443
+[ 2018-10-27 13:01:59,403 ] - [DEBUG   ] - urllib3.connectionpool - https://download.lineageos.org:443 "GET /bullhead HTTP/1.1" 200 None
+[ 2018-10-27 13:01:59,406 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:01:59,455 ] - [DEBUG   ] - root - LineageOS_Downlad_Page.html file exists.
+[ 2018-10-27 13:01:59,455 ] - [INFO    ] - root - Parsing HTML page...
+[ 2018-10-27 13:01:59,540 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 13:01:59,540 ] - [DEBUG   ] - root - ------------------Parsed Variables------------------------
+[ 2018-10-27 13:01:59,540 ] - [DEBUG   ] - root - LOS_REL_TYPE = ['nightly', 'nightly', 'nightly', 'nightly', 'nightly']
+[ 2018-10-27 13:01:59,540 ] - [DEBUG   ] - root - LOS_REL_VERSION = ['15.1', '15.1', '15.1', '15.1', '15.1']
+[ 2018-10-27 13:01:59,540 ] - [DEBUG   ] - root - LOS_REL_URL = ['https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181015/lineage-15.1-20181015-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181008/lineage-15.1-20181008-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181001/lineage-15.1-20181001-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20180924/lineage-15.1-20180924-nightly-bullhead-signed.zip']
+[ 2018-10-27 13:01:59,540 ] - [DEBUG   ] - root - LOS_REL_SIZE = ['432.65 MB', '432.66 MB', '432.48 MB', '431.03 MB', '431.05 MB']
+[ 2018-10-27 13:01:59,541 ] - [DEBUG   ] - root - LOS_REL_DATE = ['2018-10-22', '2018-10-15', '2018-10-08', '2018-10-01', '2018-09-24']
+[ 2018-10-27 13:01:59,541 ] - [DEBUG   ] - root - REL_TAG is 15.1.2018-10-22
+[ 2018-10-27 13:01:59,541 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 13:01:59,541 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 13:01:59,541 ] - [INFO    ] - root - Downloading ZIP File ...
+[ 2018-10-27 13:01:59,542 ] - [INFO    ] - root - Attempting to download : LineageOS.zip
+[ 2018-10-27 13:01:59,542 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip
+[ 2018-10-27 13:01:59,543 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:01:59,545 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2018-10-27 13:01:59,709 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip HTTP/1.1" 302 131
+[ 2018-10-27 13:01:59,720 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirror.selfnet.de:443
+[ 2018-10-27 13:01:59,827 ] - [DEBUG   ] - urllib3.connectionpool - https://mirror.selfnet.de:443 "GET /lineageos/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip HTTP/1.1" 200 453667394
+[ 2018-10-27 13:01:59,829 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:02:38,403 ] - [INFO    ] - root - Getting Checksum File...
+[ 2018-10-27 13:02:38,404 ] - [INFO    ] - root - Attempting to download : LineageOS_ZIP_SHA256.txt
+[ 2018-10-27 13:02:38,405 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip?sha256
+[ 2018-10-27 13:02:38,405 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:02:38,409 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2018-10-27 13:02:38,520 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip?sha256 HTTP/1.1" 200 115
+[ 2018-10-27 13:02:38,520 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:02:38,529 ] - [INFO    ] - root - Verifying ZIP file checksums...
+[ 2018-10-27 13:02:38,530 ] - [DEBUG   ] - root - File's LineageOS_ZIP_SHA256.txt present on FS.
+[ 2018-10-27 13:02:38,531 ] - [DEBUG   ] - root - File LineageOS.zip is present on the FS.
+[ 2018-10-27 13:02:41,276 ] - [DEBUG   ] - root - SHA256 hash for LineageOS.zip is : 3c0525b2b4cb20602ca43f7c1b540ab2709e373d693a91d7eaf572cacc333def
+[ 2018-10-27 13:02:41,276 ] - [DEBUG   ] - root - SHA256 hash SHOULD BE : 3c0525b2b4cb20602ca43f7c1b540ab2709e373d693a91d7eaf572cacc333def
+[ 2018-10-27 13:02:41,276 ] - [DEBUG   ] - root - File Hashes Match.
+[ 2018-10-27 13:02:41,277 ] - [INFO    ] - root - Woohooo.. ZIP File's Checksum matches.
+[ 2018-10-27 13:02:41,290 ] - [INFO    ] - root - Extracting from ZIP File ....
+[ 2018-10-27 13:02:41,305 ] - [INFO    ] - root - Deleting old files if any....
+[ 2018-10-27 13:02:41,322 ] - [DEBUG   ] - root - Deleting old DAT files (if any)
+[ 2018-10-27 13:02:41,335 ] - [DEBUG   ] - root - Deleting old IMG file (if any)
+[ 2018-10-27 13:02:47,090 ] - [INFO    ] - root - Downloading OLD release.json
+[ 2018-10-27 13:02:47,092 ] - [INFO    ] - root - Attempting to download : old_release.json
+[ 2018-10-27 13:02:47,092 ] - [INFO    ] - root - From URL: https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json
+[ 2018-10-27 13:02:47,093 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:02:47,097 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): raw.githubusercontent.com:443
+[ 2018-10-27 13:02:47,893 ] - [DEBUG   ] - urllib3.connectionpool - https://raw.githubusercontent.com:443 "GET /tprasadtp/lineageos-apk-extractor/metadata/release.json HTTP/1.1" 200 184
+[ 2018-10-27 13:02:47,895 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:02:47,917 ] - [INFO    ] - root - Preparing Metadata....
+[ 2018-10-27 13:02:47,919 ] - [INFO    ] - root - Checking last build date...
+[ 2018-10-27 13:02:47,921 ] - [INFO    ] - root - Last Build was 1540619929
+[ 2018-10-27 13:19:26,089 ] - [DEBUG   ] - root - ------------------------System Info------------------------------
+[ 2018-10-27 13:19:26,138 ] - [DEBUG   ] - root - Platform : Linux, Version: #285-Microsoft Thu Aug 30 17:31:00 PST 2018
+[ 2018-10-27 13:19:26,139 ] - [DEBUG   ] - root - Hostname : Bhoomi
+[ 2018-10-27 13:19:26,140 ] - [DEBUG   ] - root - Python Version : 3.6.6
+[ 2018-10-27 13:19:26,204 ] - [DEBUG   ] - root - Platform Arch : ('64bit', 'ELF')
+[ 2018-10-27 13:19:26,206 ] - [DEBUG   ] - root - -----------------------------------------------------------------
+[ 2018-10-27 13:19:26,207 ] - [INFO    ] - root - Getting LOS Download page for bullhead ...
+[ 2018-10-27 13:19:26,207 ] - [DEBUG   ] - root - Getting Download Page for bullhead
+[ 2018-10-27 13:19:26,208 ] - [INFO    ] - root - File LineageOS_Downlad_Page.html already exists. It will be deleted.
+[ 2018-10-27 13:19:26,209 ] - [INFO    ] - root - Attempting to download : LineageOS_Downlad_Page.html
+[ 2018-10-27 13:19:26,209 ] - [INFO    ] - root - From URL: https://download.lineageos.org/bullhead
+[ 2018-10-27 13:19:26,210 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:19:26,222 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): download.lineageos.org:443
+[ 2018-10-27 13:19:26,732 ] - [DEBUG   ] - urllib3.connectionpool - https://download.lineageos.org:443 "GET /bullhead HTTP/1.1" 200 None
+[ 2018-10-27 13:19:26,735 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:19:26,782 ] - [DEBUG   ] - root - LineageOS_Downlad_Page.html file exists.
+[ 2018-10-27 13:19:26,783 ] - [INFO    ] - root - Parsing HTML page...
+[ 2018-10-27 13:19:26,865 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 13:19:26,866 ] - [DEBUG   ] - root - ------------------Parsed Variables------------------------
+[ 2018-10-27 13:19:26,866 ] - [DEBUG   ] - root - LOS_REL_TYPE = ['nightly', 'nightly', 'nightly', 'nightly', 'nightly']
+[ 2018-10-27 13:19:26,866 ] - [DEBUG   ] - root - LOS_REL_VERSION = ['15.1', '15.1', '15.1', '15.1', '15.1']
+[ 2018-10-27 13:19:26,866 ] - [DEBUG   ] - root - LOS_REL_URL = ['https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181015/lineage-15.1-20181015-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181008/lineage-15.1-20181008-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181001/lineage-15.1-20181001-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20180924/lineage-15.1-20180924-nightly-bullhead-signed.zip']
+[ 2018-10-27 13:19:26,866 ] - [DEBUG   ] - root - LOS_REL_SIZE = ['432.65 MB', '432.66 MB', '432.48 MB', '431.03 MB', '431.05 MB']
+[ 2018-10-27 13:19:26,867 ] - [DEBUG   ] - root - LOS_REL_DATE = ['2018-10-22', '2018-10-15', '2018-10-08', '2018-10-01', '2018-09-24']
+[ 2018-10-27 13:19:26,867 ] - [DEBUG   ] - root - REL_TAG is 15.1.2018-10-22
+[ 2018-10-27 13:19:26,867 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 13:19:26,867 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 13:19:26,867 ] - [INFO    ] - root - Downloading ZIP File ...
+[ 2018-10-27 13:19:26,868 ] - [INFO    ] - root - File LineageOS.zip already exists. It will be deleted.
+[ 2018-10-27 13:19:26,896 ] - [INFO    ] - root - Attempting to download : LineageOS.zip
+[ 2018-10-27 13:19:26,897 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip
+[ 2018-10-27 13:19:26,897 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:19:26,903 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2018-10-27 13:19:27,013 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip HTTP/1.1" 302 131
+[ 2018-10-27 13:19:27,017 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirror.selfnet.de:443
+[ 2018-10-27 13:19:27,157 ] - [DEBUG   ] - urllib3.connectionpool - https://mirror.selfnet.de:443 "GET /lineageos/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip HTTP/1.1" 200 453667394
+[ 2018-10-27 13:19:27,159 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:20:05,484 ] - [INFO    ] - root - Getting Checksum File...
+[ 2018-10-27 13:20:05,485 ] - [INFO    ] - root - File LineageOS_ZIP_SHA256.txt already exists. It will be deleted.
+[ 2018-10-27 13:20:05,487 ] - [INFO    ] - root - Attempting to download : LineageOS_ZIP_SHA256.txt
+[ 2018-10-27 13:20:05,487 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip?sha256
+[ 2018-10-27 13:20:05,488 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:20:05,492 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2018-10-27 13:20:05,629 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip?sha256 HTTP/1.1" 200 115
+[ 2018-10-27 13:20:05,629 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:20:05,638 ] - [INFO    ] - root - Verifying ZIP file checksums...
+[ 2018-10-27 13:20:05,640 ] - [DEBUG   ] - root - File's LineageOS_ZIP_SHA256.txt present on FS.
+[ 2018-10-27 13:20:05,641 ] - [DEBUG   ] - root - File LineageOS.zip is present on the FS.
+[ 2018-10-27 13:20:07,875 ] - [DEBUG   ] - root - SHA256 hash for LineageOS.zip is : 3c0525b2b4cb20602ca43f7c1b540ab2709e373d693a91d7eaf572cacc333def
+[ 2018-10-27 13:20:07,875 ] - [DEBUG   ] - root - SHA256 hash SHOULD BE : 3c0525b2b4cb20602ca43f7c1b540ab2709e373d693a91d7eaf572cacc333def
+[ 2018-10-27 13:20:07,875 ] - [DEBUG   ] - root - File Hashes Match.
+[ 2018-10-27 13:20:07,875 ] - [INFO    ] - root - Woohooo.. ZIP File's Checksum matches.
+[ 2018-10-27 13:20:07,876 ] - [INFO    ] - root - Extracting from ZIP File ....
+[ 2018-10-27 13:20:07,876 ] - [INFO    ] - root - Deleting old files if any....
+[ 2018-10-27 13:20:07,894 ] - [DEBUG   ] - root - Deleting old DAT files (if any)
+[ 2018-10-27 13:20:07,897 ] - [DEBUG   ] - root - Deleting old IMG file (if any)
+[ 2018-10-27 13:20:12,715 ] - [INFO    ] - root - Downloading OLD release.json
+[ 2018-10-27 13:20:12,716 ] - [INFO    ] - root - File old_release.json already exists. It will be deleted.
+[ 2018-10-27 13:20:12,717 ] - [INFO    ] - root - Attempting to download : old_release.json
+[ 2018-10-27 13:20:12,718 ] - [INFO    ] - root - From URL: https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json
+[ 2018-10-27 13:20:12,718 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:20:12,721 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): raw.githubusercontent.com:443
+[ 2018-10-27 13:20:13,502 ] - [DEBUG   ] - urllib3.connectionpool - https://raw.githubusercontent.com:443 "GET /tprasadtp/lineageos-apk-extractor/metadata/release.json HTTP/1.1" 200 187
+[ 2018-10-27 13:20:13,502 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:20:13,511 ] - [INFO    ] - root - Preparing Metadata....
+[ 2018-10-27 13:20:13,512 ] - [INFO    ] - root - Checking last build date...
+[ 2018-10-27 13:20:13,515 ] - [INFO    ] - root - Last Build was 1540619929
+[ 2018-10-27 13:20:13,516 ] - [INFO    ] - root - Last Release Tag was 15.1.2018-10-20
+[ 2018-10-27 13:20:13,517 ] - [INFO    ] - root - This release is New. GH Releases will be enabled if on MASTER
+[ 2018-10-27 13:20:13,519 ] - [INFO    ] - root - Generating Exporter Scripts...
+[ 2018-10-27 13:20:13,520 ] - [CRITICAL] - root - Failed to write exporter script.
+[ 2018-10-27 13:20:13,523 ] - [ERROR   ] - root - must be str, not int
+Traceback (most recent call last):
+  File "./los_extractor.py", line 299, in set_flags_and_metadata
+    + 'export LOGFILE_TS=' + utc_ts  + '"\n')
+TypeError: must be str, not int
+[ 2018-10-27 13:23:18,988 ] - [DEBUG   ] - root - ------------------------System Info------------------------------
+[ 2018-10-27 13:23:19,035 ] - [DEBUG   ] - root - Platform : Linux, Version: #285-Microsoft Thu Aug 30 17:31:00 PST 2018
+[ 2018-10-27 13:23:19,037 ] - [DEBUG   ] - root - Hostname : Bhoomi
+[ 2018-10-27 13:23:19,038 ] - [DEBUG   ] - root - Python Version : 3.6.6
+[ 2018-10-27 13:23:19,102 ] - [DEBUG   ] - root - Platform Arch : ('64bit', 'ELF')
+[ 2018-10-27 13:23:19,105 ] - [DEBUG   ] - root - -----------------------------------------------------------------
+[ 2018-10-27 13:23:19,105 ] - [INFO    ] - root - Getting LOS Download page for bullhead ...
+[ 2018-10-27 13:23:19,106 ] - [DEBUG   ] - root - Getting Download Page for bullhead
+[ 2018-10-27 13:23:19,106 ] - [INFO    ] - root - File LineageOS_Downlad_Page.html already exists. It will be deleted.
+[ 2018-10-27 13:23:19,107 ] - [INFO    ] - root - Attempting to download : LineageOS_Downlad_Page.html
+[ 2018-10-27 13:23:19,108 ] - [INFO    ] - root - From URL: https://download.lineageos.org/bullhead
+[ 2018-10-27 13:23:19,110 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:23:19,123 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): download.lineageos.org:443
+[ 2018-10-27 13:23:19,630 ] - [DEBUG   ] - urllib3.connectionpool - https://download.lineageos.org:443 "GET /bullhead HTTP/1.1" 200 None
+[ 2018-10-27 13:23:19,633 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:23:19,676 ] - [DEBUG   ] - root - LineageOS_Downlad_Page.html file exists.
+[ 2018-10-27 13:23:19,677 ] - [INFO    ] - root - Parsing HTML page...
+[ 2018-10-27 13:23:19,759 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 13:23:19,759 ] - [DEBUG   ] - root - ------------------Parsed Variables------------------------
+[ 2018-10-27 13:23:19,760 ] - [DEBUG   ] - root - LOS_REL_TYPE = ['nightly', 'nightly', 'nightly', 'nightly', 'nightly']
+[ 2018-10-27 13:23:19,760 ] - [DEBUG   ] - root - LOS_REL_VERSION = ['15.1', '15.1', '15.1', '15.1', '15.1']
+[ 2018-10-27 13:23:19,760 ] - [DEBUG   ] - root - LOS_REL_URL = ['https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181015/lineage-15.1-20181015-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181008/lineage-15.1-20181008-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181001/lineage-15.1-20181001-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20180924/lineage-15.1-20180924-nightly-bullhead-signed.zip']
+[ 2018-10-27 13:23:19,760 ] - [DEBUG   ] - root - LOS_REL_SIZE = ['432.65 MB', '432.66 MB', '432.48 MB', '431.03 MB', '431.05 MB']
+[ 2018-10-27 13:23:19,760 ] - [DEBUG   ] - root - LOS_REL_DATE = ['2018-10-22', '2018-10-15', '2018-10-08', '2018-10-01', '2018-09-24']
+[ 2018-10-27 13:23:19,760 ] - [DEBUG   ] - root - REL_TAG is 15.1.2018-10-22
+[ 2018-10-27 13:23:19,760 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 13:23:19,761 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 13:23:19,761 ] - [INFO    ] - root - Downloading ZIP File ...
+[ 2018-10-27 13:23:19,761 ] - [INFO    ] - root - File LineageOS.zip already exists. It will be deleted.
+[ 2018-10-27 13:23:19,798 ] - [INFO    ] - root - Attempting to download : LineageOS.zip
+[ 2018-10-27 13:23:19,799 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip
+[ 2018-10-27 13:23:19,803 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:23:19,809 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2018-10-27 13:23:19,948 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip HTTP/1.1" 302 133
+[ 2018-10-27 13:23:19,951 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirror.kumi.systems:443
+[ 2018-10-27 13:23:20,656 ] - [DEBUG   ] - urllib3.connectionpool - https://mirror.kumi.systems:443 "GET /lineageos/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip HTTP/1.1" 200 453667394
+[ 2018-10-27 13:23:20,660 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:23:59,437 ] - [INFO    ] - root - Getting Checksum File...
+[ 2018-10-27 13:23:59,439 ] - [INFO    ] - root - File LineageOS_ZIP_SHA256.txt already exists. It will be deleted.
+[ 2018-10-27 13:23:59,441 ] - [INFO    ] - root - Attempting to download : LineageOS_ZIP_SHA256.txt
+[ 2018-10-27 13:23:59,443 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip?sha256
+[ 2018-10-27 13:23:59,445 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:23:59,449 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2018-10-27 13:23:59,556 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip?sha256 HTTP/1.1" 200 115
+[ 2018-10-27 13:23:59,558 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:23:59,575 ] - [INFO    ] - root - Verifying ZIP file checksums...
+[ 2018-10-27 13:23:59,577 ] - [DEBUG   ] - root - File's LineageOS_ZIP_SHA256.txt present on FS.
+[ 2018-10-27 13:23:59,578 ] - [DEBUG   ] - root - File LineageOS.zip is present on the FS.
+[ 2018-10-27 13:24:02,616 ] - [DEBUG   ] - root - SHA256 hash for LineageOS.zip is : 3c0525b2b4cb20602ca43f7c1b540ab2709e373d693a91d7eaf572cacc333def
+[ 2018-10-27 13:24:02,617 ] - [DEBUG   ] - root - SHA256 hash SHOULD BE : 3c0525b2b4cb20602ca43f7c1b540ab2709e373d693a91d7eaf572cacc333def
+[ 2018-10-27 13:24:02,617 ] - [DEBUG   ] - root - File Hashes Match.
+[ 2018-10-27 13:24:02,618 ] - [INFO    ] - root - Woohooo.. ZIP File's Checksum matches.
+[ 2018-10-27 13:24:02,620 ] - [INFO    ] - root - Extracting from ZIP File ....
+[ 2018-10-27 13:24:02,622 ] - [INFO    ] - root - Deleting old files if any....
+[ 2018-10-27 13:24:02,664 ] - [DEBUG   ] - root - Deleting old DAT files (if any)
+[ 2018-10-27 13:24:02,735 ] - [DEBUG   ] - root - Deleting old IMG file (if any)
+[ 2018-10-27 13:24:08,676 ] - [INFO    ] - root - Downloading OLD release.json
+[ 2018-10-27 13:24:08,678 ] - [INFO    ] - root - File old_release.json already exists. It will be deleted.
+[ 2018-10-27 13:24:08,680 ] - [INFO    ] - root - Attempting to download : old_release.json
+[ 2018-10-27 13:24:08,681 ] - [INFO    ] - root - From URL: https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json
+[ 2018-10-27 13:24:08,682 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:24:08,686 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): raw.githubusercontent.com:443
+[ 2018-10-27 13:24:09,346 ] - [DEBUG   ] - urllib3.connectionpool - https://raw.githubusercontent.com:443 "GET /tprasadtp/lineageos-apk-extractor/metadata/release.json HTTP/1.1" 200 187
+[ 2018-10-27 13:24:09,347 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:24:09,353 ] - [INFO    ] - root - Preparing Metadata....
+[ 2018-10-27 13:24:09,354 ] - [INFO    ] - root - Checking last build date...
+[ 2018-10-27 13:24:09,357 ] - [INFO    ] - root - Last Build was 1540619929
+[ 2018-10-27 13:24:09,358 ] - [INFO    ] - root - Last Release Tag was 15.1.2018-10-20
+[ 2018-10-27 13:24:09,359 ] - [INFO    ] - root - This release is New. GH Releases will be enabled if on MASTER
+[ 2018-10-27 13:24:09,361 ] - [INFO    ] - root - Generating Exporter Scripts...
+[ 2018-10-27 13:24:09,374 ] - [INFO    ] - root - Generating Release Notes...
+[ 2018-10-27 13:24:09,390 ] - [DEBUG   ] - root - Generated Release Notes
+[ 2018-10-27 13:24:09,391 ] - [INFO    ] - root - Generating release.json
+[ 2018-10-27 13:30:08,269 ] - [DEBUG   ] - root - ------------------------System Info------------------------------
+[ 2018-10-27 13:30:08,318 ] - [DEBUG   ] - root - Platform : Linux, Version: #285-Microsoft Thu Aug 30 17:31:00 PST 2018
+[ 2018-10-27 13:30:08,319 ] - [DEBUG   ] - root - Hostname : Bhoomi
+[ 2018-10-27 13:30:08,320 ] - [DEBUG   ] - root - Python Version : 3.6.6
+[ 2018-10-27 13:30:08,382 ] - [DEBUG   ] - root - Platform Arch : ('64bit', 'ELF')
+[ 2018-10-27 13:30:08,384 ] - [DEBUG   ] - root - -----------------------------------------------------------------
+[ 2018-10-27 13:30:08,385 ] - [INFO    ] - root - Getting LOS Download page for bullhead ...
+[ 2018-10-27 13:30:08,385 ] - [DEBUG   ] - root - Getting Download Page for bullhead
+[ 2018-10-27 13:30:08,386 ] - [INFO    ] - root - File LineageOS_Downlad_Page.html already exists. It will be deleted.
+[ 2018-10-27 13:30:08,387 ] - [INFO    ] - root - Attempting to download : LineageOS_Downlad_Page.html
+[ 2018-10-27 13:30:08,388 ] - [INFO    ] - root - From URL: https://download.lineageos.org/bullhead
+[ 2018-10-27 13:30:08,389 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:30:08,401 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): download.lineageos.org:443
+[ 2018-10-27 13:30:08,893 ] - [DEBUG   ] - urllib3.connectionpool - https://download.lineageos.org:443 "GET /bullhead HTTP/1.1" 200 None
+[ 2018-10-27 13:30:08,896 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:30:08,948 ] - [DEBUG   ] - root - LineageOS_Downlad_Page.html file exists.
+[ 2018-10-27 13:30:08,949 ] - [INFO    ] - root - Parsing HTML page...
+[ 2018-10-27 13:30:09,039 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 13:30:09,040 ] - [DEBUG   ] - root - ------------------Parsed Variables------------------------
+[ 2018-10-27 13:30:09,040 ] - [DEBUG   ] - root - LOS_REL_TYPE = ['nightly', 'nightly', 'nightly', 'nightly', 'nightly']
+[ 2018-10-27 13:30:09,040 ] - [DEBUG   ] - root - LOS_REL_VERSION = ['15.1', '15.1', '15.1', '15.1', '15.1']
+[ 2018-10-27 13:30:09,040 ] - [DEBUG   ] - root - LOS_REL_URL = ['https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181015/lineage-15.1-20181015-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181008/lineage-15.1-20181008-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181001/lineage-15.1-20181001-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20180924/lineage-15.1-20180924-nightly-bullhead-signed.zip']
+[ 2018-10-27 13:30:09,040 ] - [DEBUG   ] - root - LOS_REL_SIZE = ['432.65 MB', '432.66 MB', '432.48 MB', '431.03 MB', '431.05 MB']
+[ 2018-10-27 13:30:09,040 ] - [DEBUG   ] - root - LOS_REL_DATE = ['2018-10-22', '2018-10-15', '2018-10-08', '2018-10-01', '2018-09-24']
+[ 2018-10-27 13:30:09,041 ] - [DEBUG   ] - root - REL_TAG is 15.1.2018-10-22
+[ 2018-10-27 13:30:09,041 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 13:30:09,041 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 13:30:09,041 ] - [INFO    ] - root - Downloading ZIP File ...
+[ 2018-10-27 13:30:09,042 ] - [INFO    ] - root - File LineageOS.zip already exists. It will be deleted.
+[ 2018-10-27 13:30:09,075 ] - [INFO    ] - root - Attempting to download : LineageOS.zip
+[ 2018-10-27 13:30:09,077 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip
+[ 2018-10-27 13:30:09,080 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:30:09,084 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2018-10-27 13:30:09,218 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip HTTP/1.1" 302 133
+[ 2018-10-27 13:30:09,221 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirror.kumi.systems:443
+[ 2018-10-27 13:30:10,020 ] - [DEBUG   ] - urllib3.connectionpool - https://mirror.kumi.systems:443 "GET /lineageos/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip HTTP/1.1" 200 453667394
+[ 2018-10-27 13:30:10,025 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:30:48,922 ] - [INFO    ] - root - Getting Checksum File...
+[ 2018-10-27 13:30:48,923 ] - [INFO    ] - root - File LineageOS_ZIP_SHA256.txt already exists. It will be deleted.
+[ 2018-10-27 13:30:48,926 ] - [INFO    ] - root - Attempting to download : LineageOS_ZIP_SHA256.txt
+[ 2018-10-27 13:30:48,927 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip?sha256
+[ 2018-10-27 13:30:48,930 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:30:48,937 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2018-10-27 13:30:49,074 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip?sha256 HTTP/1.1" 200 115
+[ 2018-10-27 13:30:49,075 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:30:49,083 ] - [INFO    ] - root - Verifying ZIP file checksums...
+[ 2018-10-27 13:30:49,084 ] - [DEBUG   ] - root - File's LineageOS_ZIP_SHA256.txt present on FS.
+[ 2018-10-27 13:30:49,085 ] - [DEBUG   ] - root - File LineageOS.zip is present on the FS.
+[ 2018-10-27 13:30:51,858 ] - [DEBUG   ] - root - SHA256 hash for LineageOS.zip is : 3c0525b2b4cb20602ca43f7c1b540ab2709e373d693a91d7eaf572cacc333def
+[ 2018-10-27 13:30:51,858 ] - [DEBUG   ] - root - SHA256 hash SHOULD BE : 3c0525b2b4cb20602ca43f7c1b540ab2709e373d693a91d7eaf572cacc333def
+[ 2018-10-27 13:30:51,858 ] - [DEBUG   ] - root - File Hashes Match.
+[ 2018-10-27 13:30:51,859 ] - [INFO    ] - root - Woohooo.. ZIP File's Checksum matches.
+[ 2018-10-27 13:30:51,859 ] - [INFO    ] - root - Extracting from ZIP File ....
+[ 2018-10-27 13:30:51,861 ] - [INFO    ] - root - Deleting old files if any....
+[ 2018-10-27 13:30:51,880 ] - [DEBUG   ] - root - Deleting old DAT files (if any)
+[ 2018-10-27 13:30:51,901 ] - [DEBUG   ] - root - Deleting old IMG file (if any)
+[ 2018-10-27 13:30:56,634 ] - [INFO    ] - root - Downloading OLD release.json
+[ 2018-10-27 13:30:56,636 ] - [INFO    ] - root - File old_release.json already exists. It will be deleted.
+[ 2018-10-27 13:30:56,638 ] - [INFO    ] - root - Attempting to download : old_release.json
+[ 2018-10-27 13:30:56,640 ] - [INFO    ] - root - From URL: https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json
+[ 2018-10-27 13:30:56,646 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:30:56,654 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): raw.githubusercontent.com:443
+[ 2018-10-27 13:30:57,462 ] - [DEBUG   ] - urllib3.connectionpool - https://raw.githubusercontent.com:443 "GET /tprasadtp/lineageos-apk-extractor/metadata/release.json HTTP/1.1" 200 187
+[ 2018-10-27 13:30:57,463 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:30:57,469 ] - [INFO    ] - root - Preparing Metadata....
+[ 2018-10-27 13:30:57,470 ] - [INFO    ] - root - Checking last build date...
+[ 2018-10-27 13:30:57,477 ] - [INFO    ] - root - Last Build was 1540619929
+[ 2018-10-27 13:30:57,478 ] - [INFO    ] - root - Last Release Tag was 15.1.2018-10-20
+[ 2018-10-27 13:30:57,481 ] - [INFO    ] - root - This release is New. GH Releases will be enabled if on MASTER
+[ 2018-10-27 13:30:57,489 ] - [INFO    ] - root - Generating Exporter Scripts...
+[ 2018-10-27 13:30:57,501 ] - [INFO    ] - root - Release_Notes.md exists.
+[ 2018-10-27 13:30:57,502 ] - [INFO    ] - root - Deleting old release notes
+[ 2018-10-27 13:30:57,504 ] - [INFO    ] - root - Generating Release Notes...
+[ 2018-10-27 13:30:57,514 ] - [DEBUG   ] - root - Generated Release Notes
+[ 2018-10-27 13:30:57,514 ] - [INFO    ] - root - Generating release.json
+[ 2018-10-27 13:32:37,219 ] - [DEBUG   ] - root - ------------------------System Info------------------------------
+[ 2018-10-27 13:32:37,265 ] - [DEBUG   ] - root - Platform : Linux, Version: #285-Microsoft Thu Aug 30 17:31:00 PST 2018
+[ 2018-10-27 13:32:37,266 ] - [DEBUG   ] - root - Hostname : Bhoomi
+[ 2018-10-27 13:32:37,268 ] - [DEBUG   ] - root - Python Version : 3.6.6
+[ 2018-10-27 13:32:37,330 ] - [DEBUG   ] - root - Platform Arch : ('64bit', 'ELF')
+[ 2018-10-27 13:32:37,332 ] - [DEBUG   ] - root - -----------------------------------------------------------------
+[ 2018-10-27 13:32:37,332 ] - [INFO    ] - root - Getting LOS Download page for bullhead ...
+[ 2018-10-27 13:32:37,333 ] - [DEBUG   ] - root - Getting Download Page for bullhead
+[ 2018-10-27 13:32:37,333 ] - [INFO    ] - root - File LineageOS_Downlad_Page.html already exists. It will be deleted.
+[ 2018-10-27 13:32:37,334 ] - [INFO    ] - root - Attempting to download : LineageOS_Downlad_Page.html
+[ 2018-10-27 13:32:37,335 ] - [INFO    ] - root - From URL: https://download.lineageos.org/bullhead
+[ 2018-10-27 13:32:37,336 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:32:37,347 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): download.lineageos.org:443
+[ 2018-10-27 13:32:37,830 ] - [DEBUG   ] - urllib3.connectionpool - https://download.lineageos.org:443 "GET /bullhead HTTP/1.1" 200 None
+[ 2018-10-27 13:32:37,833 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:32:37,881 ] - [DEBUG   ] - root - LineageOS_Downlad_Page.html file exists.
+[ 2018-10-27 13:32:37,882 ] - [INFO    ] - root - Parsing HTML page...
+[ 2018-10-27 13:32:37,961 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 13:32:37,962 ] - [DEBUG   ] - root - ------------------Parsed Variables------------------------
+[ 2018-10-27 13:32:37,962 ] - [DEBUG   ] - root - LOS_REL_TYPE = ['nightly', 'nightly', 'nightly', 'nightly', 'nightly']
+[ 2018-10-27 13:32:37,962 ] - [DEBUG   ] - root - LOS_REL_VERSION = ['15.1', '15.1', '15.1', '15.1', '15.1']
+[ 2018-10-27 13:32:37,962 ] - [DEBUG   ] - root - LOS_REL_URL = ['https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181015/lineage-15.1-20181015-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181008/lineage-15.1-20181008-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181001/lineage-15.1-20181001-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20180924/lineage-15.1-20180924-nightly-bullhead-signed.zip']
+[ 2018-10-27 13:32:37,962 ] - [DEBUG   ] - root - LOS_REL_SIZE = ['432.65 MB', '432.66 MB', '432.48 MB', '431.03 MB', '431.05 MB']
+[ 2018-10-27 13:32:37,962 ] - [DEBUG   ] - root - LOS_REL_DATE = ['2018-10-22', '2018-10-15', '2018-10-08', '2018-10-01', '2018-09-24']
+[ 2018-10-27 13:32:37,962 ] - [DEBUG   ] - root - REL_TAG is 15.1.2018-10-22
+[ 2018-10-27 13:32:37,963 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 13:32:37,963 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 13:32:37,963 ] - [INFO    ] - root - Downloading ZIP File ...
+[ 2018-10-27 13:32:37,964 ] - [INFO    ] - root - File LineageOS.zip already exists. It will be deleted.
+[ 2018-10-27 13:32:38,008 ] - [INFO    ] - root - Attempting to download : LineageOS.zip
+[ 2018-10-27 13:32:38,010 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip
+[ 2018-10-27 13:32:38,010 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:32:38,018 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2018-10-27 13:32:38,127 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip HTTP/1.1" 302 124
+[ 2018-10-27 13:32:38,131 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): ftp.fau.de:443
+[ 2018-10-27 13:32:39,781 ] - [DEBUG   ] - urllib3.connectionpool - https://ftp.fau.de:443 "GET /lineageos/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip HTTP/1.1" 200 453667394
+[ 2018-10-27 13:32:39,786 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:33:18,721 ] - [INFO    ] - root - Getting Checksum File...
+[ 2018-10-27 13:33:18,723 ] - [INFO    ] - root - File LineageOS_ZIP_SHA256.txt already exists. It will be deleted.
+[ 2018-10-27 13:33:18,725 ] - [INFO    ] - root - Attempting to download : LineageOS_ZIP_SHA256.txt
+[ 2018-10-27 13:33:18,725 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip?sha256
+[ 2018-10-27 13:33:18,726 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:33:18,730 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2018-10-27 13:33:18,836 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip?sha256 HTTP/1.1" 200 115
+[ 2018-10-27 13:33:18,837 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:33:18,846 ] - [INFO    ] - root - Verifying ZIP file checksums...
+[ 2018-10-27 13:33:18,847 ] - [DEBUG   ] - root - File's LineageOS_ZIP_SHA256.txt present on FS.
+[ 2018-10-27 13:33:18,847 ] - [DEBUG   ] - root - File LineageOS.zip is present on the FS.
+[ 2018-10-27 13:33:21,169 ] - [DEBUG   ] - root - SHA256 hash for LineageOS.zip is : 3c0525b2b4cb20602ca43f7c1b540ab2709e373d693a91d7eaf572cacc333def
+[ 2018-10-27 13:33:21,169 ] - [DEBUG   ] - root - SHA256 hash SHOULD BE : 3c0525b2b4cb20602ca43f7c1b540ab2709e373d693a91d7eaf572cacc333def
+[ 2018-10-27 13:33:21,169 ] - [DEBUG   ] - root - File Hashes Match.
+[ 2018-10-27 13:33:21,169 ] - [INFO    ] - root - Woohooo.. ZIP File's Checksum matches.
+[ 2018-10-27 13:33:21,170 ] - [INFO    ] - root - Extracting from ZIP File ....
+[ 2018-10-27 13:33:21,170 ] - [INFO    ] - root - Deleting old files if any....
+[ 2018-10-27 13:33:21,186 ] - [DEBUG   ] - root - Deleting old DAT files (if any)
+[ 2018-10-27 13:33:21,220 ] - [DEBUG   ] - root - Deleting old IMG file (if any)
+[ 2018-10-27 13:33:25,359 ] - [INFO    ] - root - Downloading OLD release.json
+[ 2018-10-27 13:33:25,360 ] - [INFO    ] - root - File old_release.json already exists. It will be deleted.
+[ 2018-10-27 13:33:25,361 ] - [INFO    ] - root - Attempting to download : old_release.json
+[ 2018-10-27 13:33:25,362 ] - [INFO    ] - root - From URL: https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json
+[ 2018-10-27 13:33:25,363 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 13:33:25,366 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): raw.githubusercontent.com:443
+[ 2018-10-27 13:33:26,031 ] - [DEBUG   ] - urllib3.connectionpool - https://raw.githubusercontent.com:443 "GET /tprasadtp/lineageos-apk-extractor/metadata/release.json HTTP/1.1" 200 187
+[ 2018-10-27 13:33:26,034 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 13:33:26,053 ] - [INFO    ] - root - Preparing Metadata....
+[ 2018-10-27 13:33:26,056 ] - [INFO    ] - root - Checking last build date...
+[ 2018-10-27 13:33:26,062 ] - [INFO    ] - root - Last Build was 1540619929
+[ 2018-10-27 13:33:26,069 ] - [INFO    ] - root - Last Release Tag was 15.1.2018-10-20
+[ 2018-10-27 13:33:26,074 ] - [INFO    ] - root - This release is New. GH Releases will be enabled if on MASTER
+[ 2018-10-27 13:33:26,081 ] - [INFO    ] - root - Generating Exporter Scripts...
+[ 2018-10-27 13:33:26,092 ] - [INFO    ] - root - Release_Notes.md exists.
+[ 2018-10-27 13:33:26,093 ] - [INFO    ] - root - Deleting old release notes
+[ 2018-10-27 13:33:26,097 ] - [INFO    ] - root - Generating Release Notes...
+[ 2018-10-27 13:33:26,109 ] - [DEBUG   ] - root - Generated Release Notes
+[ 2018-10-27 13:33:26,109 ] - [INFO    ] - root - Generating release.json
+[ 2018-10-27 13:33:26,113 ] - [DEBUG   ] - root - JSON Dump is : {"version": 2, "ci": {"deployed": "true"}, "lineage": {"build": "2018-10-22", "build_type": "nightly", "zip_file": "https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip"}, "release": {"tag": "15.1.2018-10-22", "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2018-10-22"}}
+[ 2018-10-27 13:41:17,949 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2018-10-27 13:41:17,949 ] - [INFO    ] - root - Reading json data from file.
+[ 2018-10-27 13:41:17,950 ] - [CRITICAL] - root - Failed to read from release.json
+[ 2018-10-27 13:41:17,951 ] - [ERROR   ] - root - string indices must be integers
+Traceback (most recent call last):
+  File "./copy_files.py", line 65, in define_tag_from_json
+    TAG = str(jsondata['release']['tag'])
+TypeError: string indices must be integers
+[ 2018-10-27 13:42:20,706 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2018-10-27 13:42:20,707 ] - [INFO    ] - root - Reading json data from file.
+[ 2018-10-27 13:42:20,708 ] - [CRITICAL] - root - Failed to read from release.json
+[ 2018-10-27 13:42:20,709 ] - [ERROR   ] - root - string indices must be integers
+Traceback (most recent call last):
+  File "./copy_files.py", line 65, in define_tag_from_json
+    TAG = jsondata['release']['tag']
+TypeError: string indices must be integers
+[ 2018-10-27 13:43:03,427 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2018-10-27 13:43:03,427 ] - [INFO    ] - root - Reading json data from file.
+[ 2018-10-27 13:43:03,429 ] - [CRITICAL] - root - Failed to read from release.json
+[ 2018-10-27 13:43:03,430 ] - [ERROR   ] - root - string indices must be integers
+Traceback (most recent call last):
+  File "./copy_files.py", line 65, in define_tag_from_json
+    TAG = str(jsondata['release']['tag'])
+TypeError: string indices must be integers
+[ 2018-10-27 13:44:07,199 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2018-10-27 13:44:07,199 ] - [INFO    ] - root - Reading json data from file.
+[ 2018-10-27 13:44:07,200 ] - [CRITICAL] - root - Failed to read from release.json
+[ 2018-10-27 13:44:07,201 ] - [ERROR   ] - root - string indices must be integers
+Traceback (most recent call last):
+  File "./copy_files.py", line 65, in define_tag_from_json
+    TAG = jsondata['release']['tag']
+TypeError: string indices must be integers
+[ 2018-10-27 13:44:42,776 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2018-10-27 13:44:42,776 ] - [INFO    ] - root - Reading json data from file.
+[ 2018-10-27 13:44:42,778 ] - [CRITICAL] - root - Failed to read from release.json
+[ 2018-10-27 13:44:42,780 ] - [ERROR   ] - root - string indices must be integers
+Traceback (most recent call last):
+  File "./copy_files.py", line 66, in define_tag_from_json
+    TAG = jsondata['release']['tag']
+TypeError: string indices must be integers
+[ 2018-10-27 13:45:06,197 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2018-10-27 13:45:06,197 ] - [INFO    ] - root - Reading json data from file.
+[ 2018-10-27 13:45:06,200 ] - [INFO    ] - root - Copying Metadata
+[ 2018-10-27 13:45:06,201 ] - [INFO    ] - root - Creating Metadata Folder...
+[ 2018-10-27 13:45:06,203 ] - [INFO    ] - root - Copying release.json
+[ 2018-10-27 13:45:06,211 ] - [INFO    ] - root - Checking Mount point
+[ 2018-10-27 13:45:06,215 ] - [DEBUG   ] - root - Creating Releases Folder
+[ 2018-10-27 13:45:06,217 ] - [CRITICAL] - root - test_transfer.json is not present. Cannot determine file list.
+[ 2018-10-27 13:46:33,641 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2018-10-27 13:46:33,642 ] - [INFO    ] - root - Reading json data from file.
+[ 2018-10-27 13:46:33,643 ] - [INFO    ] - root - Copying Metadata
+[ 2018-10-27 13:46:33,643 ] - [INFO    ] - root - Deleting already existing folder..
+[ 2018-10-27 13:46:33,646 ] - [INFO    ] - root - Creating Metadata Folder...
+[ 2018-10-27 13:46:33,648 ] - [INFO    ] - root - Copying release.json
+[ 2018-10-27 13:46:33,653 ] - [INFO    ] - root - Checking Mount point
+[ 2018-10-27 13:46:33,654 ] - [DEBUG   ] - root - releases already present. deleting it..
+[ 2018-10-27 13:46:33,656 ] - [DEBUG   ] - root - Creating Releases Folder
+[ 2018-10-27 13:46:33,657 ] - [CRITICAL] - root - test_transfer.json is not present. Cannot determine file list.
+[ 2018-10-27 13:47:38,346 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2018-10-27 13:47:38,346 ] - [INFO    ] - root - Reading json data from file.
+[ 2018-10-27 13:47:38,347 ] - [INFO    ] - root - Copying Metadata
+[ 2018-10-27 13:47:38,348 ] - [INFO    ] - root - Deleting already existing folder..
+[ 2018-10-27 13:47:38,350 ] - [INFO    ] - root - Creating Metadata Folder...
+[ 2018-10-27 13:47:38,351 ] - [INFO    ] - root - Copying release.json
+[ 2018-10-27 13:47:38,357 ] - [INFO    ] - root - Checking Mount point
+[ 2018-10-27 13:47:38,358 ] - [DEBUG   ] - root - releases already present. deleting it..
+[ 2018-10-27 13:47:38,359 ] - [DEBUG   ] - root - Creating Releases Folder
+[ 2018-10-27 13:47:38,366 ] - [INFO    ] - root - Copying Email from test/1.txt
+[ 2018-10-27 13:47:38,370 ] - [INFO    ] - root - Copying Gallery from test/2.txt
+[ 2018-10-27 13:47:38,375 ] - [INFO    ] - root - Copying Release Notes...
+[ 2018-10-27 13:54:24,447 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2018-10-27 13:54:24,447 ] - [INFO    ] - root - Reading json data from file.
+[ 2018-10-27 13:54:24,449 ] - [INFO    ] - root - Copying Metadata
+[ 2018-10-27 13:54:24,449 ] - [INFO    ] - root - Deleting already existing folder..
+[ 2018-10-27 13:54:24,452 ] - [INFO    ] - root - Creating Metadata Folder...
+[ 2018-10-27 13:54:24,453 ] - [INFO    ] - root - Copying release.json
+[ 2018-10-27 13:54:24,460 ] - [INFO    ] - root - Checking Mount point
+[ 2018-10-27 13:54:24,461 ] - [DEBUG   ] - root - releases already present. deleting it..
+[ 2018-10-27 13:54:24,465 ] - [DEBUG   ] - root - Creating Releases Folder
+[ 2018-10-27 13:54:24,466 ] - [INFO    ] - root - Copying Email from test/1.txt
+[ 2018-10-27 13:54:24,470 ] - [INFO    ] - root - Copying Gallery from test/2.txt
+[ 2018-10-27 13:54:24,474 ] - [INFO    ] - root - Copying Release Notes...
+[ 2018-10-27 14:10:07,628 ] - [DEBUG   ] - root - ------------------------System Info------------------------------
+[ 2018-10-27 14:10:07,689 ] - [DEBUG   ] - root - Platform : Linux, Version: #285-Microsoft Thu Aug 30 17:31:00 PST 2018
+[ 2018-10-27 14:10:07,690 ] - [DEBUG   ] - root - Hostname : Bhoomi
+[ 2018-10-27 14:10:07,693 ] - [DEBUG   ] - root - Python Version : 3.6.6
+[ 2018-10-27 14:10:07,757 ] - [DEBUG   ] - root - Platform Arch : ('64bit', 'ELF')
+[ 2018-10-27 14:10:07,760 ] - [DEBUG   ] - root - -----------------------------------------------------------------
+[ 2018-10-27 14:10:07,760 ] - [INFO    ] - root - Getting LOS Download page for bullhead ...
+[ 2018-10-27 14:10:07,761 ] - [DEBUG   ] - root - Getting Download Page for bullhead
+[ 2018-10-27 14:10:07,762 ] - [INFO    ] - root - File LineageOS_Downlad_Page.html already exists. It will be deleted.
+[ 2018-10-27 14:10:07,763 ] - [INFO    ] - root - Attempting to download : LineageOS_Downlad_Page.html
+[ 2018-10-27 14:10:07,763 ] - [INFO    ] - root - From URL: https://download.lineageos.org/bullhead
+[ 2018-10-27 14:10:07,764 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 14:10:07,777 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): download.lineageos.org:443
+[ 2018-10-27 14:10:08,227 ] - [DEBUG   ] - urllib3.connectionpool - https://download.lineageos.org:443 "GET /bullhead HTTP/1.1" 200 None
+[ 2018-10-27 14:10:08,228 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 14:10:08,255 ] - [DEBUG   ] - root - LineageOS_Downlad_Page.html file exists.
+[ 2018-10-27 14:10:08,256 ] - [INFO    ] - root - Parsing HTML page...
+[ 2018-10-27 14:10:08,347 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 14:10:08,348 ] - [DEBUG   ] - root - ------------------Parsed Variables------------------------
+[ 2018-10-27 14:10:08,348 ] - [DEBUG   ] - root - LOS_REL_TYPE = ['nightly', 'nightly', 'nightly', 'nightly', 'nightly']
+[ 2018-10-27 14:10:08,348 ] - [DEBUG   ] - root - LOS_REL_VERSION = ['15.1', '15.1', '15.1', '15.1', '15.1']
+[ 2018-10-27 14:10:08,348 ] - [DEBUG   ] - root - LOS_REL_URL = ['https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181015/lineage-15.1-20181015-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181008/lineage-15.1-20181008-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181001/lineage-15.1-20181001-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20180924/lineage-15.1-20180924-nightly-bullhead-signed.zip']
+[ 2018-10-27 14:10:08,348 ] - [DEBUG   ] - root - LOS_REL_SIZE = ['432.65 MB', '432.66 MB', '432.48 MB', '431.03 MB', '431.05 MB']
+[ 2018-10-27 14:10:08,348 ] - [DEBUG   ] - root - LOS_REL_DATE = ['2018-10-22', '2018-10-15', '2018-10-08', '2018-10-01', '2018-09-24']
+[ 2018-10-27 14:10:08,349 ] - [DEBUG   ] - root - REL_TAG is 15.1.2018-10-22
+[ 2018-10-27 14:10:08,349 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 14:10:08,349 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 14:10:08,349 ] - [INFO    ] - root - Downloading ZIP File ...
+[ 2018-10-27 14:10:08,350 ] - [INFO    ] - root - Getting Checksum File...
+[ 2018-10-27 14:10:08,350 ] - [INFO    ] - root - Verifying ZIP file checksums...
+[ 2018-10-27 14:10:08,350 ] - [INFO    ] - root - Extracting from ZIP File ....
+[ 2018-10-27 14:10:08,351 ] - [INFO    ] - root - Downloading OLD release.json
+[ 2018-10-27 14:10:08,351 ] - [INFO    ] - root - File old_release.json already exists. It will be deleted.
+[ 2018-10-27 14:10:08,352 ] - [INFO    ] - root - Attempting to download : old_release.json
+[ 2018-10-27 14:10:08,352 ] - [INFO    ] - root - From URL: https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json
+[ 2018-10-27 14:10:08,353 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 14:10:08,355 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): raw.githubusercontent.com:443
+[ 2018-10-27 14:10:09,185 ] - [DEBUG   ] - urllib3.connectionpool - https://raw.githubusercontent.com:443 "GET /tprasadtp/lineageos-apk-extractor/metadata/release.json HTTP/1.1" 200 187
+[ 2018-10-27 14:10:09,187 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 14:10:09,200 ] - [INFO    ] - root - Preparing Metadata....
+[ 2018-10-27 14:10:09,201 ] - [INFO    ] - root - Checking last build date...
+[ 2018-10-27 14:10:09,203 ] - [INFO    ] - root - Last Build was 1540619929
+[ 2018-10-27 14:10:09,204 ] - [INFO    ] - root - Last Release Tag was 15.1.2018-10-20
+[ 2018-10-27 14:10:09,206 ] - [INFO    ] - root - This release is New. GH Releases will be enabled if on MASTER
+[ 2018-10-27 14:10:09,209 ] - [INFO    ] - root - Generating Exporter Scripts...
+[ 2018-10-27 14:10:09,220 ] - [INFO    ] - root - Release_Notes.md exists.
+[ 2018-10-27 14:10:09,222 ] - [INFO    ] - root - Deleting old release notes
+[ 2018-10-27 14:10:09,228 ] - [INFO    ] - root - Generating Release Notes...
+[ 2018-10-27 14:10:09,240 ] - [DEBUG   ] - root - Generated Release Notes
+[ 2018-10-27 14:10:09,240 ] - [INFO    ] - root - Generating release.json
+[ 2018-10-27 14:10:09,241 ] - [INFO    ] - root - release.json exists.
+[ 2018-10-27 14:10:09,243 ] - [INFO    ] - root - Deleting old release.json file...
+[ 2018-10-27 14:10:09,244 ] - [CRITICAL] - root - Failed to remove existing release.json.
+[ 2018-10-27 14:10:09,244 ] - [ERROR   ] - root - [Errno 20] Not a directory: 'release.json'
+Traceback (most recent call last):
+  File "./los_extractor.py", line 334, in set_flags_and_metadata
+    shutil.rmtree(RELEASE_JSON)
+  File "/mnt/c/Users/Sindhu/Git/lineageos-apk-extractor/lib/python3.6/shutil.py", line 480, in rmtree
+    _rmtree_safe_fd(fd, path, onerror)
+  File "/mnt/c/Users/Sindhu/Git/lineageos-apk-extractor/lib/python3.6/shutil.py", line 402, in _rmtree_safe_fd
+    onerror(os.listdir, path, sys.exc_info())
+  File "/mnt/c/Users/Sindhu/Git/lineageos-apk-extractor/lib/python3.6/shutil.py", line 399, in _rmtree_safe_fd
+    names = os.listdir(topfd)
+NotADirectoryError: [Errno 20] Not a directory: 'release.json'
+[ 2018-10-27 14:11:12,524 ] - [DEBUG   ] - root - ------------------------System Info------------------------------
+[ 2018-10-27 14:11:12,575 ] - [DEBUG   ] - root - Platform : Linux, Version: #285-Microsoft Thu Aug 30 17:31:00 PST 2018
+[ 2018-10-27 14:11:12,576 ] - [DEBUG   ] - root - Hostname : Bhoomi
+[ 2018-10-27 14:11:12,578 ] - [DEBUG   ] - root - Python Version : 3.6.6
+[ 2018-10-27 14:11:12,630 ] - [DEBUG   ] - root - Platform Arch : ('64bit', 'ELF')
+[ 2018-10-27 14:11:12,633 ] - [DEBUG   ] - root - -----------------------------------------------------------------
+[ 2018-10-27 14:11:12,633 ] - [INFO    ] - root - Getting LOS Download page for bullhead ...
+[ 2018-10-27 14:11:12,634 ] - [DEBUG   ] - root - Getting Download Page for bullhead
+[ 2018-10-27 14:11:12,635 ] - [INFO    ] - root - File LineageOS_Downlad_Page.html already exists. It will be deleted.
+[ 2018-10-27 14:11:12,637 ] - [INFO    ] - root - Attempting to download : LineageOS_Downlad_Page.html
+[ 2018-10-27 14:11:12,637 ] - [INFO    ] - root - From URL: https://download.lineageos.org/bullhead
+[ 2018-10-27 14:11:12,639 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 14:11:12,654 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): download.lineageos.org:443
+[ 2018-10-27 14:11:13,126 ] - [DEBUG   ] - urllib3.connectionpool - https://download.lineageos.org:443 "GET /bullhead HTTP/1.1" 200 None
+[ 2018-10-27 14:11:13,128 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 14:11:13,150 ] - [DEBUG   ] - root - LineageOS_Downlad_Page.html file exists.
+[ 2018-10-27 14:11:13,151 ] - [INFO    ] - root - Parsing HTML page...
+[ 2018-10-27 14:11:13,237 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 14:11:13,237 ] - [DEBUG   ] - root - ------------------Parsed Variables------------------------
+[ 2018-10-27 14:11:13,237 ] - [DEBUG   ] - root - LOS_REL_TYPE = ['nightly', 'nightly', 'nightly', 'nightly', 'nightly']
+[ 2018-10-27 14:11:13,237 ] - [DEBUG   ] - root - LOS_REL_VERSION = ['15.1', '15.1', '15.1', '15.1', '15.1']
+[ 2018-10-27 14:11:13,237 ] - [DEBUG   ] - root - LOS_REL_URL = ['https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181015/lineage-15.1-20181015-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181008/lineage-15.1-20181008-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181001/lineage-15.1-20181001-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20180924/lineage-15.1-20180924-nightly-bullhead-signed.zip']
+[ 2018-10-27 14:11:13,237 ] - [DEBUG   ] - root - LOS_REL_SIZE = ['432.65 MB', '432.66 MB', '432.48 MB', '431.03 MB', '431.05 MB']
+[ 2018-10-27 14:11:13,238 ] - [DEBUG   ] - root - LOS_REL_DATE = ['2018-10-22', '2018-10-15', '2018-10-08', '2018-10-01', '2018-09-24']
+[ 2018-10-27 14:11:13,238 ] - [DEBUG   ] - root - REL_TAG is 15.1.2018-10-22
+[ 2018-10-27 14:11:13,238 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 14:11:13,238 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 14:11:13,238 ] - [INFO    ] - root - Downloading ZIP File ...
+[ 2018-10-27 14:11:13,239 ] - [INFO    ] - root - Getting Checksum File...
+[ 2018-10-27 14:11:13,240 ] - [INFO    ] - root - Verifying ZIP file checksums...
+[ 2018-10-27 14:11:13,241 ] - [INFO    ] - root - Extracting from ZIP File ....
+[ 2018-10-27 14:11:13,242 ] - [INFO    ] - root - Downloading OLD release.json
+[ 2018-10-27 14:11:13,243 ] - [INFO    ] - root - File old_release.json already exists. It will be deleted.
+[ 2018-10-27 14:11:13,244 ] - [INFO    ] - root - Attempting to download : old_release.json
+[ 2018-10-27 14:11:13,245 ] - [INFO    ] - root - From URL: https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json
+[ 2018-10-27 14:11:13,246 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 14:11:13,251 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): raw.githubusercontent.com:443
+[ 2018-10-27 14:11:13,901 ] - [DEBUG   ] - urllib3.connectionpool - https://raw.githubusercontent.com:443 "GET /tprasadtp/lineageos-apk-extractor/metadata/release.json HTTP/1.1" 200 187
+[ 2018-10-27 14:11:13,902 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 14:11:13,908 ] - [INFO    ] - root - Preparing Metadata....
+[ 2018-10-27 14:11:13,910 ] - [INFO    ] - root - Checking last build date...
+[ 2018-10-27 14:11:13,912 ] - [INFO    ] - root - Last Build was 1540619929
+[ 2018-10-27 14:11:13,912 ] - [INFO    ] - root - Last Release Tag was 15.1.2018-10-20
+[ 2018-10-27 14:11:13,913 ] - [INFO    ] - root - This release is New. GH Releases will be enabled if on MASTER
+[ 2018-10-27 14:11:13,915 ] - [INFO    ] - root - Generating Exporter Scripts...
+[ 2018-10-27 14:11:13,926 ] - [INFO    ] - root - Release_Notes.md exists.
+[ 2018-10-27 14:11:13,927 ] - [INFO    ] - root - Deleting old release notes
+[ 2018-10-27 14:11:13,931 ] - [INFO    ] - root - Generating Release Notes...
+[ 2018-10-27 14:11:13,943 ] - [DEBUG   ] - root - Generated Release Notes
+[ 2018-10-27 14:11:13,944 ] - [INFO    ] - root - Generating release.json
+[ 2018-10-27 14:11:13,945 ] - [INFO    ] - root - release.json exists.
+[ 2018-10-27 14:11:13,946 ] - [INFO    ] - root - Deleting old release.json file...
+[ 2018-10-27 14:11:13,950 ] - [DEBUG   ] - root - JSON Dump is : {"version": 2, "ci": {"deployed": "true"}, "lineage": {"version": "15.1", "build": "2018-10-22", "build_type": "nightly", "zip_file": "https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip"}, "release": {"tag": "15.1.2018-10-22", "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2018-10-22"}}
+[ 2018-10-27 14:12:42,926 ] - [DEBUG   ] - root - ------------------------System Info------------------------------
+[ 2018-10-27 14:12:42,970 ] - [DEBUG   ] - root - Platform : Linux, Version: #285-Microsoft Thu Aug 30 17:31:00 PST 2018
+[ 2018-10-27 14:12:42,971 ] - [DEBUG   ] - root - Hostname : Bhoomi
+[ 2018-10-27 14:12:42,972 ] - [DEBUG   ] - root - Python Version : 3.6.6
+[ 2018-10-27 14:12:43,018 ] - [DEBUG   ] - root - Platform Arch : ('64bit', 'ELF')
+[ 2018-10-27 14:12:43,020 ] - [DEBUG   ] - root - -----------------------------------------------------------------
+[ 2018-10-27 14:12:43,021 ] - [INFO    ] - root - Getting LOS Download page for bullhead ...
+[ 2018-10-27 14:12:43,021 ] - [DEBUG   ] - root - Getting Download Page for bullhead
+[ 2018-10-27 14:12:43,022 ] - [INFO    ] - root - File LineageOS_Downlad_Page.html already exists. It will be deleted.
+[ 2018-10-27 14:12:43,023 ] - [INFO    ] - root - Attempting to download : LineageOS_Downlad_Page.html
+[ 2018-10-27 14:12:43,024 ] - [INFO    ] - root - From URL: https://download.lineageos.org/bullhead
+[ 2018-10-27 14:12:43,025 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 14:12:43,038 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): download.lineageos.org:443
+[ 2018-10-27 14:12:43,510 ] - [DEBUG   ] - urllib3.connectionpool - https://download.lineageos.org:443 "GET /bullhead HTTP/1.1" 200 None
+[ 2018-10-27 14:12:43,513 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 14:12:43,569 ] - [DEBUG   ] - root - LineageOS_Downlad_Page.html file exists.
+[ 2018-10-27 14:12:43,570 ] - [INFO    ] - root - Parsing HTML page...
+[ 2018-10-27 14:12:43,661 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 14:12:43,661 ] - [DEBUG   ] - root - ------------------Parsed Variables------------------------
+[ 2018-10-27 14:12:43,661 ] - [DEBUG   ] - root - LOS_REL_TYPE = ['nightly', 'nightly', 'nightly', 'nightly', 'nightly']
+[ 2018-10-27 14:12:43,662 ] - [DEBUG   ] - root - LOS_REL_VERSION = ['15.1', '15.1', '15.1', '15.1', '15.1']
+[ 2018-10-27 14:12:43,662 ] - [DEBUG   ] - root - LOS_REL_URL = ['https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181015/lineage-15.1-20181015-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181008/lineage-15.1-20181008-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181001/lineage-15.1-20181001-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20180924/lineage-15.1-20180924-nightly-bullhead-signed.zip']
+[ 2018-10-27 14:12:43,662 ] - [DEBUG   ] - root - LOS_REL_SIZE = ['432.65 MB', '432.66 MB', '432.48 MB', '431.03 MB', '431.05 MB']
+[ 2018-10-27 14:12:43,662 ] - [DEBUG   ] - root - LOS_REL_DATE = ['2018-10-22', '2018-10-15', '2018-10-08', '2018-10-01', '2018-09-24']
+[ 2018-10-27 14:12:43,662 ] - [DEBUG   ] - root - REL_TAG is 15.1.2018-10-22
+[ 2018-10-27 14:12:43,662 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 14:12:43,662 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 14:12:43,663 ] - [INFO    ] - root - Downloading ZIP File ...
+[ 2018-10-27 14:12:43,663 ] - [INFO    ] - root - Getting Checksum File...
+[ 2018-10-27 14:12:43,664 ] - [INFO    ] - root - Verifying ZIP file checksums...
+[ 2018-10-27 14:12:43,665 ] - [INFO    ] - root - Extracting from ZIP File ....
+[ 2018-10-27 14:12:43,668 ] - [INFO    ] - root - Downloading OLD release.json
+[ 2018-10-27 14:12:43,668 ] - [INFO    ] - root - File old_release.json already exists. It will be deleted.
+[ 2018-10-27 14:12:43,670 ] - [INFO    ] - root - Attempting to download : old_release.json
+[ 2018-10-27 14:12:43,671 ] - [INFO    ] - root - From URL: https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json
+[ 2018-10-27 14:12:43,674 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 14:12:43,680 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): raw.githubusercontent.com:443
+[ 2018-10-27 14:12:44,330 ] - [DEBUG   ] - urllib3.connectionpool - https://raw.githubusercontent.com:443 "GET /tprasadtp/lineageos-apk-extractor/metadata/release.json HTTP/1.1" 200 187
+[ 2018-10-27 14:12:44,331 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 14:12:44,338 ] - [INFO    ] - root - Preparing Metadata....
+[ 2018-10-27 14:12:44,340 ] - [INFO    ] - root - Checking last build date...
+[ 2018-10-27 14:12:44,343 ] - [INFO    ] - root - Last Build was 1540619929
+[ 2018-10-27 14:12:44,343 ] - [INFO    ] - root - Last Release Tag was 15.1.2018-10-20
+[ 2018-10-27 14:12:44,345 ] - [INFO    ] - root - This release is New. GH Releases will be enabled if on MASTER
+[ 2018-10-27 14:12:44,348 ] - [INFO    ] - root - Generating Exporter Scripts...
+[ 2018-10-27 14:12:44,368 ] - [INFO    ] - root - Release_Notes.md exists.
+[ 2018-10-27 14:12:44,369 ] - [INFO    ] - root - Deleting old release notes
+[ 2018-10-27 14:12:44,374 ] - [INFO    ] - root - Generating Release Notes...
+[ 2018-10-27 14:12:44,384 ] - [DEBUG   ] - root - Generated Release Notes
+[ 2018-10-27 14:12:44,384 ] - [INFO    ] - root - Generating release.json
+[ 2018-10-27 14:12:44,385 ] - [INFO    ] - root - release.json exists.
+[ 2018-10-27 14:12:44,386 ] - [INFO    ] - root - Deleting old release.json file...
+[ 2018-10-27 14:12:44,390 ] - [DEBUG   ] - root - JSON Dump is : {"version": 2, "ci": {"deployed": "true"}, "lineage": {"version": "15.1", "build": "2018-10-22", "build_type": "nightly", "zip_file": "https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip"}, "release": {"tag": "15.1.2018-10-22", "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2018-10-22"}}
+[ 2018-10-27 14:16:43,618 ] - [DEBUG   ] - root - ------------------------System Info------------------------------
+[ 2018-10-27 14:16:43,663 ] - [DEBUG   ] - root - Platform : Linux, Version: #285-Microsoft Thu Aug 30 17:31:00 PST 2018
+[ 2018-10-27 14:16:43,664 ] - [DEBUG   ] - root - Hostname : Bhoomi
+[ 2018-10-27 14:16:43,666 ] - [DEBUG   ] - root - Python Version : 3.6.6
+[ 2018-10-27 14:16:43,716 ] - [DEBUG   ] - root - Platform Arch : ('64bit', 'ELF')
+[ 2018-10-27 14:16:43,719 ] - [DEBUG   ] - root - -----------------------------------------------------------------
+[ 2018-10-27 14:16:43,719 ] - [INFO    ] - root - Getting LOS Download page for bullhead ...
+[ 2018-10-27 14:16:43,720 ] - [DEBUG   ] - root - Getting Download Page for bullhead
+[ 2018-10-27 14:16:43,720 ] - [INFO    ] - root - File LineageOS_Downlad_Page.html already exists. It will be deleted.
+[ 2018-10-27 14:16:43,722 ] - [INFO    ] - root - Attempting to download : LineageOS_Downlad_Page.html
+[ 2018-10-27 14:16:43,722 ] - [INFO    ] - root - From URL: https://download.lineageos.org/bullhead
+[ 2018-10-27 14:16:43,723 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 14:16:43,736 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): download.lineageos.org:443
+[ 2018-10-27 14:16:44,214 ] - [DEBUG   ] - urllib3.connectionpool - https://download.lineageos.org:443 "GET /bullhead HTTP/1.1" 200 None
+[ 2018-10-27 14:16:44,217 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 14:16:44,261 ] - [DEBUG   ] - root - LineageOS_Downlad_Page.html file exists.
+[ 2018-10-27 14:16:44,262 ] - [INFO    ] - root - Parsing HTML page...
+[ 2018-10-27 14:16:44,343 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 14:16:44,343 ] - [DEBUG   ] - root - ------------------Parsed Variables------------------------
+[ 2018-10-27 14:16:44,343 ] - [DEBUG   ] - root - LOS_REL_TYPE = ['nightly', 'nightly', 'nightly', 'nightly', 'nightly']
+[ 2018-10-27 14:16:44,344 ] - [DEBUG   ] - root - LOS_REL_VERSION = ['15.1', '15.1', '15.1', '15.1', '15.1']
+[ 2018-10-27 14:16:44,344 ] - [DEBUG   ] - root - LOS_REL_URL = ['https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181015/lineage-15.1-20181015-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181008/lineage-15.1-20181008-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181001/lineage-15.1-20181001-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20180924/lineage-15.1-20180924-nightly-bullhead-signed.zip']
+[ 2018-10-27 14:16:44,344 ] - [DEBUG   ] - root - LOS_REL_SIZE = ['432.65 MB', '432.66 MB', '432.48 MB', '431.03 MB', '431.05 MB']
+[ 2018-10-27 14:16:44,344 ] - [DEBUG   ] - root - LOS_REL_DATE = ['2018-10-22', '2018-10-15', '2018-10-08', '2018-10-01', '2018-09-24']
+[ 2018-10-27 14:16:44,344 ] - [DEBUG   ] - root - REL_TAG is 15.1.2018-10-22
+[ 2018-10-27 14:16:44,344 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 14:16:44,344 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 14:16:44,345 ] - [INFO    ] - root - Downloading ZIP File ...
+[ 2018-10-27 14:16:44,345 ] - [INFO    ] - root - Getting Checksum File...
+[ 2018-10-27 14:16:44,346 ] - [INFO    ] - root - Verifying ZIP file checksums...
+[ 2018-10-27 14:16:44,347 ] - [INFO    ] - root - Extracting from ZIP File ....
+[ 2018-10-27 14:16:44,348 ] - [INFO    ] - root - Downloading OLD release.json
+[ 2018-10-27 14:16:44,349 ] - [INFO    ] - root - File old_release.json already exists. It will be deleted.
+[ 2018-10-27 14:16:44,351 ] - [INFO    ] - root - Attempting to download : old_release.json
+[ 2018-10-27 14:16:44,351 ] - [INFO    ] - root - From URL: https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json
+[ 2018-10-27 14:16:44,352 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 14:16:44,356 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): raw.githubusercontent.com:443
+[ 2018-10-27 14:16:45,126 ] - [DEBUG   ] - urllib3.connectionpool - https://raw.githubusercontent.com:443 "GET /tprasadtp/lineageos-apk-extractor/metadata/release.json HTTP/1.1" 200 187
+[ 2018-10-27 14:16:45,129 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 14:16:45,142 ] - [INFO    ] - root - Preparing Metadata....
+[ 2018-10-27 14:16:45,143 ] - [INFO    ] - root - Checking last build date...
+[ 2018-10-27 14:16:45,148 ] - [INFO    ] - root - Last Build was 1540619929
+[ 2018-10-27 14:16:45,149 ] - [INFO    ] - root - Last Release Tag was 15.1.2018-10-20
+[ 2018-10-27 14:16:45,154 ] - [INFO    ] - root - This release is New. GH Releases will be enabled if on MASTER
+[ 2018-10-27 14:16:45,157 ] - [INFO    ] - root - Generating Exporter Scripts...
+[ 2018-10-27 14:16:45,172 ] - [INFO    ] - root - Release_Notes.md exists.
+[ 2018-10-27 14:16:45,173 ] - [INFO    ] - root - Deleting old release notes
+[ 2018-10-27 14:16:45,176 ] - [INFO    ] - root - Generating Release Notes...
+[ 2018-10-27 14:16:45,190 ] - [DEBUG   ] - root - Generated Release Notes
+[ 2018-10-27 14:16:45,190 ] - [INFO    ] - root - Generating release.json
+[ 2018-10-27 14:16:45,191 ] - [INFO    ] - root - release.json exists.
+[ 2018-10-27 14:16:45,192 ] - [INFO    ] - root - Deleting old release.json file...
+[ 2018-10-27 14:16:45,197 ] - [DEBUG   ] - root - JSON Dump is : {"version": 2, "ci": {"build_date": 1540642605, "build_ts": "02:16 PM DST on Oct 27, 2018", "node_name": "Bhoomi", "deployed": "true"}, "lineage": {"version": "15.1", "build": "2018-10-22", "build_type": "nightly", "zip_file": "https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip"}, "release": {"tag": "15.1.2018-10-22", "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2018-10-22"}}
+[ 2018-10-27 14:19:32,083 ] - [DEBUG   ] - root - ------------------------System Info------------------------------
+[ 2018-10-27 14:19:32,136 ] - [DEBUG   ] - root - Platform : Linux, Version: #285-Microsoft Thu Aug 30 17:31:00 PST 2018
+[ 2018-10-27 14:19:32,137 ] - [DEBUG   ] - root - Hostname : Bhoomi
+[ 2018-10-27 14:19:32,140 ] - [DEBUG   ] - root - Python Version : 3.6.6
+[ 2018-10-27 14:19:32,201 ] - [DEBUG   ] - root - Platform Arch : ('64bit', 'ELF')
+[ 2018-10-27 14:19:32,205 ] - [DEBUG   ] - root - -----------------------------------------------------------------
+[ 2018-10-27 14:19:32,205 ] - [INFO    ] - root - Getting LOS Download page for bullhead ...
+[ 2018-10-27 14:19:32,206 ] - [DEBUG   ] - root - Getting Download Page for bullhead
+[ 2018-10-27 14:19:32,207 ] - [INFO    ] - root - File LineageOS_Downlad_Page.html already exists. It will be deleted.
+[ 2018-10-27 14:19:32,209 ] - [INFO    ] - root - Attempting to download : LineageOS_Downlad_Page.html
+[ 2018-10-27 14:19:32,209 ] - [INFO    ] - root - From URL: https://download.lineageos.org/bullhead
+[ 2018-10-27 14:19:32,210 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 14:19:32,227 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): download.lineageos.org:443
+[ 2018-10-27 14:19:32,710 ] - [DEBUG   ] - urllib3.connectionpool - https://download.lineageos.org:443 "GET /bullhead HTTP/1.1" 200 None
+[ 2018-10-27 14:19:32,711 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 14:19:32,736 ] - [DEBUG   ] - root - LineageOS_Downlad_Page.html file exists.
+[ 2018-10-27 14:19:32,737 ] - [INFO    ] - root - Parsing HTML page...
+[ 2018-10-27 14:19:32,853 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 14:19:32,853 ] - [DEBUG   ] - root - ------------------Parsed Variables------------------------
+[ 2018-10-27 14:19:32,853 ] - [DEBUG   ] - root - LOS_REL_TYPE = ['nightly', 'nightly', 'nightly', 'nightly', 'nightly']
+[ 2018-10-27 14:19:32,853 ] - [DEBUG   ] - root - LOS_REL_VERSION = ['15.1', '15.1', '15.1', '15.1', '15.1']
+[ 2018-10-27 14:19:32,854 ] - [DEBUG   ] - root - LOS_REL_URL = ['https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181015/lineage-15.1-20181015-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181008/lineage-15.1-20181008-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181001/lineage-15.1-20181001-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20180924/lineage-15.1-20180924-nightly-bullhead-signed.zip']
+[ 2018-10-27 14:19:32,854 ] - [DEBUG   ] - root - LOS_REL_SIZE = ['432.65 MB', '432.66 MB', '432.48 MB', '431.03 MB', '431.05 MB']
+[ 2018-10-27 14:19:32,854 ] - [DEBUG   ] - root - LOS_REL_DATE = ['2018-10-22', '2018-10-15', '2018-10-08', '2018-10-01', '2018-09-24']
+[ 2018-10-27 14:19:32,854 ] - [DEBUG   ] - root - REL_TAG is 15.1.2018-10-22
+[ 2018-10-27 14:19:32,854 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 14:19:32,854 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-10-27 14:19:32,855 ] - [INFO    ] - root - Downloading ZIP File ...
+[ 2018-10-27 14:19:32,855 ] - [INFO    ] - root - Getting Checksum File...
+[ 2018-10-27 14:19:32,856 ] - [INFO    ] - root - Verifying ZIP file checksums...
+[ 2018-10-27 14:19:32,858 ] - [INFO    ] - root - Extracting from ZIP File ....
+[ 2018-10-27 14:19:32,859 ] - [INFO    ] - root - Downloading OLD release.json
+[ 2018-10-27 14:19:32,860 ] - [INFO    ] - root - File old_release.json already exists. It will be deleted.
+[ 2018-10-27 14:19:32,862 ] - [INFO    ] - root - Attempting to download : old_release.json
+[ 2018-10-27 14:19:32,862 ] - [INFO    ] - root - From URL: https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json
+[ 2018-10-27 14:19:32,863 ] - [INFO    ] - root - Downloading file.....
+[ 2018-10-27 14:19:32,870 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): raw.githubusercontent.com:443
+[ 2018-10-27 14:19:33,522 ] - [DEBUG   ] - urllib3.connectionpool - https://raw.githubusercontent.com:443 "GET /tprasadtp/lineageos-apk-extractor/metadata/release.json HTTP/1.1" 200 187
+[ 2018-10-27 14:19:33,523 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-10-27 14:19:33,528 ] - [INFO    ] - root - Preparing Metadata....
+[ 2018-10-27 14:19:33,529 ] - [INFO    ] - root - Checking last build date...
+[ 2018-10-27 14:19:33,531 ] - [INFO    ] - root - Last Build was 1540619929
+[ 2018-10-27 14:19:33,531 ] - [INFO    ] - root - Last Release Tag was 15.1.2018-10-20
+[ 2018-10-27 14:19:33,532 ] - [INFO    ] - root - This release is New. GH Releases will be enabled if on MASTER
+[ 2018-10-27 14:19:33,535 ] - [INFO    ] - root - Generating Exporter Scripts...
+[ 2018-10-27 14:19:33,544 ] - [INFO    ] - root - Release_Notes.md exists.
+[ 2018-10-27 14:19:33,545 ] - [INFO    ] - root - Deleting old release notes
+[ 2018-10-27 14:19:33,547 ] - [INFO    ] - root - Generating Release Notes...
+[ 2018-10-27 14:19:33,560 ] - [DEBUG   ] - root - Generated Release Notes
+[ 2018-10-27 14:19:33,560 ] - [INFO    ] - root - Generating release.json
+[ 2018-10-27 14:19:33,561 ] - [INFO    ] - root - release.json exists.
+[ 2018-10-27 14:19:33,562 ] - [INFO    ] - root - Deleting old release.json file...
+[ 2018-10-27 14:19:33,565 ] - [DEBUG   ] - root - JSON Dump is : {"version": 2, "ci": {"build_date": 1540642773, "build_ts": "02:19 PM DST on Oct 27, 2018", "node_name": "Bhoomi", "deployed": "true"}, "lineage": {"version": "15.1", "build": "2018-10-22", "build_type": "nightly", "zip_file": "https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip"}, "release": {"tag": "15.1.2018-10-22", "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2018-10-22"}}
+[ 2018-10-27 15:54:09,092 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2018-10-27 15:54:09,093 ] - [INFO    ] - root - Reading json data from file.
+[ 2018-10-27 15:54:09,094 ] - [CRITICAL] - root - Invalid deploy flag. It can either be <true> or <false>
+[ 2018-10-27 15:55:21,682 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2018-10-27 15:55:21,682 ] - [INFO    ] - root - Reading json data from file.
+[ 2018-10-27 15:55:21,683 ] - [CRITICAL] - root - Invalid deploy flag. It can either be <true> or <false>
+[ 2018-10-27 15:55:59,256 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2018-10-27 15:55:59,256 ] - [INFO    ] - root - Reading json data from file.
+[ 2018-10-27 15:55:59,258 ] - [CRITICAL] - root - Invalid deploy flag. It can either be <true> or <false>
+[ 2018-10-27 15:56:26,942 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2018-10-27 15:56:26,942 ] - [INFO    ] - root - Reading json data from file.
+[ 2018-10-27 15:56:26,944 ] - [INFO    ] - root - Copying Metadata
+[ 2018-10-27 15:56:26,944 ] - [INFO    ] - root - Deleting already existing folder..
+[ 2018-10-27 15:56:26,949 ] - [INFO    ] - root - Creating Metadata Folder...
+[ 2018-10-27 15:56:26,951 ] - [INFO    ] - root - Copying release.json
+[ 2018-10-27 15:56:26,958 ] - [INFO    ] - root - Checking Mount point
+[ 2018-10-27 15:56:26,958 ] - [DEBUG   ] - root - releases already present. deleting it..
+[ 2018-10-27 15:56:26,963 ] - [DEBUG   ] - root - Creating Releases Folder
+[ 2018-10-27 15:56:26,971 ] - [INFO    ] - root - Copying Email from /mnt/lineage/app/Email/Email.apk
+[ 2018-10-27 15:56:26,974 ] - [ERROR   ] - root - Failed to Copy Email
+[ 2018-10-27 15:56:26,974 ] - [ERROR   ] - root - [Errno 2] No such file or directory: '/mnt/lineage/app/Email/Email.apk'
+Traceback (most recent call last):
+  File "./copy_files.py", line 110, in copy_release_files
+    shutil.copy2(path, RELEASE_DIR / fname)
+  File "/mnt/c/Users/Sindhu/Git/lineageos-apk-extractor/lib/python3.6/shutil.py", line 257, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "/mnt/c/Users/Sindhu/Git/lineageos-apk-extractor/lib/python3.6/shutil.py", line 120, in copyfile
+    with open(src, 'rb') as fsrc:
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/lineage/app/Email/Email.apk'
+[ 2018-10-27 15:56:26,981 ] - [INFO    ] - root - Copying Gallery from /mnt/lineage/priv-app/Gallery2/Gallery2.apk
+[ 2018-10-27 15:56:26,987 ] - [ERROR   ] - root - Failed to Copy Gallery
+[ 2018-10-27 15:56:26,987 ] - [ERROR   ] - root - [Errno 2] No such file or directory: '/mnt/lineage/priv-app/Gallery2/Gallery2.apk'
+Traceback (most recent call last):
+  File "./copy_files.py", line 110, in copy_release_files
+    shutil.copy2(path, RELEASE_DIR / fname)
+  File "/mnt/c/Users/Sindhu/Git/lineageos-apk-extractor/lib/python3.6/shutil.py", line 257, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "/mnt/c/Users/Sindhu/Git/lineageos-apk-extractor/lib/python3.6/shutil.py", line 120, in copyfile
+    with open(src, 'rb') as fsrc:
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/lineage/priv-app/Gallery2/Gallery2.apk'
+[ 2018-10-27 15:56:27,000 ] - [INFO    ] - root - Copying Music from /mnt/lineage/priv-app/Eleven/Eleven.apk
+[ 2018-10-27 15:56:27,003 ] - [ERROR   ] - root - Failed to Copy Music
+[ 2018-10-27 15:56:27,003 ] - [ERROR   ] - root - [Errno 2] No such file or directory: '/mnt/lineage/priv-app/Eleven/Eleven.apk'
+Traceback (most recent call last):
+  File "./copy_files.py", line 110, in copy_release_files
+    shutil.copy2(path, RELEASE_DIR / fname)
+  File "/mnt/c/Users/Sindhu/Git/lineageos-apk-extractor/lib/python3.6/shutil.py", line 257, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "/mnt/c/Users/Sindhu/Git/lineageos-apk-extractor/lib/python3.6/shutil.py", line 120, in copyfile
+    with open(src, 'rb') as fsrc:
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/lineage/priv-app/Eleven/Eleven.apk'
+[ 2018-10-27 15:56:27,014 ] - [INFO    ] - root - Copying Calendar from /mnt/lineage/app/Calendar/Calendar.apk
+[ 2018-10-27 15:56:27,018 ] - [ERROR   ] - root - Failed to Copy Calendar
+[ 2018-10-27 15:56:27,020 ] - [ERROR   ] - root - [Errno 2] No such file or directory: '/mnt/lineage/app/Calendar/Calendar.apk'
+Traceback (most recent call last):
+  File "./copy_files.py", line 110, in copy_release_files
+    shutil.copy2(path, RELEASE_DIR / fname)
+  File "/mnt/c/Users/Sindhu/Git/lineageos-apk-extractor/lib/python3.6/shutil.py", line 257, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "/mnt/c/Users/Sindhu/Git/lineageos-apk-extractor/lib/python3.6/shutil.py", line 120, in copyfile
+    with open(src, 'rb') as fsrc:
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/lineage/app/Calendar/Calendar.apk'
+[ 2018-10-27 15:56:27,028 ] - [INFO    ] - root - Copying Jelly from /mnt/lineage/app/Jelly/Jelly.apk
+[ 2018-10-27 15:56:27,034 ] - [ERROR   ] - root - Failed to Copy Jelly
+[ 2018-10-27 15:56:27,034 ] - [ERROR   ] - root - [Errno 2] No such file or directory: '/mnt/lineage/app/Jelly/Jelly.apk'
+Traceback (most recent call last):
+  File "./copy_files.py", line 110, in copy_release_files
+    shutil.copy2(path, RELEASE_DIR / fname)
+  File "/mnt/c/Users/Sindhu/Git/lineageos-apk-extractor/lib/python3.6/shutil.py", line 257, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "/mnt/c/Users/Sindhu/Git/lineageos-apk-extractor/lib/python3.6/shutil.py", line 120, in copyfile
+    with open(src, 'rb') as fsrc:
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/lineage/app/Jelly/Jelly.apk'
+[ 2018-10-27 15:56:27,046 ] - [INFO    ] - root - Copying Trebuchet from /mnt/lineage/priv-app/Trebuchet/Trebuchet.apk
+[ 2018-10-27 15:56:27,048 ] - [ERROR   ] - root - Failed to Copy Trebuchet
+[ 2018-10-27 15:56:27,049 ] - [ERROR   ] - root - [Errno 2] No such file or directory: '/mnt/lineage/priv-app/Trebuchet/Trebuchet.apk'
+Traceback (most recent call last):
+  File "./copy_files.py", line 110, in copy_release_files
+    shutil.copy2(path, RELEASE_DIR / fname)
+  File "/mnt/c/Users/Sindhu/Git/lineageos-apk-extractor/lib/python3.6/shutil.py", line 257, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "/mnt/c/Users/Sindhu/Git/lineageos-apk-extractor/lib/python3.6/shutil.py", line 120, in copyfile
+    with open(src, 'rb') as fsrc:
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/lineage/priv-app/Trebuchet/Trebuchet.apk'
+[ 2018-10-27 15:56:27,061 ] - [INFO    ] - root - Copying Release Notes...
