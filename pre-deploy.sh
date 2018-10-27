@@ -18,7 +18,7 @@ git config --local user.email "${GH_EMAIL}"
 if [ "${BUILD_TAG}" != "" ] || [ "${DEPLOY}" != "" ]; then
     if [ "${DEPLOY}" == "true" ]; then
         echo "Deploy to Github releases is Enabled."
-        if git show-ref --tags --quiet --verify -- "refs/tags/${BUILD_TAG}"
+        if git show-ref --tags --quiet --verify -- "refs/tags/${BUILD_TAG}"; then
             echo "Tag already present. Deleting it."
             git tag -d "${BUILD_TAG}"
             git push origin :refs/tags/"${BUILD_TAG}"
