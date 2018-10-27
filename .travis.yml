@@ -16,17 +16,17 @@ install:
 - ./install-brotli.sh
 - sudo apt-get install -y jshon shellcheck
 - pip3 install -q -r requirements.txt
-before_Script:
+before_script:
 - brotli --version
+- shellcheck ./pre-deploy.sh
 script:
 - ./los_extractor.py
-- brotli -d -f --verbose --ouput system.new.dat system.new.dat.br
-- ./sdat2img.py system.transfer.list system.new.dat system.img
+- brotli --decompress --force --verbose --ouput=system.new.dat system.new.dat.br
+- ./sdat2img.py
 - sudo mount -t ext4 system.img /mnt/lineage
 - ./copy_files.py
 - chmod +x ./flags.sh && source ./flags.sh
 before_deploy:
-- shellcheck ./pre-deploy.sh
 - ./pre-deploy.sh
 - export RELEASE_BODY=$(jshon -s "$(cat Release_Notes.md)"))
 deploy:

@@ -7,7 +7,7 @@
 set -e
 echo "Cloning Brotli Repo"
 git clone https://github.com/google/brotli
-cd brotli
+cd brotli || false
 ./configure-cmake --disable-debug
 make
 sudo make install
