@@ -4,5 +4,9 @@
     "Music": "/mnt/lineage/priv-app/Eleven/Eleven.apk",
     "Calendar": "/mnt/lineage/app/Calendar/Calendar.apk",
     "Jelly": "/mnt/lineage/app/Jelly/Jelly.apk",
-    "Trebuchet": "/mnt/lineage/priv-app/Trebuchet/Trebuchet.apk"
+    "Trebuchet": "/mnt/lineage/priv-app/Trebuchet/Trebuchet.apk",
+    "Snap": " /mnt/lineage/priv-app/Snap/Snap.apk",
+    "Recorder": "/mnt/lineage/priv-app/Recorder/Recorder.apk",
+    "messaging": "/mnt/lineage/app/messaging/messaging.apk",
+    "DeskClock": "/mnt/lineage/app/DeskClock/DeskClock.apk"
 }
