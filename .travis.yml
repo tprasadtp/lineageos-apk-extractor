@@ -30,7 +30,7 @@ script:
 - ./pre-deploy.sh
 - cat Release_Notes.md
 before_deploy:
-- export RELEASE_BODY=$(jshon -s "$(cat Release_Notes.md)"))
+- export RELEASE_BODY=$(jshon -s "$(cat Release_Notes.md)")
 deploy:
 - provider: pages
   skip_cleanup: true
