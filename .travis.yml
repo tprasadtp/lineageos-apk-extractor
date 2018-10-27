@@ -21,7 +21,7 @@ before_script:
 - shellcheck ./pre-deploy.sh
 script:
 - ./los_extractor.py
-- brotli --decompress --force --verbose --ouput=system.new.dat system.new.dat.br
+- brotli --decompress --force --verbose --output=system.new.dat system.new.dat.br
 - ./sdat2img.py
 - sudo mount -t ext4 system.img /mnt/lineage
 - ./copy_files.py
