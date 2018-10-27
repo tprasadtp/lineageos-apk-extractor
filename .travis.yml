@@ -13,7 +13,8 @@ before_install:
 - rm -rf ./metadata/ ./releases/
 - rm -f ./flags.sh
 install:
-- sudo apt-get install -y jshon shellcheck brotli
+- ./install-brotli.sh
+- sudo apt-get install -y jshon shellcheck
 - pip3 install -q -r requirements.txt
 before_Script:
 - brotli --version
