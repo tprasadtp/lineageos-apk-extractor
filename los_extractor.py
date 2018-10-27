@@ -205,7 +205,7 @@ def generate_release_notes():
     Release Notes Generator.
     Use Extracted info to generate Release notes.
     """
-    if os.path.isfile(RELEASE_NOTES):
+    if Path(RELEASE_NOTES).exists():
         log.info('%s exists.', RELEASE_NOTES)
         try:
             log.info('Deleting old release notes')
@@ -213,7 +213,7 @@ def generate_release_notes():
         except OSError as e:
             log.critical('Failed to remove existing release notes.')
             log.error('Error was %s', e.strerror)
-            sys.exit()
+            sys.exit(1)
     log.info('Generating Release Notes...')
     with open(RELEASE_NOTES, 'w+') as release_notes:
             release_notes.write('# Release notes for Tag lineage -' + REL_TAG + '\n\n')
