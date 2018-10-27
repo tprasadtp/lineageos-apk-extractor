@@ -2,11 +2,11 @@
     "version": 1,
     "ci": {
         "build_passed": "True",
-        "build_date": 1540611000
+        "build_date": 1540612850
     },
     "lineage": {
         "build": "2018-10-22",
         "build_type": "nightly"
     },
-    "release_tag": "15.1.2018-10-10"
+    "release_tag": "15.1.2018-10-22"
 }
