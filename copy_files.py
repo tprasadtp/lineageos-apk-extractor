@@ -13,7 +13,7 @@ from pathlib import Path
 try:
     from utils import get_file as dl
 except ImportError:
-    raise ImportError
+    sys.exit(1)
 
 MOUNT_POINT = "/mnt/lineage/"
 RELEASE_DIR = Path('releases')
@@ -21,6 +21,7 @@ METADATA_DIR = Path('metadata')
 LOG_FILE = "LineageOS_APK_Extractor.logs"
 RELEASES_JSON = "release.json"
 TRANSFER_JSON = "transfer.json"
+RELEASE_NOTES = "Release_Notes.md"
 #TRANSFER_JSON = "test_transfer.json"
 FLAGS_SCRIPT = "flags.sh"
 
@@ -71,6 +72,12 @@ def copy_release_files():
                     shutil.copy2(path, RELEASE_DIR / fname)
                 except Exception:
                     log.error("Failed to Copy %s", app)
+            log.info('Copying Release Notes...')
+            try:
+                shutil.copy2(RELEASE_NOTES, RELEASE_DIR / RELEASE_NOTES)
+            except:
+                log.critical("Failed to copy Release Notes to upload folder.")
+                sys.exit(1)
         else:
             log.critical("%s is not present. Cannot determine file list.", TRANSFER_JSON)
             sys.exit(1)
@@ -104,9 +111,9 @@ def check_last_build():
     """
     log.info("Checking last build date...")
     if os.path.isfile('metadata.json') and os.path.isfile(RELEASES_JSON):
-        with open('metadata.json') as m:
+        with open('metadata.json', 'r') as m:
             last_metadata = json.loads(m.read())
-        with open(RELEASES_JSON) as r:
+        with open(RELEASES_JSON, 'r') as r:
             current_metadata = json.loads(r.read())
         last_build_date = last_metadata['ci']['build_date']
         log.info('Last Build was %s', last_build_date)
@@ -119,9 +126,20 @@ def check_last_build():
         TAG = current_build_tag
         log.info('Current Release Tag is %s',current_build_tag)
         if current_build_date > last_build_date  and current_build_tag != last_build_tag:
-            log.info("This release is New. GH Pages and GH Releases will be enabled if on MASTER")
+            log.info("This release is New. GH Releases will be enabled if on MASTER")
             with open(FLAGS_SCRIPT, 'w+') as flag_file:
                 flag_file.write('#!/usr/bin/env bash\nexport DEPLOY="true"\nexport BUILD_TAG="' + current_build_tag + '"\n')
+            # Change deployed to true in json
+            current_metadata['ci']['deployed'] = "true"
+            try:
+                log.info('Updating Release Metadata JSON to reflect deployment flags.')
+                with open(RELEASES_JSON, 'w') as updated_json:
+                    updated_json.write(json.dumps(current_metadata, indent=4))
+            except:
+                log.critical('Failed to write updated release.json')
+                sys.exit(1)
+            log.info('Copying release assets...')
+            copy_release_files()
         else:
             log.info("Release is already the latest.")
             with open(FLAGS_SCRIPT, 'w+') as flag_file:
@@ -136,7 +154,6 @@ def main():
     """
     dl(file_name='metadata.json',file_url="https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json")
     check_last_build()
-    copy_release_files()
     copy_metadata_files()
 
 

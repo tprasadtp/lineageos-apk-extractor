@@ -6,6 +6,10 @@ branches:
   except:
   - gh-pages
   - metadata
+  - 15.1.*
+  - 16.0.*
+  - 16.1.*
+  - 17.0.*
 before_install:
 - chmod +x ./*.py
 - chmod +x ./*.sh
@@ -44,14 +48,13 @@ deploy:
   github-token: ${GH_TOKEN}
   on:
     branch: master
-    condition: ${DEPLOY} = true
 - provider: releases
   api_key: ${GH_TOKEN}
   file_glob: true
   file: releases/*
   skip_cleanup: true
   prerelease: true
-  name: ${BUILD_TAG}
+  name: Lineage - ${BUILD_TAG}
   body: ${RELEASE_BODY}
   overwrite: true
   on:

@@ -240,8 +240,9 @@ def generate_json_metadata():
     metadata = {}
     metadata.update({ 'version' : 1,
                       'ci': {
-                            'build_passed' : "True",
-                            'build_date' :   int(time.time())
+                            'deployed' : "false",
+                            'build_date' :   int(time.time()),
+                            'build_ts'  : time.strftime('%I:%M %p %Z on %b %d, %Y')
                             },
                       'lineage': {
                           'build' : LOS_REL_DATE[0],
