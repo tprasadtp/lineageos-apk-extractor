@@ -1,10 +1,10 @@
 {
     "version": 2,
     "ci": {
-        "build_date": 1540658485,
-        "build_ts": "06:41 PM DST on Oct 27, 2018",
-        "node_name": "Bhoomi",
-        "deployed": "true"
+        "build_date": 1540666281,
+        "build_ts": "06:51 PM UTC on Oct 27, 2018",
+        "node_name": "travis-job-0ec232e0-e2e0-4cec-a76d-b0e73795a133",
+        "deployed": "false"
     },
     "lineage": {
         "version": "15.1",
