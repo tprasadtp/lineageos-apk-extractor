@@ -28,7 +28,7 @@ cp LineageOS_APK_Extractor.logs ./metadata/logs/LineageOS_APK_Extractor-"${BUILD
 
 echo "Copying Release Notes"
 mkdir -p ./metadata/release-notes
-cp Release_Notes ./metadata/release-notes/Release-Notes-"${BUILD_TAG}".md
+cp Release_Notes.md ./metadata/release-notes/Release-Notes-"${BUILD_TAG}".md
 
 # Install gems
 #gem install octokit
