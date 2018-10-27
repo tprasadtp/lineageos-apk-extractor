@@ -44,7 +44,7 @@ deploy:
   github-token: ${GH_TOKEN}
   on:
     branch: master
-    condition: DEPLOY = true
+    condition: ${DEPLOY} = true
 - provider: release
   api_key: ${GH_TOKEN}
   file_glob: true
@@ -56,6 +56,6 @@ deploy:
   overwrite: true
   on:
     branch: master
-    condition: DEPLOY = true
+    condition: ${DEPLOY} = true
 notifications:
   email: false

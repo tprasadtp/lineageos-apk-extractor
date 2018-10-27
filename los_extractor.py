@@ -212,9 +212,9 @@ def generate_release_notes():
             release_notes.write('- Lineage OS Version : ' + LOS_REL_VERSION[0] + '\n')
             release_notes.write('- Lineage OS Type : ' + LOS_REL_TYPE[0] + '\n', )
             release_notes.write('- Zip file used : [ZIPfile]('+ LOS_REL_URL[0] + ')' + '\n')
-            release_notes.write('- Lineage OS build date : ' + LOS_REL_DATE[0] + '\n\n\n')
-            release_notes.write('- Node : '+ platform.node() + '\n')
-            release_notes.write('## Tags and Downloads\n')
+            release_notes.write('- Lineage OS build date : ' + LOS_REL_DATE[0] + '\n')
+            release_notes.write('- Node : '+ platform.node() + '\n\n\n')
+            release_notes.write('## Tags and Downloads\n\n')
             release_notes.write('- This is generated automatically.\n' +
                                 '- Tags correspond to build date.\n' +
                                 '- Every release is tagged lineage-[lineage-version]-build-date\n\n')
