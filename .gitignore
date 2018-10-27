@@ -314,8 +314,11 @@ release_notes.*
 release.json
 [Rr]lease[_-][Nn]otes.md
 *.html
-*.txt
 test*
 flags.sh
 metadata.json
 *release.*
+gh-deploy
+metadata/*
+releases/*
+*LineageOS_ZIP_SHA256*

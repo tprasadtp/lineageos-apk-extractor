@@ -6,10 +6,10 @@ branches:
   except:
   - gh-pages
   - metadata
-  - 15.1.*
-  - 16.0.*
-  - 16.1.*
-  - 17.0.*
+  - 15.1.*.*
+  - 16.0.*.*
+  - 16.1.*.*
+  - 17.0.*.*
 before_install:
 - chmod +x ./*.py
 - chmod +x ./*.sh

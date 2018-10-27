@@ -6,8 +6,12 @@
 # https://opensource.org/licenses/MIT
 set -e
 METADATA_BRANCH="gh-pages"
+#GIT_DIR="${HOME}/pages"
 # Checkout the branch
-git clone --branch=${METADATA_BRANCH}    https://${GH_TOKEN}@github.com/$TRAVIS_REPO_SLUG gh-deploy 2>&1 > /dev/null
+echo "saving PWD"
+pushd $PWD
+echo "Cloning ${METADATA_BRANCH} branch"
+git clone --branch=${METADATA_BRANCH}    https://github.com/tprasadtp/lineageos-apk-extractor gh-deploy 2>&1 > /dev/null
 #git clone --branch=${METADATA_BRANCH}    https://github.com/tprasadtp/lineageos-apk-extractor.git gh-deploy
 # Update pages
 rsync -Ea ./metadata/ ./gh-deploy/
@@ -16,5 +20,6 @@ cd gh-deploy || false
 git add -A .
 git config user.name  "Valarie-CI-Bot (TravisCI)"
 git config user.email "${GH_EMAIL}"
-git commit -m "CI-Updated for build ${BUILD_TAG} - with TS - ${LOGFILE_TS}"
-git push -fq origin ${METADATA_BRANCH} 2>&1 > /dev/null
+git commit --allow-empty -am "CI-Updated for build ${BUILD_TAG} - with TS - ${LOGFILE_TS}"
+git push -fq https://valarie-ci-bot:${GH_TOKEN}@github.com/tprasadtp/lineageos-apk-extractor ${METADATA_BRANCH} 2>&1 > /dev/null
+popd

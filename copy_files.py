@@ -30,6 +30,7 @@ RELEASE_NOTES = "Release_Notes.md"
 
 #if os.environ.get('TRAVIS') == "true" or os.environ.get('CI') == "true":
 #    print("Running on TRAVIS or other CI.")
+#    TRANSFER_JSON = "transfer.json"
 TRANSFER_JSON = "transfer.json"
 #else:
 #    TRANSFER_JSON = "test_transfer.json"
@@ -64,7 +65,6 @@ def define_tag_from_json():
                 global TAG, GH_RELEASES_DEPLOY_FLAG
                 TAG = jsondata['release']['tag']
                 GH_RELEASES_DEPLOY_FLAG = jsondata['ci']['deployed']
-                print(f'Git Flag: <{GH_RELEASES_DEPLOY_FLAG}>')
                 if str(TAG) == "":
                     log.critical('TAG is empty!.')
                     sys.exit(10)
