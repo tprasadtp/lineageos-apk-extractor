@@ -46,11 +46,3 @@ else
     echo "BUILD_TAG and DEPLOY were not exported properly."
     exit 1
 fi
-
-
-
-
-
-# Install gems
-#gem install octokit
-#gem install optparse
