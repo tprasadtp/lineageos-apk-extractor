@@ -209,8 +209,8 @@ def generate_release_notes():
         log.info('%s exists.', RELEASE_NOTES)
         try:
             log.info('Deleting old release notes')
-            os.remove(RELEASE_NOTES)
-        except OSError as e:
+            Path(RELEASE_NOTES).unlink()
+        except Exception as e:
             log.critical('Failed to remove existing release notes.')
             log.exception(e)
             sys.exit(1)
@@ -286,18 +286,14 @@ def set_flags_and_metadata():
         # Do not generate release notes as it will not be used.
         if int(utc_ts) > int(last_build_date)  and REL_TAG != str(last_build_tag):
             log.info("This release is New. GH Releases will be enabled if on MASTER")
-            METADATA.update({
-                             'ci': {
-                                   'deployed' : "true"
-                                    }
-                            })
+            METADATA['ci'].update({ 'deployed' : "true"})
             try:
                 with open(FLAGS_SCRIPT, 'w+') as flag_file:
                     log.info('Generating Exporter Scripts...')
                     flag_file.write('#!/usr/bin/env bash\n'
                                     + 'export DEPLOY="true"\n'
                                     + 'export BUILD_TAG="' + REL_TAG + '"\n'
-                                    + 'export LOGFILE_TS=' + str(utc_ts)  + '"\n')
+                                    + 'export LOGFILE_TS="' + str(utc_ts)  + '"\n')
             except Exception as e:
                 log.critical('Failed to write exporter script.')
                 log.exception(e)
@@ -310,11 +306,7 @@ def set_flags_and_metadata():
             ##################################################################
         else:
             log.info("Release is already the latest.")
-            METADATA.update({
-                             'ci': {
-                                   'deployed' : "false"
-                                    }
-                            })
+            METADATA['ci'].update({ 'deployed' : "false"})
             try:
                 with open(FLAGS_SCRIPT, 'w+') as flag_file:
                     flag_file.write('#!/usr/bin/env bash\n'
@@ -331,7 +323,7 @@ def set_flags_and_metadata():
             log.info('%s exists.', RELEASE_JSON)
             try:
                 log.info('Deleting old %s file...', RELEASE_JSON)
-                shutil.rmtree(RELEASE_JSON)
+                Path(RELEASE_JSON).unlink()
             except OSError as e:
                 log.critical('Failed to remove existing %s.', RELEASE_JSON)
                 log.exception(e)
