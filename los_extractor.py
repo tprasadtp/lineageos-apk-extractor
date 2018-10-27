@@ -288,6 +288,12 @@ def set_flags_and_metadata():
             except Exception:
                 log.critical('Failed to write exporter script.')
                 sys.exit(1)
+
+            ##################################################################
+            # Generate Release Notes
+            ##################################################################
+            generate_release_notes()
+            ##################################################################
         else:
             log.info("Release is already the latest.")
             METADATA.update({
@@ -356,7 +362,6 @@ def main():
     extract_zip_contents(zip_file=LOS_ZIP_FILE, destination=os.getcwd())
 
     # Release Notes & Metadata
-    generate_release_notes()
     set_flags_and_metadata()
 
 
