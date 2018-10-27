@@ -16,7 +16,9 @@ git config --local user.name "valarie-ci-bot"
 git config --local user.email "${GH_EMAIL}"
 
 if [ "${BUILD_TAG}" != "" ] || [ "${DEPLOY}" != "" ]; then
-    git tag "${BUILD_TAG}"
+    if [ "${DEPLOY}" == "true" ]; then
+        git tag "${BUILD_TAG}"
+    fi
 else
     echo "BUILD_TAG and DEPLOY are not exported properly."
     exit 1
