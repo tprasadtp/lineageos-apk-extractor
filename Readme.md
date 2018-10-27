@@ -1,4 +1,4 @@
-# Extract APKs from Lineage OS ZIPs automatically and upload to github releases regularly
+# Extract APKs from Lineage OS ZIPs & automatically upload to Github releases regularly
 
 [![Build Status](https://travis-ci.com/tprasadtp/lineageos-apk-extractor.svg?branch=master)](https://travis-ci.com/tprasadtp/lineageos-apk-extractor)
 [![license](https://img.shields.io/github/license/tprasadtp/lineageos-apk-extractor.svg?style=flat)](https://github.com/tprasadtp//blob/master/LICENSE)
@@ -22,13 +22,13 @@
 
 Use Python 3.6+
 
-[![Python](https://static.prasadt.com/logo64/python.png)](lineageos-apk-extractor)
+![Python](https://static.prasadt.com/logo64/python.png)
 
 ## Details
 
 - APKs are extracted weekly from Pixel(Marlin) or Nexus 5X(bullhead) devices.
 - Some APKs might depend on LOS framework and fail to install on AOSP or other builds.
-- I absolutely take no responsibility for the APKS.
+- I take absolutely no responsibility for the APKs.
 - Log file of this verification can be obtained in releases.
 - Releases are tagged according to their build dates mentioned in ZIPs.
 - **No Tests** are carried out on APKs to ensure compatibility.
