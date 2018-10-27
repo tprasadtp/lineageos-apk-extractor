@@ -1,11 +1,11 @@
 # Release notes for Tag lineage -2018-10-22
 
-- Release notes generated on : 03:21 AM UTC on Oct 27, 2018
+- Release notes generated on : 03:32 AM UTC on Oct 27, 2018
 - Lineage OS Version : 15.1
 - Lineage OS Type : nightly
 - Zip file used : [ZIPfile](https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip)
 - Lineage OS build date : 2018-10-22
-- Node : travis-job-793a8bde-c304-485e-b0cf-a76b584a1517
+- Node : travis-job-1efd7f90-ca90-4efd-8b25-470b03aa9217
 
 
 ## Tags and Downloads
