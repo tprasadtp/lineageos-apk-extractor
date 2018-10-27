@@ -20,14 +20,17 @@ if [ "${BUILD_TAG}" != "" ] || [ "${DEPLOY}" != "" ]; then
         git tag "${BUILD_TAG}"
         echo "Copying Release Logs"
         mkdir -p ./metadata/release-logs
-        cp LineageOS_APK_Extractor.logs ./metadata/release-logs/LineageOS_APK_Extractor-"${BUILD_TAG}".log
+        cp LineageOS_APK_Extractor.logs ./metadata/release-logs/LOS_APK_Extractor-"${BUILD_TAG}".log
         echo "Copying Release Notes"
         mkdir -p ./metadata/release-notes
         cp Release_Notes.md ./metadata/release-notes/Release-Notes-"${BUILD_TAG}".md
     else
         echo "Copying Build Logs"
+        if [ "${LOGFILE_TS}" == "" ]; then
+            LOGFILE_TS="$(date +%s)"
+        fi
         mkdir -p ./metadata/logs
-        cp LineageOS_APK_Extractor.logs ./metadata/logs/LineageOS_APK_Extractor-"${BUILD_TAG}".log
+        cp LineageOS_APK_Extractor.logs ./metadata/logs/LOS_APK_Extractor-"${BUILD_TAG}"-"${LOGFILE_TS}".log
         echo "This Build will not be released."
     fi
 else

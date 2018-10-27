@@ -38,7 +38,7 @@ OLD_RELEASE_JSON = "old_release.json"
 REL_TAG_BASE_URL = "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/"
 # Files
 LOS_DL_PAGE = "LineageOS_Downlad_Page.html"
-LOG_FILE = "LineageOS_APK_Extractor.logs"
+LOG_FILE = "LOS_APK_Extractor.logs"
 LOS_ZIP_FILE = "LineageOS.zip"
 LOS_SHA256_FILE = "LineageOS_ZIP_SHA256.txt"
 FLAGS_SCRIPT = "flags.sh"
@@ -243,10 +243,14 @@ def set_flags_and_metadata():
     log.info('Downloading OLD release.json')
     dl(file_name=OLD_RELEASE_JSON, file_url="https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json")
     log.info('Preparing Metadata....')
+    # Set Time Vars
+    global utc_ts
+    utc_ts = int(time.time())
+    human_ts = time.strftime('%I:%M %p %Z on %b %d, %Y')
     METADATA.update({ 'version' : 2,
                       'ci': {
-                            'build_date' : int(time.time()),
-                            'build_ts'  : time.strftime('%I:%M %p %Z on %b %d, %Y'),
+                            'build_date' : utc_ts,
+                            'build_ts'  : human_ts,
                             'node_name' : platform.node()
                             },
                       'lineage': {
@@ -267,14 +271,14 @@ def set_flags_and_metadata():
         last_build_date = last_metadata['ci']['build_date']
         log.info('Last Build was %s', last_build_date)
         last_build_tag = last_metadata['release']['tag']
-        log.info('Last Release Tag was %s',last_build_tag)
+        log.info('Last Release Tag was %s', last_build_tag)
         # If build timestamp for old build is less than current timestamp and
         # if tags are different, set ci.deployed to true. Also set DEPLOY=true
         # in flags script. Also generate Release Notes.
         #---------------------------------------------------------------------
         # Otherwise, set ci.deployed to flase, and DEPLOY=false.
         # Do not generate release notes as it will not be used.
-        if int(time.time()) > last_build_date  and REL_TAG != last_build_tag:
+        if utc_ts > int(last_build_date)  and REL_TAG != str(last_build_tag):
             log.info("This release is New. GH Releases will be enabled if on MASTER")
             METADATA.update({
                              'ci': {
@@ -284,7 +288,10 @@ def set_flags_and_metadata():
             try:
                 with open(FLAGS_SCRIPT, 'w+') as flag_file:
                     log.info('Generating Exporter Scripts...')
-                    flag_file.write('#!/usr/bin/env bash\nexport DEPLOY="true"\nexport BUILD_TAG="' + REL_TAG + '"\n')
+                    flag_file.write('#!/usr/bin/env bash\n'
+                                    + 'export DEPLOY="true"\n'
+                                    + 'export BUILD_TAG="' + REL_TAG + '"\n'
+                                    + 'export LOGFILE_TS=' + utc_ts  + '"\n')
             except Exception:
                 log.critical('Failed to write exporter script.')
                 sys.exit(1)
@@ -303,7 +310,10 @@ def set_flags_and_metadata():
                             })
             try:
                 with open(FLAGS_SCRIPT, 'w+') as flag_file:
-                    flag_file.write('#!/usr/bin/env bash\nexport DEPLOY="false"\nexport BUILD_TAG="' + REL_TAG + '"\n')
+                    flag_file.write('#!/usr/bin/env bash\n'
+                                    + 'export DEPLOY="false"\n'
+                                    + 'export BUILD_TAG="' + REL_TAG + '"\n'
+                                    + 'export LOGFILE_TS="' + utc_ts + '"\n')
             except Exception:
                 log.critical('Failed to write exporter script.')
                 sys.exit(1)

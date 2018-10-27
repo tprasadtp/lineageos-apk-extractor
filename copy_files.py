@@ -18,7 +18,7 @@ except ImportError:
 MOUNT_POINT = "/mnt/lineage/"
 RELEASE_DIR = Path('releases')
 METADATA_DIR = Path('metadata')
-LOG_FILE = "LineageOS_APK_Extractor.logs"
+LOG_FILE = "LOS_APK_Extractor.logs"
 RELEASE_JSON = "release.json"
 TRANSFER_JSON = "transfer.json"
 RELEASE_NOTES = "Release_Notes.md"
