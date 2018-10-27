@@ -1,6 +1,6 @@
 # Extract APKs from Lineage OS ZIPs automatically and upload to github releases regularly
 
-[![Build Status](https://travis-ci.org/tprasadtp/lineageos-apk-extractor.svg?branch=master)](https://travis-ci.org/tprasadtp/lineageos-apk-extractor)
+[![Build Status](https://travis-ci.com/tprasadtp/lineageos-apk-extractor.svg?branch=master)](https://travis-ci.org/tprasadtp/lineageos-apk-extractor)
 [![license](https://img.shields.io/github/license/tprasadtp/lineageos-apk-extractor.svg?style=flat)](https://github.com/tprasadtp//blob/master/LICENSE)
 [![Lineage Version](https://img.shields.io/badge/dynamic/json.svg?label=Lineage%20Build&style=flat&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/metadata/release.json&query=lineage.build)](https://github.com/tprasadtp/lineageos-apk-extractor/releases/latest)
 ![GitHub Release Date](https://img.shields.io/github/release-datetprasadtp/lineageos-apk-extractor.svg)

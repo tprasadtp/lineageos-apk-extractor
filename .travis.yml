@@ -13,11 +13,14 @@ before_install:
 - rm -rf ./metadata/ ./releases/
 - rm -f ./flags.sh
 install:
-- sudo apt-get install -y jshon shellcheck
+- sudo apt-get install -y jshon shellcheck brotli
 - pip3 install -q -r requirements.txt
+before_Script:
+- brotli --version
 script:
 - ./los_extractor.py
-- ./sdat2img.py system.transfer.list system.new.dat.br system.img
+- brotli -d -f --verbose --ouput system.new.dat system.new.dat.br
+- ./sdat2img.py system.transfer.list system.new.dat system.img
 - sudo mount -t ext4 system.img /mnt/lineage
 - ./copy_files.py
 - chmod +x ./flags.sh && source ./flags.sh
