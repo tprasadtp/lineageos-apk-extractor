@@ -39,6 +39,8 @@ if [ "${BUILD_TAG}" != "" ] || [ "${DEPLOY}" != "" ]; then
         cp LOS_APK_Extractor.logs ./metadata/logs/LOS_APK_Extractor-"${BUILD_TAG}"-"${LOGFILE_TS}".log
         echo "This Build will not be released."
     fi
+    echo "RSYNCING to gh-deploy"
+    rsync -Eav ./gh-pages/ ./gh-deploy/
 else
     echo "BUILD_TAG and DEPLOY were not exported properly."
     exit 1

@@ -16,7 +16,7 @@ before_install:
 - sudo mkdir -p /mnt/lineage
 - rm -rf ./metadata/ ./releases/
 - rm -f ./flags.sh
-- echo "https://valarie-ci-bot:${GH_TOKEN}@github.com" > $HOME/.git-credentials
+- git clone --branch=gh-pages    https://github.com/tprasadtp/lineageos-apk-extractor gh-pages 2>&1 > /dev/null
 install:
 - ./install-brotli.sh
 - sudo apt-get install -y jshon shellcheck
@@ -36,9 +36,16 @@ before_deploy:
 - ./pre-deploy.sh
 - export DATE="$(date)"
 deploy:
-- provider: script
+- provider: pages
   skip_cleanup: true
-  script: ./travis-deploy-metadata.sh
+  deployment-file: false
+  allow-empty-commit: true
+  local-dir: gh-deploy
+  keep-history: true
+  target-branch: gh-pages
+  email: ${GH_EMAIL}
+  name: Valarie-CI-Bot
+  github-token: ${GH_TOKEN}
   on:
     branch: master
 - provider: releases
