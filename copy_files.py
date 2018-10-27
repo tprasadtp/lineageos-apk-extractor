@@ -8,11 +8,17 @@ you can find it at the link below.
 https://opensource.org/licenses/MIT
 """
 
-import os, sys, platform, logging, shutil, json
+import os
+import sys
+import platform
+import logging, logging.handlers
+import shutil
+import json
 from pathlib import Path
 try:
     from utils import get_file as dl
-except ImportError:
+except ImportError as e:
+    print(str(e))
     sys.exit(1)
 
 MOUNT_POINT = "/mnt/lineage/"
@@ -20,10 +26,13 @@ RELEASE_DIR = Path('releases')
 METADATA_DIR = Path('metadata')
 LOG_FILE = "LOS_APK_Extractor.logs"
 RELEASE_JSON = "release.json"
-TRANSFER_JSON = "transfer.json"
 RELEASE_NOTES = "Release_Notes.md"
-#TRANSFER_JSON = "test_transfer.json"
 
+#if os.environ.get('TRAVIS') == "true" or os.environ.get('CI') == "true":
+#    print("Running on TRAVIS or other CI.")
+TRANSFER_JSON = "transfer.json"
+#else:
+#    TRANSFER_JSON = "test_transfer.json"
 
 log = logging.getLogger()
 log.setLevel(logging.DEBUG)
@@ -51,12 +60,12 @@ def define_tag_from_json():
         try:
             log.info('Reading json data from file.')
             with open(RELEASE_JSON) as r:
-                jsondata = json.dumps(r.read())
+                jsondata = json.loads(r.read())
                 global TAG
-                TAG = str(jsondata['release']['tag'])
+                TAG = jsondata['release']['tag']
                 if str(TAG) == "":
                     log.critical('TAG is empty!.')
-                    sys.exit(2)
+                    sys.exit(10)
         except Exception as e:
             log.critical('Failed to read from %s', RELEASE_JSON)
             log.exception(e)

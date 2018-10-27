@@ -254,6 +254,7 @@ def set_flags_and_metadata():
                             'node_name' : platform.node()
                             },
                       'lineage': {
+                            'version' : LOS_REL_VERSION[0],
                             'build' : LOS_REL_DATE[0],
                             'build_type' : LOS_REL_TYPE[0],
                             'zip_file': LOS_REL_URL[0]
@@ -283,7 +284,7 @@ def set_flags_and_metadata():
         #---------------------------------------------------------------------
         # Otherwise, set ci.deployed to flase, and DEPLOY=false.
         # Do not generate release notes as it will not be used.
-        if utc_ts > int(last_build_date)  and REL_TAG != str(last_build_tag):
+        if int(utc_ts) > int(last_build_date)  and REL_TAG != str(last_build_tag):
             log.info("This release is New. GH Releases will be enabled if on MASTER")
             METADATA.update({
                              'ci': {
@@ -296,7 +297,7 @@ def set_flags_and_metadata():
                     flag_file.write('#!/usr/bin/env bash\n'
                                     + 'export DEPLOY="true"\n'
                                     + 'export BUILD_TAG="' + REL_TAG + '"\n'
-                                    + 'export LOGFILE_TS=' + utc_ts  + '"\n')
+                                    + 'export LOGFILE_TS=' + str(utc_ts)  + '"\n')
             except Exception as e:
                 log.critical('Failed to write exporter script.')
                 log.exception(e)
@@ -319,14 +320,14 @@ def set_flags_and_metadata():
                     flag_file.write('#!/usr/bin/env bash\n'
                                     + 'export DEPLOY="false"\n'
                                     + 'export BUILD_TAG="' + REL_TAG + '"\n'
-                                    + 'export LOGFILE_TS="' + utc_ts + '"\n')
+                                    + 'export LOGFILE_TS="' + str(utc_ts) + '"\n')
             except Exception as e:
                 log.critical('Failed to write exporter script.')
                 log.exception(e)
                 sys.exit(1)
         # Write METADATA to json
         log.info("Generating %s", RELEASE_JSON)
-        if Path.exists(RELEASE_JSON):
+        if Path(RELEASE_JSON).exists():
             log.info('%s exists.', RELEASE_JSON)
             try:
                 log.info('Deleting old %s file...', RELEASE_JSON)
