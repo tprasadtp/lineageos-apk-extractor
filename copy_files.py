@@ -67,7 +67,7 @@ def copy_release_files():
             for app, path in transfer.items():
                 fname = app + '-' + TAG + os.path.splitext(path)[1]
                 try:
-                    log.debug("Copying %s from %s", app, path)
+                    log.info("Copying %s from %s", app, path)
                     shutil.copy2(path, RELEASE_DIR / fname)
                 except Exception:
                     log.error("Failed to Copy %s", app)
