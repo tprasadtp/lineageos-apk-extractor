@@ -1,8 +1,9 @@
 {
     "version": 1,
     "ci": {
-        "build_passed": "True",
-        "build_date": 1540612850
+        "deployed": "false",
+        "build_date": 1540619929,
+        "build_ts": "05:58 AM UTC on Oct 27, 2018"
     },
     "lineage": {
         "build": "2018-10-22",
