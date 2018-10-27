@@ -66,6 +66,7 @@ def __download_file(file_name, file_url):
     Requires requests v2.19+. Older versions may not support
     `with` statement.
     """
+    log.info('Downloading file.....')
     with requests.get(file_url, stream = True, timeout=10) as response:
         log.debug('Response code is %s', response.status_code)
         response.raise_for_status()

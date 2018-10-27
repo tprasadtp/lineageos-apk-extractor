@@ -10,4 +10,5 @@ brotli --decompress --force --verbose --ouput=system.new.dat system.new.dat.br
 ./sdat2img.py system.transfer.list system.new.dat system.img
 sudo mount -t ext4 system.img /mnt/lineage
 ./copy_files.py
-chmod +x ./flags.sh && source ./flags.sh
+chmod +x ./flags.sh
+source ./flags.sh
