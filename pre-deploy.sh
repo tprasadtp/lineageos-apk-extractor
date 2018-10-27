@@ -21,7 +21,6 @@ if [ "${BUILD_TAG}" != "" ] || [ "${DEPLOY}" != "" ]; then
         if git show-ref --tags --quiet --verify -- "refs/tags/${BUILD_TAG}"; then
             echo "Tag already present. Deleting it."
             git tag -d "${BUILD_TAG}"
-            git push origin :refs/tags/"${BUILD_TAG}"
         fi
         echo "Creating Tag : ${BUILD_TAG}"
         git tag "${BUILD_TAG}"

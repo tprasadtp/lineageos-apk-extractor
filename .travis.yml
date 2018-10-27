@@ -16,6 +16,7 @@ before_install:
 - sudo mkdir -p /mnt/lineage
 - rm -rf ./metadata/ ./releases/
 - rm -f ./flags.sh
+- echo "https://valarie-ci-bot:${GH_TOKEN}@github.com" > $HOME/.git-credentials
 install:
 - ./install-brotli.sh
 - sudo apt-get install -y jshon shellcheck
