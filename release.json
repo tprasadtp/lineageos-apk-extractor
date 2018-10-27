@@ -2,7 +2,7 @@
     "version": 1,
     "ci": {
         "build_passed": "True",
-        "build_date": 1540609289
+        "build_date": 1540609000
     },
     "lineage": {
         "build": "2018-10-22",
