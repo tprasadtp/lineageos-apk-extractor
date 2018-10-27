@@ -10,7 +10,6 @@ https://opensource.org/licenses/MIT
 
 # Imports
 import os, shutil, hashlib
-import atexit
 import sys, platform, zipfile, json
 from pathlib import Path
 import logging, logging.handlers
@@ -59,21 +58,11 @@ log_file_handler.setLevel(logging.DEBUG)
 log_console_handler = logging.StreamHandler()
 log_console_handler.setLevel(logging.INFO)
 # Formatters
-log_file_handler.setFormatter(logging.Formatter('[ {asctime} ] - %(name)s - [ {levelname:8s} ] - {message}', style='{'))
-log_console_handler.setFormatter(logging.Formatter('[ {levelname:8s} ] - {message}', style='{'))
+log_file_handler.setFormatter(logging.Formatter('[ %(asctime)s ] - [%(levelname)-8s] - %(name)s - %(message)s'))
+log_console_handler.setFormatter(logging.Formatter('[ %(levelname)-8s] - %(message)s'))
 # Add the handlers to the logger
 log.addHandler(log_file_handler)
 log.addHandler(log_console_handler)
-
-
-@atexit.register
-def __close_logs():
-    """
-    Closes all Log Handlers.
-    Exits with code.
-    """
-    log.removeHandler(log_file_handler)
-    log.removeHandler(log_console_handler)
 
 def log_sysinfo():
     """
@@ -98,6 +87,7 @@ def extract_checksum_from_file(file_name):
             return checksum_file.readline().split(" ",1)[0]
     else:
         log.error("File %s not found.", file_name)
+        sys.exit(1)
 
 def verify_sha256_checksum(file_name, checksum):
     """
@@ -119,8 +109,7 @@ def verify_sha256_checksum(file_name, checksum):
         log.debug('SHA256 hash SHOULD BE : %s', checksum.lower())
     else:
         log.critical('OOOPS! File not found.')
-        __close_logs()
-        SystemExit('ZIP File not Found.')
+        sys.exit('ZIP File not Found.')
     if checksum.lower() == sha256hash.hexdigest():
         log.debug('File Hashes Match.')
         return True
@@ -161,7 +150,7 @@ def extract_los_urls(device_name="marlin"):
         log.debug('----------------------------------------------------------')
     else:
         log.error('File %s not found.', LOS_DL_PAGE)
-        SystemExit('File {LOS_DL_PAGE} not found.')
+        sys.exit()
 
 
 def extract_zip_contents(zip_file, destination):
@@ -176,7 +165,7 @@ def extract_zip_contents(zip_file, destination):
           zip_ref.extractall(destination)
     else:
         log.error('%s not found.', zip_file)
-        SystemError('ZIP is not the filesystem.')
+        sys.exit('ZIP is not the filesystem.')
 
 def purge(dir, pattern):
     """
@@ -214,7 +203,7 @@ def generate_release_notes():
         except OSError as e:
             log.critical('Failed to remove existing release notes.')
             log.error('Error was %s', e.strerror)
-            raise OSError
+            sys.exit()
     log.info('Generating Release Notes...')
     with open(RELEASE_NOTES, 'w+') as release_notes:
             release_notes.write('# Release notes for Tag lineage -' + LOS_REL_DATE[0] + '\n\n')
@@ -246,7 +235,7 @@ def generate_json_metadata():
         except OSError as e:
             log.critical('Failed to remove existing release notes.')
             log.error('Error was %s', e.strerror)
-            raise OSError
+            sys.exit()
     log.info('Generating Metadata JSON for gh-pages')
     metadata = {}
     metadata.update({ 'version' : 1,
@@ -286,8 +275,7 @@ def main():
         log.info("File's Checksum matches.")
     else:
         log.error("File is corrupt. Please try again.")
-        __close_logs()
-        raise Exception('ZIP File is corrupt or modified')
+        sys.exit()
 
     # Extract Files
     log.info('Extracting from ZIP File ....')
