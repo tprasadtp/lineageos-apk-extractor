@@ -8,15 +8,15 @@ set -e
 
 echo "DEPLOY is set to ${DEPLOY}"
 echo "BUILD_TAG is set to ${BUILD_TAG}"
-
-echo "Tagging Release...."
-
-echo "Setting Up Git Email & User"
-git config --local user.name "valarie-ci-bot"
-git config --local user.email "${GH_EMAIL}"
+LOG_FILE="LOS_APK_Extractor"
 
 if [ "${BUILD_TAG}" != "" ] || [ "${DEPLOY}" != "" ]; then
     if [ "${DEPLOY}" == "true" ]; then
+        echo "Tagging Release...."
+        echo "Setting Up Git Email & User"
+        git config --local user.name "valarie-ci-bot"
+        git config --local user.email "${GH_EMAIL}"
+
         echo "Deploy to Github releases is Enabled."
         if git show-ref --tags --quiet --verify -- "refs/tags/${BUILD_TAG}"; then
             echo "Tag already present. Deleting it."
@@ -26,7 +26,12 @@ if [ "${BUILD_TAG}" != "" ] || [ "${DEPLOY}" != "" ]; then
         git tag "${BUILD_TAG}"
         echo "Copying Release Logs"
         mkdir -p ./metadata/release-logs
-        cp LOS_APK_Extractor.logs ./metadata/release-logs/LOS_APK_Extractor-"${BUILD_TAG}".log
+        cp "${LOG_FILE}".logs ./metadata/release-logs/"${LOG_FILE}"-"${BUILD_TAG}".log
+        if [ "${LOGFILE_TS}" == "" ]; then
+            LOGFILE_TS="$(date +%s)"
+        fi
+        mkdir -p ./metadata/logs
+        cp ./metadata/release-logs/"${LOG_FILE}"-"${BUILD_TAG}".log ./metadata/logs/"${LOG_FILE}"-"${BUILD_TAG}"-"${LOGFILE_TS}".log
         echo "Copying Release Notes"
         mkdir -p ./metadata/release-notes
         cp Release_Notes.md ./metadata/release-notes/Release-Notes-"${BUILD_TAG}".md
@@ -36,10 +41,10 @@ if [ "${BUILD_TAG}" != "" ] || [ "${DEPLOY}" != "" ]; then
             LOGFILE_TS="$(date +%s)"
         fi
         mkdir -p ./metadata/logs
-        cp LOS_APK_Extractor.logs ./metadata/logs/LOS_APK_Extractor-"${BUILD_TAG}"-"${LOGFILE_TS}".log
+        cp "${LOG_FILE}".logs ./metadata/logs/"${LOG_FILE}"-"${BUILD_TAG}"-"${LOGFILE_TS}".log
         echo "This Build will not be released."
     fi
-    echo "RSYNCING to gh-deploy"
+    echo "RSYNC'ING to gh-deploy"
     rsync -Eav ./gh-pages/ ./gh-deploy/
     rsync -Eav ./metadata/ ./gh-deploy/
 else

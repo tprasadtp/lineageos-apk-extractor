@@ -1,21 +1,21 @@
 # Extract APKs from Lineage OS ZIPs & automatically upload to Github releases regularly
 
-[![Travis (.com)](https://img.shields.io/travis/com/tprasadtp/lineageos-apk-extractor.svg?style=flat-square)](https://travis-ci.com/tprasadtp/lineageos-apk-extractor)
-[![license](https://img.shields.io/github/license/tprasadtp/lineageos-apk-extractor.svg?style=flat-square)](https://github.com/tprasadtp//blob/master/LICENSE)
-![GitHub repo size](https://img.shields.io/github/repo-size/tprasadtp/lineageos-apk-extractor.svg?style=flat-square&logo=Python)
+[![Travis (.com)](https://img.shields.io/travis/com/tprasadtp/lineageos-apk-extractor.svg?style=for-the-badge)](https://travis-ci.com/tprasadtp/lineageos-apk-extractor)
+[![license](https://img.shields.io/github/license/tprasadtp/lineageos-apk-extractor.svg?style=for-the-badge)](https://github.com/tprasadtp//blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/tprasadtp/lineageos-apk-extractor/all.svg?style=for-the-badge&logo=github&label=Latest%20Release&colorB=blue)](https://github.com/tprasadtp/lineageos-apk-extractor/releases)
 
 ### Lineage OS Details
 
-[![Lineage Version](https://img.shields.io/badge/dynamic/json.svg?label=Lineage%20Version&style=flat-square&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json&query=$.lineage.version)](https://github.com/tprasadtp/lineageos-apk-extractor/releases/latest)
+[![Lineage Version](https://img.shields.io/badge/dynamic/json.svg?label=Version&style=flat-square&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json&query=$.lineage.version)](https://github.com/tprasadtp/lineageos-apk-extractor/releases/latest)
 ![Lineage Build Date](https://img.shields.io/badge/dynamic/json.svg?label=Build%20Date&style=flat-square&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json&query=$.lineage.build)
-![Lineage Build Type](https://img.shields.io/badge/dynamic/json.svg?label=Build%20Type&style=flat-square&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json&query=$.lineage.build_type)
+![Lineage Build Type](https://img.shields.io/badge/dynamic/json.svg?label=Type&style=flat-square&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json&query=$.lineage.build_type)
 
-### CI
+### CI & Deployment
 
-[![Last Built on](https://img.shields.io/badge/dynamic/json.svg?label=Last%20Build%20on&style=flat-square&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json&query=$.ci.build_ts&logo=travis&colorB=blue)](https://github.com/tprasadtp/lineageos-apk-extractor/releases/latest)
+[![Last Built on](https://img.shields.io/badge/dynamic/json.svg?label=Last%20Build%20on&style=flat-square&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json&query=$.ci.build_ts&logo=travis&colorB=blue)](https://github.com/tprasadtp/lineageos-apk-extractor/tree/gh-pages/logs)
 [![Last Build Deployed](https://img.shields.io/badge/dynamic/json.svg?label=Last%20Build%20Deployed&style=flat-square&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json&query=$.ci.deployed&logo=travis)](https://github.com/tprasadtp/lineageos-apk-extractor/releases/latest)
 ![Build Tag](https://img.shields.io/badge/dynamic/json.svg?label=Build%20Tag&style=flat-square&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json&query=release.tag&logo=github)
-[![GitHub (pre-)release](https://img.shields.io/github/release/tprasadtp/lineageos-apk-extractor/all.svg?style=flat-square&logo=github&label=Release&colorB=blue)](https://github.com/tprasadtp/lineageos-apk-extractor/releases)
+![GitHub repo size](https://img.shields.io/github/repo-size/tprasadtp/lineageos-apk-extractor.svg?style=flat-square&logo=Python)
 
 ## Details
 
@@ -40,3 +40,20 @@ If you have a problems **other than** released APKs being corrupt or not extract
 - Python icon by Freepik from flat-squareicon.com
 - Original `sdat2img.py` by [Andrei Conache](https://github.com/xpirt/sdat2img). Please note that licence information is missing from original repository.
 - Builds use `brotli` to decompress `system.new.dat.br`.
+
+## APKs
+
+```json
+{
+    "Email": "/mnt/lineage/app/Email/Email.apk",
+    "Gallery": "/mnt/lineage/priv-app/Gallery2/Gallery2.apk",
+    "Music": "/mnt/lineage/priv-app/Eleven/Eleven.apk",
+    "Calendar": "/mnt/lineage/app/Calendar/Calendar.apk",
+    "Jelly": "/mnt/lineage/app/Jelly/Jelly.apk",
+    "Trebuchet": "/mnt/lineage/priv-app/Trebuchet/Trebuchet.apk",
+    "Snap": " /mnt/lineage/priv-app/Snap/Snap.apk",
+    "Recorder": "/mnt/lineage/priv-app/Recorder/Recorder.apk",
+    "messaging": "/mnt/lineage/app/messaging/messaging.apk",
+    "DeskClock": "/mnt/lineage/app/DeskClock/DeskClock.apk"
+}
+```
