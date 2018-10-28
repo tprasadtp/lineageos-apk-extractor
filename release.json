@@ -1,9 +1,9 @@
 {
     "version": 2,
     "ci": {
-        "build_date": 1540672377,
-        "build_ts": "08:32 PM UTC on Oct 27, 2018",
-        "node_name": "travis-job-0626de0a-050b-471d-9dcd-fb93a509ddd1",
+        "build_date": 1540748062,
+        "build_ts": "05:34 PM UTC on Oct 28, 2018",
+        "node_name": "travis-job-cadd430e-8c20-4d8c-9259-7df4b5de5c0e",
         "deployed": "false"
     },
     "lineage": {
