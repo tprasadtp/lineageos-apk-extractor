@@ -1,5 +1,5 @@
 {
-    "version": 2,
+    "version": 2.5,
     "ci": {
         "build_date": 1540948028,
         "build_ts": "01:07 AM UTC on Oct 31, 2018",
@@ -15,5 +15,6 @@
     "release": {
         "tag": "15.1.2018-10-29",
         "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2018-10-29"
+        "human_ts" : "Mon 00 0000 at 00:00"
     }
 }
