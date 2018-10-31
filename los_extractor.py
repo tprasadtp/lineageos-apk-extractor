@@ -246,11 +246,13 @@ def set_flags_and_metadata():
     # Set Time Vars
     global utc_ts
     utc_ts = int(time.time())
-    human_ts = time.strftime('%I:%M %p %Z on %b %d, %Y')
-    METADATA.update({ 'version' : 2,
+    human_ts = time.strftime('%b %d %Y at %H:%M')
+    build_num = os.environ.get('TRAVIS_BUILD_NUMBER', "NaN")
+    METADATA.update({ 'version' : 3,
                       'ci': {
                             'build_date' : utc_ts,
-                            'build_ts'  : human_ts,
+                            'build_date_human'  : human_ts,
+                            'build_number' : build_num,
                             'node_name' : platform.node()
                             },
                       'lineage': {
@@ -270,12 +272,17 @@ def set_flags_and_metadata():
         with open(OLD_RELEASE_JSON, 'r') as oldjson:
             last_metadata = json.loads(oldjson.read())
         try:
+            # Get Last build TS unix epoch
             last_build_date = last_metadata['ci']['build_date']
             log.info('Last Build was %s', last_build_date)
+            # Get Last Release Tag
             last_build_tag = last_metadata['release']['tag']
             log.info('Last Release Tag was %s', last_build_tag)
+            # Also Get last Release Date
+            last_release_ts = last_metadata['release']['human_ts']
+            log.info('Last Release TS was %s', last_release_ts)
         except KeyError as e:
-            log.critical('JSON file from Repository is Old. update it manually to latesest schema')
+            log.critical('JSON file from repository seems to be old. update it manually to latest schema.')
             log.exception(e)
             sys.exit(10)
         # If build timestamp for old build is less than current timestamp and
@@ -287,47 +294,29 @@ def set_flags_and_metadata():
         if int(utc_ts) > int(last_build_date)  and REL_TAG != str(last_build_tag):
             log.info("This release is New. GH Releases will be enabled if on MASTER")
             METADATA['ci'].update({ 'deployed' : "true"})
-            try:
-                with open(FLAGS_SCRIPT, 'w+') as flag_file:
-                    log.info('Generating Exporter Scripts...')
-                    flag_file.write('#!/usr/bin/env bash\n'
-                                    + 'export DEPLOY="true"\n'
-                                    + 'export BUILD_TAG="' + REL_TAG + '"\n'
-                                    + 'export LOGFILE_TS="' + str(utc_ts)  + '"\n')
-            except Exception as e:
-                log.critical('Failed to write exporter script.')
-                log.exception(e)
-                sys.exit(1)
-
-            ##################################################################
+            METADATA['release'].update({'human_ts' : human_ts})
+            gh_rel_flag = "false"
             # Generate Release Notes
-            ##################################################################
             generate_release_notes()
-            ##################################################################
         else:
             log.info("Release is already the latest.")
             METADATA['ci'].update({ 'deployed' : "false"})
-            try:
-                with open(FLAGS_SCRIPT, 'w+') as flag_file:
-                    flag_file.write('#!/usr/bin/env bash\n'
-                                    + 'export DEPLOY="false"\n'
-                                    + 'export BUILD_TAG="' + REL_TAG + '"\n'
-                                    + 'export LOGFILE_TS="' + str(utc_ts) + '"\n')
-            except Exception as e:
-                log.critical('Failed to write exporter script.')
-                log.exception(e)
-                sys.exit(1)
+            # Keep old release date as is.
+            METADATA['release'].update({'human_ts': last_release_ts})
+            gh_rel_flag = "false"
+        log.info('Writing exporter script...')
+        try:
+            with open(FLAGS_SCRIPT, 'w+') as flag_file:
+                flag_file.write('#!/usr/bin/env bash\n'
+                                + 'export DEPLOY="' + gh_rel_flag +'"\n'
+                                + 'export BUILD_TAG="' + REL_TAG + '"\n'
+                                + 'export LOGFILE_TS="' + str(utc_ts) + '"\n')
+        except Exception as e:
+            log.critical('Failed to write exporter script.')
+            log.exception(e)
+            sys.exit(1)
         # Write METADATA to json
         log.info("Generating %s", RELEASE_JSON)
-        if Path(RELEASE_JSON).exists():
-            log.info('%s exists.', RELEASE_JSON)
-            try:
-                log.info('Deleting old %s file...', RELEASE_JSON)
-                Path(RELEASE_JSON).unlink()
-            except OSError as e:
-                log.critical('Failed to remove existing %s.', RELEASE_JSON)
-                log.exception(e)
-                sys.exit(1)
         try:
             with open(RELEASE_JSON, 'w+') as release_json:
                 release_json.write(json.dumps(METADATA, indent=4))

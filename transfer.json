@@ -7,6 +7,6 @@
     "Trebuchet": "/mnt/lineage/priv-app/Trebuchet/Trebuchet.apk",
     "Snap": " /mnt/lineage/priv-app/Snap/Snap.apk",
     "Recorder": "/mnt/lineage/priv-app/Recorder/Recorder.apk",
-    "messaging": "/mnt/lineage/app/messaging/messaging.apk",
+    "Messaging": "/mnt/lineage/app/messaging/messaging.apk",
     "DeskClock": "/mnt/lineage/app/DeskClock/DeskClock.apk"
 }

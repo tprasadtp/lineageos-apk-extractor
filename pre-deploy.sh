@@ -10,7 +10,10 @@ echo "DEPLOY is set to ${DEPLOY}"
 echo "BUILD_TAG is set to ${BUILD_TAG}"
 LOG_FILE="LOS_APK_Extractor"
 
-if [ "${BUILD_TAG}" != "" ] || [ "${DEPLOY}" != "" ]; then
+if [ "${BUILD_TAG}" == "" ] || [ "${DEPLOY}" == "" ]; then
+    echo "BUILD_TAG and DEPLOY were not exported properly."
+    exit 1
+else
     if [ "${DEPLOY}" == "true" ]; then
         echo "Tagging Release...."
         echo "Setting Up Git Email & User"
@@ -27,15 +30,11 @@ if [ "${BUILD_TAG}" != "" ] || [ "${DEPLOY}" != "" ]; then
         echo "Copying Release Logs"
         mkdir -p ./metadata/release-logs
         cp "${LOG_FILE}".logs ./metadata/release-logs/"${LOG_FILE}"-"${BUILD_TAG}".log
-        if [ "${LOGFILE_TS}" == "" ]; then
-            LOGFILE_TS="$(date +%s)"
-        fi
-        mkdir -p ./metadata/logs
-        cp ./metadata/release-logs/"${LOG_FILE}"-"${BUILD_TAG}".log ./metadata/logs/"${LOG_FILE}"-"${BUILD_TAG}"-"${LOGFILE_TS}".log
         echo "Copying Release Notes"
         mkdir -p ./metadata/release-notes
         cp Release_Notes.md ./metadata/release-notes/Release-Notes-"${BUILD_TAG}".md
     else
+        # We cond deploy to github releases
         echo "Copying Build Logs"
         if [ "${LOGFILE_TS}" == "" ]; then
             LOGFILE_TS="$(date +%s)"
@@ -47,7 +46,4 @@ if [ "${BUILD_TAG}" != "" ] || [ "${DEPLOY}" != "" ]; then
     echo "RSYNC'ING to gh-deploy"
     rsync -Eav ./gh-pages/ ./gh-deploy/
     rsync -Eav ./metadata/ ./gh-deploy/
-else
-    echo "BUILD_TAG and DEPLOY were not exported properly."
-    exit 1
 fi

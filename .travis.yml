@@ -11,15 +11,14 @@ branches:
   - 16.1.*.*
   - 17.0.*.*
 before_install:
-- chmod +x ./*.py
-- chmod +x ./*.sh
+# Lets not break build if script is not executable.
+- chmod +x ./*.py ./*.sh
 - sudo mkdir -p /mnt/lineage
-- rm -rf ./metadata/ ./releases/
-- rm -f ./flags.sh
+- rm -rf ./metadata/ ./releases/ ./flags.sh
 - git clone --branch=gh-pages    https://github.com/tprasadtp/lineageos-apk-extractor gh-pages 2>&1 > /dev/null
 install:
+# Keep for now. As soon as Travis updates to xenial, use apt-get.
 - ./install-brotli.sh
-- sudo apt-get install -y jshon shellcheck
 - pip3 install -q -r requirements.txt
 before_script:
 - brotli --version
@@ -30,10 +29,11 @@ script:
 - ./sdat2img.py
 - sudo mount -t ext4 system.img /mnt/lineage
 - ./copy_files.py
+# We need to source flags prior to "before_deploy"
 - chmod +x ./flags.sh && source ./flags.sh
 before_deploy:
+# Git Tag, Copy logs, copy metadata files
 - ./pre-deploy.sh
-- export DATE="$(date)"
 deploy:
 - provider: pages
   skip_cleanup: true
@@ -55,7 +55,7 @@ deploy:
   skip_cleanup: true
   prerelease: true
   name: Lineage - ${BUILD_TAG}
-  body: Automatically released on ${DATE}. For [Release Notes](https://github.com/tprasadtp/lineageos-apk-extractor/tree/gh-pages/release-notes) see [here](https://github.com/tprasadtp/lineageos-apk-extractor/tree/gh-pages/release-notes/Release-Notes-${BUILD_TAG}.md). Logs can be found [here](https://github.com/tprasadtp/lineageos-apk-extractor/tree/gh-pages/release-logs/LOS_APK_Extractor-${BUILD_TAG}.log). Non taggeed logs can be found [here](https://github.com/tprasadtp/lineageos-apk-extractor/tree/gh-pages/logs)
+  body: Automatically released. For [Release Notes](https://github.com/tprasadtp/lineageos-apk-extractor/tree/gh-pages/release-notes) see [here](https://github.com/tprasadtp/lineageos-apk-extractor/tree/gh-pages/release-notes/Release-Notes-${BUILD_TAG}.md). Logs can be found [here](https://github.com/tprasadtp/lineageos-apk-extractor/tree/gh-pages/release-logs/LOS_APK_Extractor-${BUILD_TAG}.log). Non taggeed logs can be found [here](https://github.com/tprasadtp/lineageos-apk-extractor/tree/gh-pages/logs)
   overwrite: true
   on:
     branch: master
