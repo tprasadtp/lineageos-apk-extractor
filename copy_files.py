@@ -68,7 +68,7 @@ def define_tag_from_json():
                 if str(TAG) == "":
                     log.critical('TAG is empty!.')
                     sys.exit(10)
-                if str(GH_RELEASES_DEPLOY_FLAG).lower() != "true" and str(GH_RELEASES_DEPLOY_FLAG).lower() != "false" :
+                if str(GH_RELEASES_DEPLOY_FLAG).lower() != "yes" and str(GH_RELEASES_DEPLOY_FLAG).lower() != "no" :
                     log.critical('Invalid deploy flag. It can either be <true> or <false>')
                     sys.exit(10)
         except Exception as e:
