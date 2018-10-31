@@ -17,6 +17,7 @@ import sys
 import platform
 import zipfile
 import json
+import datetime
 from pathlib import Path
 import logging, logging.handlers
 
@@ -29,6 +30,7 @@ except ImportError:
     sys.exit("Failed to import bs4")
 
 from utils import get_file as dl
+from utils import write_json
 
 # Settings
 DEVICE_NAME = "bullhead"
@@ -54,6 +56,11 @@ LOS_REL_SIZE = []
 LOS_REL_DATE = []
 
 METADATA = {}
+# Defaults to false
+GH_RELEASE_FLAG = False
+# TS
+UTC_TS = int(time.time())
+
 # Logs
 log = logging.getLogger()
 log.setLevel(logging.DEBUG)
@@ -146,7 +153,7 @@ def extract_los_urls(device_name="marlin"):
                     LOS_REL_SIZE.append(td[3].string)
                     LOS_REL_DATE.append(td[4].string)
         global REL_TAG
-        REL_TAG= LOS_REL_VERSION[0] + '.' +LOS_REL_DATE[0]
+        REL_TAG = LOS_REL_VERSION[0] + '.' +LOS_REL_DATE[0]
         # Debugging stuff
         log.debug('----------------------------------------------------------')
         log.debug('------------------Parsed Variables------------------------')
@@ -200,25 +207,19 @@ def delete_old_files():
     purge(dir=os.getcwd(), pattern="*.bin")
 
 
-def generate_release_notes():
+def generate_release_notes(time_stamp):
     """
     Release Notes Generator.
     Use Extracted info to generate Release notes.
+    Args:
+        time_stamp - (str) Timestamp in human readable form.
+    Returns :
+        None
     """
-    if Path(RELEASE_NOTES).exists():
-        log.info('%s exists.', RELEASE_NOTES)
-        try:
-            log.info('Deleting old release notes')
-            Path(RELEASE_NOTES).unlink()
-        except Exception as e:
-            log.critical('Failed to remove existing release notes.')
-            log.exception(e)
-            sys.exit(1)
     log.info('Generating Release Notes...')
     with open(RELEASE_NOTES, 'w+') as release_notes:
             release_notes.write('# Release notes for Tag lineage -' + REL_TAG + '\n\n')
-            ts = time.strftime('%I:%M %p %Z on %b %d, %Y')
-            release_notes.write('- Release notes generated on : ' + ts + '\n')
+            release_notes.write('- Release notes generated on : ' + str(time_stamp) + '\n')
             release_notes.write('- Lineage OS Version : ' + LOS_REL_VERSION[0] + '\n')
             release_notes.write('- Lineage OS Type : ' + LOS_REL_TYPE[0] + '\n', )
             release_notes.write('- Zip file used : [ZIPfile]('+ LOS_REL_URL[0] + ')' + '\n')
@@ -228,30 +229,34 @@ def generate_release_notes():
             release_notes.write('## Tags and Downloads\n\n')
             release_notes.write('- This is generated automatically.\n'
                                 + '- Tags correspond to build date.\n'
-                                + '- Every release is tagged '
+                                + '- Every release is tagged as'
                                 + '[lineage-version].[build-date]\n\n')
             release_notes.write('## Logs\n' +
-                                'Logs related to this Build are available'
-                                + 'as assets or available in logs folder in `gh-pages` branch.\n')
-    log.debug("Generated Release Notes")
+                                'Logs related to this build are available'
+                                + 'as assets or available in logs folder under `gh-pages` branch.\n')
+    log.debug("Generated Release Notes.")
 
-def set_flags_and_metadata():
+def set_metadata_and_get_release_flag(current_ts, last_build_ts, last_build_tag, last_release_date):
     """
-    Set conditional flags and generate release tags & variable exporter scripts.
-    Also generate metadata json
+    Define common Metadata like build time etc.
+    Args:
+        current_ts      - (int) current unix epoch
+        last_build_date - (int) unix epoch during last build
+        last_relase_ts  - (str) date and time of last release on github releases.
+        last_build_tag  - (str) last build tag
+    Returns:
+        bool - GH_RELEASE_FLAG
+        Modifies global Dictionary METADATA.
     """
-    log.info('Downloading OLD release.json')
-    dl(file_name=OLD_RELEASE_JSON, file_url="https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json")
-    log.info('Preparing Metadata....')
-    # Set Time Vars
-    global utc_ts
-    utc_ts = int(time.time())
-    human_ts = time.strftime('%b %d %Y at %H:%M')
-    build_num = os.environ.get('TRAVIS_BUILD_NUMBER', "NaN")
+
+    # Convert to Human Readable TS
+    ts_human = time.strftime('%d %b %y %H:%M',  time.gmtime(UTC_TS))
+    # If running on TRAVIS-CI get build number else, set it to NA
+    build_num = os.environ.get('TRAVIS_BUILD_NUMBER', "NA")
     METADATA.update({ 'version' : 3,
                       'ci': {
-                            'build_date' : utc_ts,
-                            'build_date_human'  : human_ts,
+                            'build_date' : current_ts,
+                            'build_date_human'  :  ts_human,
                             'build_number' : build_num,
                             'node_name' : platform.node()
                             },
@@ -266,68 +271,78 @@ def set_flags_and_metadata():
                             'link': REL_TAG_BASE_URL + REL_TAG
                             }
                       })
+    # If build timestamp for old build is less than current timestamp and
+    # if tags are different, set ci.deployed to Yes. Also set DEPLOY=true
+    # in flags script. Also generate Release Notes.
+    #---------------------------------------------------------------------
+    # Otherwise, set ci.deployed to No, and DEPLOY=false.
+    # Do not generate release notes as it will not be used.
+    #if gh_release_flag:
+    if str(REL_TAG) != str(last_build_tag):
+        print(last_build_tag)
+        log.info("This release is New. GH Releases will be enabled if on MASTER")
+        METADATA['ci'].update({ 'deployed' : "Yes"})
+        METADATA['release'].update({'human_ts' : current_ts})
+        # Generate Release Notes
+        generate_release_notes(time_stamp = ts_human)
+        return True
+    else:
+        log.info("Release is already latest. No need to deploy.")
+        METADATA['ci'].update({ 'deployed' : "No"})
+        # Keep old release date as is.
+        METADATA['release'].update({'human_ts': last_release_date})
+        return False
 
-    log.info("Checking last build date...")
+def get_old_jason_data():
+    """
+    Download and parse old release.json
+    Args: None
+    Returns : A tuple (int last_build_ts, str last_build_tag, str last_release_date)
+    """
+    log.debug('Downloading OLD release.json')
+    dl(file_name=OLD_RELEASE_JSON, file_url="https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json")
+    log.debug("Reading old release.json file...")
     if os.path.isfile(OLD_RELEASE_JSON):
         with open(OLD_RELEASE_JSON, 'r') as oldjson:
             last_metadata = json.loads(oldjson.read())
-        try:
-            # Get Last build TS unix epoch
-            last_build_date = last_metadata['ci']['build_date']
-            log.info('Last Build was %s', last_build_date)
-            # Get Last Release Tag
-            last_build_tag = last_metadata['release']['tag']
-            log.info('Last Release Tag was %s', last_build_tag)
-            # Also Get last Release Date
-            last_release_ts = last_metadata['release']['human_ts']
-            log.info('Last Release TS was %s', last_release_ts)
-        except KeyError as e:
-            log.critical('JSON file from repository seems to be old. update it manually to latest schema.')
-            log.exception(e)
-            sys.exit(10)
-        # If build timestamp for old build is less than current timestamp and
-        # if tags are different, set ci.deployed to true. Also set DEPLOY=true
-        # in flags script. Also generate Release Notes.
-        #---------------------------------------------------------------------
-        # Otherwise, set ci.deployed to flase, and DEPLOY=false.
-        # Do not generate release notes as it will not be used.
-        if int(utc_ts) > int(last_build_date)  and REL_TAG != str(last_build_tag):
-            log.info("This release is New. GH Releases will be enabled if on MASTER")
-            METADATA['ci'].update({ 'deployed' : "true"})
-            METADATA['release'].update({'human_ts' : human_ts})
-            gh_rel_flag = "false"
-            # Generate Release Notes
-            generate_release_notes()
-        else:
-            log.info("Release is already the latest.")
-            METADATA['ci'].update({ 'deployed' : "false"})
-            # Keep old release date as is.
-            METADATA['release'].update({'human_ts': last_release_ts})
-            gh_rel_flag = "false"
-        log.info('Writing exporter script...')
-        try:
-            with open(FLAGS_SCRIPT, 'w+') as flag_file:
-                flag_file.write('#!/usr/bin/env bash\n'
-                                + 'export DEPLOY="' + gh_rel_flag +'"\n'
-                                + 'export BUILD_TAG="' + REL_TAG + '"\n'
-                                + 'export LOGFILE_TS="' + str(utc_ts) + '"\n')
-        except Exception as e:
-            log.critical('Failed to write exporter script.')
-            log.exception(e)
-            sys.exit(1)
-        # Write METADATA to json
-        log.info("Generating %s", RELEASE_JSON)
-        try:
-            with open(RELEASE_JSON, 'w+') as release_json:
-                release_json.write(json.dumps(METADATA, indent=4))
-                log.debug('JSON Dump is : %s', json.dumps(METADATA))
-        except Exception as e:
-            log.critical("Failed to write %s.", RELEASE_JSON)
-            log.exception(e)
-            sys.exit(1)
+            try:
+                # Get Last build TS unix epoch
+                last_build_date = last_metadata['ci']['build_date']
+                log.info('Last Build was %s', last_build_date)
+                # Get Last Release Tag
+                last_build_tag = last_metadata['release']['tag']
+                log.info('Last Release Tag was %s', last_build_tag)
+                # Also Get last Release Date
+                last_release_ts = last_metadata['release']['human_ts']
+                log.info('Last Release TS was %s', last_release_ts)
+                # Return tuple
+                return ( int(last_build_date), str(last_build_tag), str(last_release_ts))
+            except KeyError as e:
+                log.critical('JSON file from repository seems to be old. update it manually to latest schema.')
+                log.exception(e)
+                sys.exit(10)
     else:
-        log.critical('File %s which holds Metadata from previous build cannot be found. This will also result in %s not being generated.', OLD_RELEASE_JSON, RELEASE_JSON)
-        sys.exit(2)
+        log.error("Old release.json cannot be found.")
+        sys.exit(1)
+
+
+def write_export_script(release_flag=str(GH_RELEASE_FLAG).lower(), release_tag="NA", time_stamp=time.time()):
+    """
+    Writes flags.sh to disk.
+    """
+    log.debug('Writing %s', FLAGS_SCRIPT)
+    try:
+        with open(FLAGS_SCRIPT, 'w+') as flag_file:
+            flag_file.write('#!/usr/bin/env bash\n'
+                            + 'export DEPLOY="' + str(release_flag) +'"\n'
+                            + 'export BUILD_TAG="' + str(release_tag) + '"\n'
+                            + 'export LOGFILE_TS="' + str(time_stamp) + '"\n')
+    except Exception as e:
+        log.critical('Failed to write exporter script.')
+        log.exception(e)
+        sys.exit(1)
+
+
 def main():
 
     log_sysinfo()
@@ -338,7 +353,7 @@ def main():
 
     # Download Zip
     log.info('Downloading ZIP File ...')
-    dl(LOS_ZIP_FILE, LOS_REL_URL[0])
+#    dl(LOS_ZIP_FILE, LOS_REL_URL[0])
 
     # Download Checksum
     log.info('Getting Checksum File...')
@@ -354,15 +369,26 @@ def main():
 
     # Extract Files
     log.info('Extracting from ZIP File ....')
-
     # Delete Files from Last Run
     delete_old_files()
-
-    # Extract
+    # Extract files
     extract_zip_contents(zip_file=LOS_ZIP_FILE, destination=os.getcwd())
 
     # Release Notes & Metadata
-    set_flags_and_metadata()
+    log.info("Getting Info about last build & release...")
+    last_build_ts, last_build_tag, last_relase_date = get_old_jason_data()
+
+    log.info('Preparing Metadata....')
+    GH_RELEASE_FLAG = set_metadata_and_get_release_flag(current_ts=UTC_TS,
+                                                        last_build_ts=last_build_ts,
+                                                        last_build_tag=last_build_tag,
+                                                        last_release_date=last_relase_date )
+
+    log.info("Generating %s", RELEASE_JSON)
+    write_json(dict=METADATA, file_name=RELEASE_JSON)
+
+    log.info('Writing exporter script...')
+    write_export_script(release_flag=str(GH_RELEASE_FLAG).lower(), release_tag=REL_TAG, time_stamp=UTC_TS)
 
 
 if __name__ == '__main__':

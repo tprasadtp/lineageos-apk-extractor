@@ -8,7 +8,10 @@ you can find it at the link below.
 https://opensource.org/licenses/MIT
 """
 
-import os, time, sys
+import os
+import time
+import sys
+import json
 from pathlib import Path
 import logging, logging.handlers
 from functools import wraps
@@ -90,3 +93,22 @@ def get_file(file_name, file_url):
     log.info("Attempting to download : %s", file_name)
     log.info("From URL: %s", file_url)
     __download_file(file_name=file_name, file_url=file_url)
+
+def write_json(dict={}, file_name='release.json'):
+    """
+    Write JSON containing relevant data to file.
+    Args:
+        dict - dictionary containing data. defaults to "METADTA"
+        file_name - JSON filename. defaults to release.json
+    Returns:
+        None
+    """
+    log.debug("Writing %s", file_name)
+    try:
+        with open(file_name, 'w+') as op_json:
+            op_json.write(json.dumps(dict, indent=4))
+            log.debug('JSON Dump is : %s', json.dumps(dict))
+    except Exception as e:
+        log.critical("Failed to write %s.", file_name)
+        log.exception(e)
+        sys.exit(1)
