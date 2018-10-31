@@ -353,7 +353,7 @@ def main():
 
     # Download Zip
     log.info('Downloading ZIP File ...')
-#    dl(LOS_ZIP_FILE, LOS_REL_URL[0])
+    dl(LOS_ZIP_FILE, LOS_REL_URL[0])
 
     # Download Checksum
     log.info('Getting Checksum File...')
