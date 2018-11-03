@@ -250,7 +250,7 @@ def set_metadata_and_get_release_flag(current_ts, last_build_ts, last_build_tag,
     """
 
     # Convert to Human Readable TS
-    ts_human = time.strftime('%d %b %y %H:%M',  time.gmtime(UTC_TS))
+    ts_human = time.strftime('%d %b at %H:%M',  time.gmtime(UTC_TS))
     # If running on TRAVIS-CI get build number else, set it to NA
     build_num = os.environ.get('TRAVIS_BUILD_NUMBER', "NA")
     METADATA.update({ 'version' : 3,
