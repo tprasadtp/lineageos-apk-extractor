@@ -1,11 +1,11 @@
 {
     "version": 3,
     "ci": {
-        "build_date": 1541537923,
-        "build_date_human": "06 Nov at 20:58",
-        "build_number": "69",
-        "node_name": "travis-job-03817dbb-5414-4839-9a3b-44911c75a618",
-        "deployed": "Yes"
+        "build_date": 1541710358,
+        "build_date_human": "08 Nov at 20:52",
+        "build_number": "71",
+        "node_name": "travis-job-5fb10ef5-1f27-4145-9e07-9bb77b8e2496",
+        "deployed": "No"
     },
     "lineage": {
         "version": "15.1",
@@ -16,6 +16,6 @@
     "release": {
         "tag": "15.1.2018-11-05",
         "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2018-11-05",
-        "human_ts": 1541537923
+        "human_ts": "1541537923"
     }
 }
