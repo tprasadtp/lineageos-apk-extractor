@@ -282,7 +282,7 @@ def set_metadata_and_get_release_flag(current_ts, last_build_ts, last_build_tag,
         print(last_build_tag)
         log.info("This release is New. GH Releases will be enabled if on MASTER")
         METADATA['ci'].update({ 'deployed' : "Yes"})
-        METADATA['release'].update({'human_ts' : current_ts})
+        METADATA['release'].update({'human_ts' : ts_human})
         # Generate Release Notes
         generate_release_notes(time_stamp = ts_human)
         return True
