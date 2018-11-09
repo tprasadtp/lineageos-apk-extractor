@@ -1,0 +1,102 @@
+[ 2018-11-09 21:48:28,422 ] - [DEBUG   ] - root - ------------------------System Info------------------------------
+[ 2018-11-09 21:48:28,425 ] - [DEBUG   ] - root - Platform : Linux, Version: #124~14.04.1-Ubuntu SMP Fri Nov 10 19:05:36 UTC 2017
+[ 2018-11-09 21:48:28,425 ] - [DEBUG   ] - root - Hostname : travis-job-782ef065-2bfb-4079-9462-ab7154403968
+[ 2018-11-09 21:48:28,426 ] - [DEBUG   ] - root - Python Version : 3.6.3
+[ 2018-11-09 21:48:28,441 ] - [DEBUG   ] - root - Platform Arch : ('64bit', 'ELF')
+[ 2018-11-09 21:48:28,441 ] - [DEBUG   ] - root - -----------------------------------------------------------------
+[ 2018-11-09 21:48:28,442 ] - [INFO    ] - root - Getting LOS Download page for bullhead ...
+[ 2018-11-09 21:48:28,442 ] - [DEBUG   ] - root - Getting Download Page for bullhead
+[ 2018-11-09 21:48:28,442 ] - [INFO    ] - root - Attempting to download : LineageOS_Downlad_Page.html
+[ 2018-11-09 21:48:28,442 ] - [INFO    ] - root - From URL: https://download.lineageos.org/bullhead
+[ 2018-11-09 21:48:28,442 ] - [INFO    ] - root - Downloading file.....
+[ 2018-11-09 21:48:28,450 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): download.lineageos.org:443
+[ 2018-11-09 21:48:28,593 ] - [DEBUG   ] - urllib3.connectionpool - https://download.lineageos.org:443 "GET /bullhead HTTP/1.1" 200 None
+[ 2018-11-09 21:48:28,594 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-11-09 21:48:28,596 ] - [DEBUG   ] - root - LineageOS_Downlad_Page.html file exists.
+[ 2018-11-09 21:48:28,596 ] - [INFO    ] - root - Parsing HTML page...
+[ 2018-11-09 21:48:28,654 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-11-09 21:48:28,655 ] - [DEBUG   ] - root - ------------------Parsed Variables------------------------
+[ 2018-11-09 21:48:28,655 ] - [DEBUG   ] - root - LOS_REL_TYPE = ['nightly', 'nightly', 'nightly', 'nightly', 'nightly']
+[ 2018-11-09 21:48:28,655 ] - [DEBUG   ] - root - LOS_REL_VERSION = ['15.1', '15.1', '15.1', '15.1', '15.1']
+[ 2018-11-09 21:48:28,655 ] - [DEBUG   ] - root - LOS_REL_URL = ['https://mirrorbits.lineageos.org/full/bullhead/20181105/lineage-15.1-20181105-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181029/lineage-15.1-20181029-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181022/lineage-15.1-20181022-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181015/lineage-15.1-20181015-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20181008/lineage-15.1-20181008-nightly-bullhead-signed.zip']
+[ 2018-11-09 21:48:28,655 ] - [DEBUG   ] - root - LOS_REL_SIZE = ['432.65 MB', '432.66 MB', '432.65 MB', '432.66 MB', '432.48 MB']
+[ 2018-11-09 21:48:28,655 ] - [DEBUG   ] - root - LOS_REL_DATE = ['2018-11-05', '2018-10-29', '2018-10-22', '2018-10-15', '2018-10-08']
+[ 2018-11-09 21:48:28,655 ] - [DEBUG   ] - root - REL_TAG is 15.1.2018-11-05
+[ 2018-11-09 21:48:28,655 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-11-09 21:48:28,655 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2018-11-09 21:48:28,655 ] - [INFO    ] - root - Downloading ZIP File ...
+[ 2018-11-09 21:48:28,655 ] - [INFO    ] - root - Attempting to download : LineageOS.zip
+[ 2018-11-09 21:48:28,655 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/bullhead/20181105/lineage-15.1-20181105-nightly-bullhead-signed.zip
+[ 2018-11-09 21:48:28,656 ] - [INFO    ] - root - Downloading file.....
+[ 2018-11-09 21:48:28,659 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2018-11-09 21:48:29,175 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/bullhead/20181105/lineage-15.1-20181105-nightly-bullhead-signed.zip HTTP/1.1" 302 135
+[ 2018-11-09 21:48:29,178 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): ftp.acc.umu.se:443
+[ 2018-11-09 21:48:29,866 ] - [DEBUG   ] - urllib3.connectionpool - https://ftp.acc.umu.se:443 "GET /mirror/lineageos/full/bullhead/20181105/lineage-15.1-20181105-nightly-bullhead-signed.zip HTTP/1.1" 302 422
+[ 2018-11-09 21:48:29,871 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): caesar.ftp.acc.umu.se:443
+[ 2018-11-09 21:48:30,562 ] - [DEBUG   ] - urllib3.connectionpool - https://caesar.ftp.acc.umu.se:443 "GET /mirror/lineageos/full/bullhead/20181105/lineage-15.1-20181105-nightly-bullhead-signed.zip HTTP/1.1" 200 453669067
+[ 2018-11-09 21:48:30,564 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-11-09 21:49:40,117 ] - [INFO    ] - root - Getting Checksum File...
+[ 2018-11-09 21:49:40,117 ] - [INFO    ] - root - Attempting to download : LineageOS_ZIP_SHA256.txt
+[ 2018-11-09 21:49:40,118 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/bullhead/20181105/lineage-15.1-20181105-nightly-bullhead-signed.zip?sha256
+[ 2018-11-09 21:49:40,118 ] - [INFO    ] - root - Downloading file.....
+[ 2018-11-09 21:49:40,122 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2018-11-09 21:49:40,586 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/bullhead/20181105/lineage-15.1-20181105-nightly-bullhead-signed.zip?sha256 HTTP/1.1" 200 115
+[ 2018-11-09 21:49:40,586 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-11-09 21:49:40,587 ] - [INFO    ] - root - Verifying ZIP file checksums...
+[ 2018-11-09 21:49:40,588 ] - [DEBUG   ] - root - File's LineageOS_ZIP_SHA256.txt present on FS.
+[ 2018-11-09 21:49:40,588 ] - [DEBUG   ] - root - File LineageOS.zip is present on the FS.
+[ 2018-11-09 21:49:42,687 ] - [DEBUG   ] - root - SHA256 hash for LineageOS.zip is : 0a00ebd351a9e379e89057283986890cbd8b124f045fb1cd325781f8ea79d9f1
+[ 2018-11-09 21:49:42,687 ] - [DEBUG   ] - root - SHA256 hash SHOULD BE : 0a00ebd351a9e379e89057283986890cbd8b124f045fb1cd325781f8ea79d9f1
+[ 2018-11-09 21:49:42,688 ] - [DEBUG   ] - root - File Hashes Match.
+[ 2018-11-09 21:49:42,689 ] - [INFO    ] - root - Woohooo.. ZIP File's Checksum matches.
+[ 2018-11-09 21:49:42,689 ] - [INFO    ] - root - Extracting from ZIP File ....
+[ 2018-11-09 21:49:42,689 ] - [INFO    ] - root - Deleting old files if any....
+[ 2018-11-09 21:49:42,689 ] - [DEBUG   ] - root - Deleting old DAT files (if any)
+[ 2018-11-09 21:49:42,690 ] - [DEBUG   ] - root - Deleting old IMG file (if any)
+[ 2018-11-09 21:49:43,971 ] - [INFO    ] - root - Getting Info about last build & release...
+[ 2018-11-09 21:49:43,971 ] - [DEBUG   ] - root - Downloading OLD release.json
+[ 2018-11-09 21:49:43,971 ] - [INFO    ] - root - Attempting to download : old_release.json
+[ 2018-11-09 21:49:43,972 ] - [INFO    ] - root - From URL: https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json
+[ 2018-11-09 21:49:43,972 ] - [INFO    ] - root - Downloading file.....
+[ 2018-11-09 21:49:43,976 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): raw.githubusercontent.com:443
+[ 2018-11-09 21:49:44,092 ] - [DEBUG   ] - urllib3.connectionpool - https://raw.githubusercontent.com:443 "GET /tprasadtp/lineageos-apk-extractor/gh-pages/release.json HTTP/1.1" 200 350
+[ 2018-11-09 21:49:44,092 ] - [DEBUG   ] - root - Response code is 200
+[ 2018-11-09 21:49:44,094 ] - [DEBUG   ] - root - Reading old release.json file...
+[ 2018-11-09 21:49:44,094 ] - [INFO    ] - root - Last Build was 1541710358
+[ 2018-11-09 21:49:44,094 ] - [INFO    ] - root - Last Release Tag was 15.1.2018-11-05
+[ 2018-11-09 21:49:44,094 ] - [INFO    ] - root - Last Release TS was 1541537923
+[ 2018-11-09 21:49:44,095 ] - [INFO    ] - root - Preparing Metadata....
+[ 2018-11-09 21:49:44,095 ] - [INFO    ] - root - Release is already latest. No need to deploy.
+[ 2018-11-09 21:49:44,095 ] - [INFO    ] - root - Generating release.json
+[ 2018-11-09 21:49:44,095 ] - [DEBUG   ] - root - Writing release.json
+[ 2018-11-09 21:49:44,096 ] - [DEBUG   ] - root - JSON Dump is : {"version": 3, "ci": {"build_date": 1541800108, "build_date_human": "09 Nov at 21:48", "build_number": "72", "node_name": "travis-job-782ef065-2bfb-4079-9462-ab7154403968", "deployed": "No"}, "lineage": {"version": "15.1", "build": "2018-11-05", "build_type": "nightly", "zip_file": "https://mirrorbits.lineageos.org/full/bullhead/20181105/lineage-15.1-20181105-nightly-bullhead-signed.zip"}, "release": {"tag": "15.1.2018-11-05", "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2018-11-05", "human_ts": "1541537923"}}
+[ 2018-11-09 21:49:44,096 ] - [INFO    ] - root - Writing exporter script...
+[ 2018-11-09 21:49:44,096 ] - [DEBUG   ] - root - Writing flags.sh
+[ 2018-11-09 21:50:31,637 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2018-11-09 21:50:31,638 ] - [INFO    ] - root - Reading json data from file.
+[ 2018-11-09 21:50:31,638 ] - [INFO    ] - root - Copying Metadata
+[ 2018-11-09 21:50:31,638 ] - [INFO    ] - root - Creating Metadata Folder...
+[ 2018-11-09 21:50:31,638 ] - [INFO    ] - root - Copying release.json
+[ 2018-11-09 21:50:31,639 ] - [INFO    ] - root - Checking Mount point
+[ 2018-11-09 21:50:31,640 ] - [DEBUG   ] - root - Creating Releases Folder
+[ 2018-11-09 21:50:31,641 ] - [INFO    ] - root - Copying Email from /mnt/lineage/app/Email/Email.apk
+[ 2018-11-09 21:50:31,651 ] - [INFO    ] - root - Copying Gallery from /mnt/lineage/priv-app/Gallery2/Gallery2.apk
+[ 2018-11-09 21:50:31,667 ] - [INFO    ] - root - Copying Music from /mnt/lineage/priv-app/Eleven/Eleven.apk
+[ 2018-11-09 21:50:31,677 ] - [INFO    ] - root - Copying Calendar from /mnt/lineage/app/Calendar/Calendar.apk
+[ 2018-11-09 21:50:31,681 ] - [INFO    ] - root - Copying Jelly from /mnt/lineage/app/Jelly/Jelly.apk
+[ 2018-11-09 21:50:31,684 ] - [INFO    ] - root - Copying Trebuchet from /mnt/lineage/priv-app/Trebuchet/Trebuchet.apk
+[ 2018-11-09 21:50:31,688 ] - [INFO    ] - root - Copying Snap from  /mnt/lineage/priv-app/Snap/Snap.apk
+[ 2018-11-09 21:50:31,688 ] - [ERROR   ] - root - Failed to Copy Snap
+[ 2018-11-09 21:50:31,688 ] - [ERROR   ] - root - [Errno 2] No such file or directory: ' /mnt/lineage/priv-app/Snap/Snap.apk'
+Traceback (most recent call last):
+  File "./copy_files.py", line 110, in copy_release_files
+    shutil.copy2(path, RELEASE_DIR / fname)
+  File "/home/travis/virtualenv/python3.6.3/lib/python3.6/shutil.py", line 257, in copy2
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+  File "/home/travis/virtualenv/python3.6.3/lib/python3.6/shutil.py", line 120, in copyfile
+    with open(src, 'rb') as fsrc:
+FileNotFoundError: [Errno 2] No such file or directory: ' /mnt/lineage/priv-app/Snap/Snap.apk'
+[ 2018-11-09 21:50:31,692 ] - [INFO    ] - root - Copying Recorder from /mnt/lineage/priv-app/Recorder/Recorder.apk
+[ 2018-11-09 21:50:31,699 ] - [INFO    ] - root - Copying Messaging from /mnt/lineage/app/messaging/messaging.apk
+[ 2018-11-09 21:50:31,716 ] - [INFO    ] - root - Copying DeskClock from /mnt/lineage/app/DeskClock/DeskClock.apk
+[ 2018-11-09 21:50:31,725 ] - [INFO    ] - root - GH Releases is not enabled. Not Copying Release Notes.
