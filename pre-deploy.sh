@@ -22,11 +22,11 @@ else
 
         echo "Deploy to Github releases is Enabled."
         if git show-ref --tags --quiet --verify -- "refs/tags/${BUILD_TAG}"; then
-            echo "Tag already present. Deleting it."
-            git tag -d "${BUILD_TAG}"
+            echo "Tag already present."
+        else
+            echo "Creating Tag : ${BUILD_TAG}"
+            git tag "${BUILD_TAG}"
         fi
-        echo "Creating Tag : ${BUILD_TAG}"
-        git tag "${BUILD_TAG}"
         echo "Copying Release Logs"
         mkdir -p ./metadata/release-logs
         cp "${LOG_FILE}".logs ./metadata/release-logs/"${LOG_FILE}"-"${BUILD_TAG}".log
