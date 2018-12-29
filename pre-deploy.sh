@@ -27,6 +27,8 @@ else
             echo "Creating Tag : ${BUILD_TAG}"
             git tag "${BUILD_TAG}"
         fi
+        echo "Pusing tags to origin..."
+        git push --quiet https://${GH_TOKEN}@github.com/tprasadtp/lineageos-apk-extractor.git --tags > /dev/null 2>&1
         echo "Copying Release Logs"
         mkdir -p ./metadata/release-logs
         cp "${LOG_FILE}".logs ./metadata/release-logs/"${LOG_FILE}"-"${BUILD_TAG}".log
