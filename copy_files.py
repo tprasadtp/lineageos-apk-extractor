@@ -25,8 +25,10 @@ MOUNT_POINT = "/mnt/lineage/"
 RELEASE_DIR = Path('releases')
 METADATA_DIR = Path('metadata')
 LOG_FILE = "LOS_APK_Extractor.logs"
-RELEASE_JSON = "release.json"
+DEVICE_NAME = os.environ.get('LOS_DEVICE_CODENAME', "bullhead")
+
 RELEASE_NOTES = "Release_Notes.md"
+RELEASE_JSON = f'release-{DEVICE_NAME}.json'
 
 #if os.environ.get('TRAVIS') == "true" or os.environ.get('CI') == "true":
 #    print("Running on TRAVIS or other CI.")
@@ -148,6 +150,13 @@ def copy_metadata_files():
         shutil.copy2(RELEASE_JSON, METADATA_DIR / RELEASE_JSON)
     except Exception as e:
         log.critical("Failed to copy %s.", RELEASE_JSON)
+        log.exception(e)
+        sys.exit(1)
+    try:
+        log.info('Copying Readme.md')
+        shutil.copy2('Readme.md', METADATA_DIR /'Readme.md')
+    except Exception as e:
+        log.critical("Failed to copy Readme.md")
         log.exception(e)
         sys.exit(1)
 
