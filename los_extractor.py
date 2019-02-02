@@ -291,7 +291,7 @@ def set_metadata_and_get_release_flag(current_ts, last_build_ts, last_build_tag,
                                 'tag' : REL_TAG,
                                 'human_ts' : ts_human,
                                 'link': REL_TAG_BASE_URL + REL_TAG,
-                                'ci_bnum': TRAVIS_BUILD_NUMBER
+                                'ci_bnum': os.environ.get('TRAVIS_BUILD_NUMBER', "NA"),
                                 }
                         })
         # Generate Release Notes

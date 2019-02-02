@@ -10,6 +10,10 @@ branches:
   - master
   - dev
   - testing
+addons:
+  apt:
+    packages:
+    - tree
 before_install:
 # Lets not break build if script is not executable.
 - chmod +x ./*.py ./*.sh
