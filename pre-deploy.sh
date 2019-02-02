@@ -49,7 +49,4 @@ else
         cp LOS_APK_Extractor.logs ./metadata/logs/"${LOG_FILE_PREFIX}"-B-"${TRAVIS_BUILD_NUMBER}"-"${BUILD_TAG}"-"${LOGFILE_TS}".log
         echo "This Build will not be released."
     fi
-    echo "RSYNC'ING to gh-deploy"
-    rsync -Eav ./gh-pages/ ./gh-deploy/
-    rsync -Eav ./metadata/ ./gh-deploy/
 fi
