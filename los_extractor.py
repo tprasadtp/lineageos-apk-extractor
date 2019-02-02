@@ -350,7 +350,7 @@ def write_export_script(release_flag=str(GH_RELEASE_FLAG).lower(), release_tag="
                             + 'export DEPLOY="' + str(release_flag) +'"\n'
                             + 'export BUILD_TAG="' + str(release_tag) + '"\n'
                             + 'export LOGFILE_TS="' + str(time_stamp) + '"\n'
-                            + 'export LOS_REL_VERSION="' + LOS_REL_VERSION + '"\n')
+                            + 'export LOS_REL_VERSION="' + str(LOS_REL_VERSION[0]) + '"\n')
     except Exception as e:
         log.critical('Failed to write exporter script.')
         log.exception(e)
