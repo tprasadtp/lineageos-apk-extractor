@@ -27,7 +27,7 @@ METADATA_DIR = Path('metadata')
 LOG_FILE = "LOS_APK_Extractor.logs"
 DEVICE_NAME = os.environ.get('LOS_DEVICE_CODENAME', "bullhead")
 
-RELEASE_NOTES = "Release_Notes.md"
+RELEASE_NOTES = "Release-Notes.md"
 RELEASE_JSON = f'release-{DEVICE_NAME}.json'
 
 #if os.environ.get('TRAVIS') == "true" or os.environ.get('CI') == "true":
@@ -71,7 +71,7 @@ def define_tag_from_json():
                     log.critical('TAG is empty!.')
                     sys.exit(10)
                 if str(GH_RELEASES_DEPLOY_FLAG).lower() != "yes" and str(GH_RELEASES_DEPLOY_FLAG).lower() != "no" :
-                    log.critical('Invalid deploy flag. It can either be <true> or <false>')
+                    log.critical('Invalid deploy flag. It can either be <yes> or <no>')
                     sys.exit(10)
         except Exception as e:
             log.critical('Failed to read from %s', RELEASE_JSON)
@@ -83,7 +83,7 @@ def define_tag_from_json():
 
 def copy_release_files():
     """"
-    Checks if moun point is available. If true,
+    Checks if mount point is available. If true,
     Copies APKS and other release assets to ./release folder
     """
     log.info("Checking Mount point")
@@ -114,7 +114,7 @@ def copy_release_files():
                     log.error("Failed to Copy %s", app)
                     log.exception(e)
             # Copy Release Notes
-            if str(GH_RELEASES_DEPLOY_FLAG).lower() == "true":
+            if str(GH_RELEASES_DEPLOY_FLAG).lower() == "yes":
                 log.info('Copying Release Notes...')
                 try:
                     shutil.copy2(RELEASE_NOTES, RELEASE_DIR / RELEASE_NOTES)

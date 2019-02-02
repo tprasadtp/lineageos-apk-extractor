@@ -8,7 +8,8 @@ set -e
 
 echo "DEPLOY is set to ${DEPLOY}"
 echo "BUILD_TAG is set to ${BUILD_TAG}"
-LOG_FILE="LOS_APK_Extractor"
+echo "LOS_REL_VERSION is ${LOS_REL_VERSION}"
+LOG_FILE_PREFIX="Log"
 
 if [ "${BUILD_TAG}" == "" ] || [ "${DEPLOY}" == "" ]; then
     echo "BUILD_TAG and DEPLOY were not exported properly."
@@ -27,14 +28,16 @@ else
             echo "Creating Tag : ${BUILD_TAG}"
             git tag "${BUILD_TAG}"
         fi
-        echo "Pusing tags to origin..."
-        git push --quiet https://${GH_TOKEN}@github.com/tprasadtp/lineageos-apk-extractor.git --tags > /dev/null 2>&1
         echo "Copying Release Logs"
         mkdir -p ./metadata/release-logs
-        cp "${LOG_FILE}".logs ./metadata/release-logs/"${LOG_FILE}"-"${BUILD_TAG}".log
+        cp LOS_APK_Extractor.logs ./metadata/release-logs/"${LOG_FILE_PREFIX}"-B-"${TRAVIS_BUILD_NUMBER}"-"${BUILD_TAG}".log
         echo "Copying Release Notes"
         mkdir -p ./metadata/release-notes
-        cp Release_Notes.md ./metadata/release-notes/Release-Notes-"${BUILD_TAG}".md
+        cp Release-Notes.md ./metadata/release-notes/Release-Notes-"${BUILD_TAG}".md
+
+        # Tree to gh-pages
+        # only on Deploy
+        tree /mnt/lineage/ > ./metadata/info/tree-${LOS_REL_VERSION}.txt
     else
         # We cond deploy to github releases
         echo "Copying Build Logs"
@@ -42,7 +45,7 @@ else
             LOGFILE_TS="$(date +%s)"
         fi
         mkdir -p ./metadata/logs
-        cp "${LOG_FILE}".logs ./metadata/logs/"${LOG_FILE}"-"${BUILD_TAG}"-"${LOGFILE_TS}".log
+        cp LOS_APK_Extractor.logs ./metadata/logs/"${LOG_FILE_PREFIX}"-B-"${TRAVIS_BUILD_NUMBER}"-"${BUILD_TAG}"-"${LOGFILE_TS}".log
         echo "This Build will not be released."
     fi
     echo "RSYNC'ING to gh-deploy"

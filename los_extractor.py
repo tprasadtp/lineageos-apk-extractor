@@ -35,15 +35,15 @@ from utils import write_json
 # Settings
 DEVICE_NAME = os.environ.get('LOS_DEVICE_CODENAME', "bullhead")
 
-RELEASE_NOTES = "Release_Notes.md"
+RELEASE_NOTES = "Release-Notes.md"
 RELEASE_JSON = f'release-{DEVICE_NAME}.json'
 OLD_RELEASE_JSON = "old_release.json"
 REL_TAG_BASE_URL = "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/"
 # Files
-LOS_DL_PAGE = "LineageOS_Downlad_Page.html"
+LOS_DL_PAGE = f'LineageOS_Downlad_Page_{DEVICE_NAME}.html'
 LOG_FILE = "LOS_APK_Extractor.logs"
-LOS_ZIP_FILE = "LineageOS.zip"
-LOS_SHA256_FILE = "LineageOS_ZIP_SHA256.txt"
+LOS_ZIP_FILE = f'LineageOS_{DEVICE_NAME}.zip'
+LOS_SHA256_FILE = f'LineageOS_{DEVICE_NAME}_ZIP_SHA256.txt'
 FLAGS_SCRIPT = "flags.sh"
 
 # Use chunk size of 128K
@@ -62,11 +62,16 @@ GH_RELEASE_FLAG = False
 # TS
 UTC_TS = int(time.time())
 
+if os.environ.get('FORCE_GH_RELEASE', False).lower() == "true":
+    FORCE_GH_RELEASE = True
+else:
+    FORCE_GH_RELEASE = False
+
 # Logs
-log = logging.getLogger()
+log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 # Create Rotating file handler
-log_file_handler = logging.handlers.RotatingFileHandler(LOG_FILE, maxBytes=1000000, backupCount=3 )
+log_file_handler = logging.handlers.RotatingFileHandler(LOG_FILE, maxBytes=100000, backupCount=3 )
 # Set file Log handler to Lower Log level
 log_file_handler.setLevel(logging.DEBUG)
 # Create console handler with a higher log level
@@ -138,7 +143,7 @@ def extract_los_urls(device_name="marlin"):
     Scrap Zip file URLs and data from lineage os download page.
     """
     log.debug('Getting Download Page for %s', device_name)
-    dl(file_name=LOS_DL_PAGE, file_url="https://download.lineageos.org/"+device_name)
+    dl(file_name=LOS_DL_PAGE, file_url=f'https://download.lineageos.org/{device_name}')
     if os.path.isfile(LOS_DL_PAGE):
         log.debug('%s file exists.', LOS_DL_PAGE)
         with open(LOS_DL_PAGE, encoding="utf-8") as los_dl_page:
@@ -154,7 +159,7 @@ def extract_los_urls(device_name="marlin"):
                     LOS_REL_SIZE.append(td[3].string)
                     LOS_REL_DATE.append(td[4].string)
         global REL_TAG
-        REL_TAG = LOS_REL_VERSION[0] + '.' +LOS_REL_DATE[0]
+        REL_TAG = f'{LOS_REL_VERSION[0]}.{LOS_REL_DATE[0]}'
         # Debugging stuff
         log.debug('----------------------------------------------------------')
         log.debug('------------------Parsed Variables------------------------')
@@ -228,10 +233,10 @@ def generate_release_notes(time_stamp):
             release_notes.write('- CI Node name : '+ platform.node() + '\n')
             release_notes.write('- Release Link : ' + REL_TAG_BASE_URL + REL_TAG + '\n\n\n')
             release_notes.write('## Tags and Downloads\n\n')
-            release_notes.write('- This is generated automatically.\n'
+            release_notes.write('- This file is generated automatically.\n'
                                 + '- Tags correspond to build date.\n'
                                 + '- Every release is tagged as'
-                                + '[lineage-version].[build-date]\n\n')
+                                + '[lineage-version].[los-build-date]\n\n')
             release_notes.write('## Logs\n' +
                                 'Logs related to this build are available'
                                 + 'as assets or available in logs folder under `gh-pages` branch.\n')
@@ -252,13 +257,11 @@ def set_metadata_and_get_release_flag(current_ts, last_build_ts, last_build_tag,
 
     # Convert to Human Readable TS
     ts_human = time.strftime('%d %b at %H:%M',  time.gmtime(UTC_TS))
-    # If running on TRAVIS-CI get build number else, set it to NA
-    build_num = os.environ.get('TRAVIS_BUILD_NUMBER', "NA")
     METADATA.update({ 'version' : 4,
                       'ci': {
                             'build_date' : current_ts,
                             'build_date_human'  :  ts_human,
-                            'build_number' : build_num,
+                            'build_number' : os.environ.get('TRAVIS_BUILD_NUMBER', "NA"),
                             'node_name' : platform.node()
                             },
                       'lineage': {
@@ -266,10 +269,6 @@ def set_metadata_and_get_release_flag(current_ts, last_build_ts, last_build_tag,
                             'build' : LOS_REL_DATE[0],
                             'build_type' : LOS_REL_TYPE[0],
                             'zip_file': LOS_REL_URL[0]
-                            },
-                      'release' : {
-                            'tag' : REL_TAG,
-                            'link': REL_TAG_BASE_URL + REL_TAG
                             }
                       })
     # If build timestamp for old build is less than current timestamp and
@@ -278,25 +277,38 @@ def set_metadata_and_get_release_flag(current_ts, last_build_ts, last_build_tag,
     #---------------------------------------------------------------------
     # Otherwise, set ci.deployed to No, and DEPLOY=false.
     # Do not generate release notes as it will not be used.
-    #if gh_release_flag:
-    if str(REL_TAG) != str(last_build_tag):
-        print(last_build_tag)
-        log.info("This release is New. GH Releases will be enabled if on MASTER")
+    # A global env var FORCE_GH_RELEASE is checked, if set to true, GH releases will
+    # be forced.
+
+    if (str(REL_TAG) != str(last_build_tag)) or FORCE_GH_RELEASE:
+        log.info("GH Releases will be enabled if on MASTER")
+        log.info("Last tag was %s", last_build_tag)
         METADATA['ci'].update({ 'deployed' : "Yes"})
-        METADATA['release'].update({'human_ts' : ts_human})
+        METADATA.update({ 'release' : {
+                                'tag' : REL_TAG,
+                                'human_ts' : ts_human,
+                                'link': REL_TAG_BASE_URL + REL_TAG
+                                }
+                        })
         # Generate Release Notes
         generate_release_notes(time_stamp = ts_human)
         return True
     else:
         log.info("Release is already latest. No need to deploy.")
+        log.info("Last tag was %s", last_build_tag)
         METADATA['ci'].update({ 'deployed' : "No"})
         # Keep old release date as is.
-        METADATA['release'].update({'human_ts': last_release_date})
+        METADATA.update({ 'release' : {
+                                'tag' : last_build_tag,
+                                'human_ts' : last_release_date,
+                                'link': REL_TAG_BASE_URL + last_build_tag
+                                }
+                        })
         return False
 
 def get_old_jason_data():
     """
-    Download and parse old release.json
+    Download and parse old release json
     Args: None
     Returns : A tuple (int last_build_ts, str last_build_tag, str last_release_date)
     """
@@ -337,7 +349,8 @@ def write_export_script(release_flag=str(GH_RELEASE_FLAG).lower(), release_tag="
             flag_file.write('#!/usr/bin/env bash\n'
                             + 'export DEPLOY="' + str(release_flag) +'"\n'
                             + 'export BUILD_TAG="' + str(release_tag) + '"\n'
-                            + 'export LOGFILE_TS="' + str(time_stamp) + '"\n')
+                            + 'export LOGFILE_TS="' + str(time_stamp) + '"\n'
+                            + 'export LOS_REL_VERSION="' + LOS_REL_VERSION + '"\n')
     except Exception as e:
         log.critical('Failed to write exporter script.')
         log.exception(e)
@@ -358,7 +371,7 @@ def main():
 
     # Download Checksum
     log.info('Getting Checksum File...')
-    dl(LOS_SHA256_FILE, LOS_REL_URL[0]+"?sha256")
+    dl(LOS_SHA256_FILE, f'{LOS_REL_URL[0]}?sha256')
 
     # Verify Checksums
     log.info('Verifying ZIP file checksums...')

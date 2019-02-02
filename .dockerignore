@@ -1,0 +1,9 @@
+*.md
+!README.
+*.json
+!transfer.json
+.git
+*.zip
+.vscode
+.travis.yml
+.gitignore
