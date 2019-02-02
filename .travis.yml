@@ -6,15 +6,10 @@ env:
   - LOS_DEVICE_CODENAME=bullhead
   - LOS_DEVICE_CODENAME=hammerhead
 branches:
-  except:
-  - gh-pages
-  - metadata
-  - 15.1.*.*
-  - 16.0.*.*
-  - 16.1.*.*
-  - 17.0.*.*
-  - 14.1.*.*
-  - /^untagged/
+  only:
+  - master
+  - dev
+  - testing
 before_install:
 # Lets not break build if script is not executable.
 - chmod +x ./*.py ./*.sh
