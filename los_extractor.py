@@ -301,7 +301,7 @@ def get_old_jason_data():
     Returns : A tuple (int last_build_ts, str last_build_tag, str last_release_date)
     """
     log.debug('Downloading OLD release.json')
-    dl(file_name=OLD_RELEASE_JSON, file_url=f'https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/{RELEASE_JSON}.json')
+    dl(file_name=OLD_RELEASE_JSON, file_url=f'https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/{RELEASE_JSON}')
     log.debug("Reading old release.json file...")
     if os.path.isfile(OLD_RELEASE_JSON):
         with open(OLD_RELEASE_JSON, 'r') as oldjson:
