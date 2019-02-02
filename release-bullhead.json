@@ -16,6 +16,7 @@
     "release": {
         "tag": "0000",
         "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2019-02-01",
-        "human_ts": "01 Feb at 21:13"
+        "human_ts": "01 Feb at 21:13",
+        "ci_bnum": "00"
     }
 }
