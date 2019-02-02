@@ -9,7 +9,7 @@
     },
     "lineage": {
         "version": "14.1",
-        "build": "2019-01-26",
+        "build": "2019-01-00",
         "build_type": "nightly",
         "zip_file": "https://mirrorbits.lineageos.org/full/hammerhead/20190126/lineage-14.1-20190126-nightly-hammerhead-signed.zip"
     },

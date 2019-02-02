@@ -9,7 +9,7 @@
     },
     "lineage": {
         "version": "15.1",
-        "build": "2019-02-01",
+        "build": "2019-02-00",
         "build_type": "nightly",
         "zip_file": "https://mirrorbits.lineageos.org/full/bullhead/20190201/lineage-15.1-20190201-nightly-bullhead-signed.zip"
     },
