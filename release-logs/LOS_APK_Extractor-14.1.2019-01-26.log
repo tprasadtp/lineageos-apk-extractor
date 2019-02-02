@@ -1,0 +1,92 @@
+[ 2019-02-02 11:33:03,294 ] - [DEBUG   ] - root - ------------------------System Info------------------------------
+[ 2019-02-02 11:33:03,297 ] - [DEBUG   ] - root - Platform : Linux, Version: #124~14.04.1-Ubuntu SMP Fri Nov 10 19:05:36 UTC 2017
+[ 2019-02-02 11:33:03,297 ] - [DEBUG   ] - root - Hostname : travis-job-b4e54f54-ffc0-4e93-b835-ad1d759e3b04
+[ 2019-02-02 11:33:03,297 ] - [DEBUG   ] - root - Python Version : 3.6.3
+[ 2019-02-02 11:33:03,315 ] - [DEBUG   ] - root - Platform Arch : ('64bit', 'ELF')
+[ 2019-02-02 11:33:03,316 ] - [DEBUG   ] - root - -----------------------------------------------------------------
+[ 2019-02-02 11:33:03,316 ] - [INFO    ] - root - Getting LOS Download page for hammerhead ...
+[ 2019-02-02 11:33:03,316 ] - [DEBUG   ] - root - Getting Download Page for hammerhead
+[ 2019-02-02 11:33:03,316 ] - [INFO    ] - root - Attempting to download : LineageOS_Downlad_Page.html
+[ 2019-02-02 11:33:03,316 ] - [INFO    ] - root - From URL: https://download.lineageos.org/hammerhead
+[ 2019-02-02 11:33:03,317 ] - [INFO    ] - root - Downloading file.....
+[ 2019-02-02 11:33:03,328 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): download.lineageos.org:443
+[ 2019-02-02 11:33:03,820 ] - [DEBUG   ] - urllib3.connectionpool - https://download.lineageos.org:443 "GET /hammerhead HTTP/1.1" 200 None
+[ 2019-02-02 11:33:03,820 ] - [DEBUG   ] - root - Response code is 200
+[ 2019-02-02 11:33:03,822 ] - [DEBUG   ] - root - LineageOS_Downlad_Page.html file exists.
+[ 2019-02-02 11:33:03,823 ] - [INFO    ] - root - Parsing HTML page...
+[ 2019-02-02 11:33:03,873 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2019-02-02 11:33:03,873 ] - [DEBUG   ] - root - ------------------Parsed Variables------------------------
+[ 2019-02-02 11:33:03,874 ] - [DEBUG   ] - root - LOS_REL_TYPE = ['nightly', 'nightly']
+[ 2019-02-02 11:33:03,874 ] - [DEBUG   ] - root - LOS_REL_VERSION = ['14.1', '14.1']
+[ 2019-02-02 11:33:03,874 ] - [DEBUG   ] - root - LOS_REL_URL = ['https://mirrorbits.lineageos.org/full/hammerhead/20190126/lineage-14.1-20190126-nightly-hammerhead-signed.zip', 'https://mirrorbits.lineageos.org/full/hammerhead/20181226/lineage-14.1-20181226-nightly-hammerhead-signed.zip']
+[ 2019-02-02 11:33:03,874 ] - [DEBUG   ] - root - LOS_REL_SIZE = ['314.04 MB', '313.49 MB']
+[ 2019-02-02 11:33:03,874 ] - [DEBUG   ] - root - LOS_REL_DATE = ['2019-01-26', '2018-12-26']
+[ 2019-02-02 11:33:03,874 ] - [DEBUG   ] - root - REL_TAG is 14.1.2019-01-26
+[ 2019-02-02 11:33:03,874 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2019-02-02 11:33:03,874 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2019-02-02 11:33:03,874 ] - [INFO    ] - root - Downloading ZIP File ...
+[ 2019-02-02 11:33:03,874 ] - [INFO    ] - root - Attempting to download : LineageOS.zip
+[ 2019-02-02 11:33:03,874 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/hammerhead/20190126/lineage-14.1-20190126-nightly-hammerhead-signed.zip
+[ 2019-02-02 11:33:03,874 ] - [INFO    ] - root - Downloading file.....
+[ 2019-02-02 11:33:03,879 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2019-02-02 11:33:04,395 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/hammerhead/20190126/lineage-14.1-20190126-nightly-hammerhead-signed.zip HTTP/1.1" 302 147
+[ 2019-02-02 11:33:04,399 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirror.math.princeton.edu:443
+[ 2019-02-02 11:33:04,541 ] - [DEBUG   ] - urllib3.connectionpool - https://mirror.math.princeton.edu:443 "GET /pub/lineageos/full/hammerhead/20190126/lineage-14.1-20190126-nightly-hammerhead-signed.zip HTTP/1.1" 200 329296444
+[ 2019-02-02 11:33:04,542 ] - [DEBUG   ] - root - Response code is 200
+[ 2019-02-02 11:34:27,171 ] - [INFO    ] - root - Getting Checksum File...
+[ 2019-02-02 11:34:27,171 ] - [INFO    ] - root - Attempting to download : LineageOS_ZIP_SHA256.txt
+[ 2019-02-02 11:34:27,171 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/hammerhead/20190126/lineage-14.1-20190126-nightly-hammerhead-signed.zip?sha256
+[ 2019-02-02 11:34:27,172 ] - [INFO    ] - root - Downloading file.....
+[ 2019-02-02 11:34:27,176 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2019-02-02 11:34:27,762 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/hammerhead/20190126/lineage-14.1-20190126-nightly-hammerhead-signed.zip?sha256 HTTP/1.1" 200 117
+[ 2019-02-02 11:34:27,763 ] - [DEBUG   ] - root - Response code is 200
+[ 2019-02-02 11:34:27,764 ] - [INFO    ] - root - Verifying ZIP file checksums...
+[ 2019-02-02 11:34:27,764 ] - [DEBUG   ] - root - File's LineageOS_ZIP_SHA256.txt present on FS.
+[ 2019-02-02 11:34:27,765 ] - [DEBUG   ] - root - File LineageOS.zip is present on the FS.
+[ 2019-02-02 11:34:29,292 ] - [DEBUG   ] - root - SHA256 hash for LineageOS.zip is : daa1aa4db6012d31c5e46c4476b054a4d4e539529d2d4337942b82af874c318c
+[ 2019-02-02 11:34:29,292 ] - [DEBUG   ] - root - SHA256 hash SHOULD BE : daa1aa4db6012d31c5e46c4476b054a4d4e539529d2d4337942b82af874c318c
+[ 2019-02-02 11:34:29,292 ] - [DEBUG   ] - root - File Hashes Match.
+[ 2019-02-02 11:34:29,292 ] - [INFO    ] - root - Woohooo.. ZIP File's Checksum matches.
+[ 2019-02-02 11:34:29,292 ] - [INFO    ] - root - Extracting from ZIP File ....
+[ 2019-02-02 11:34:29,292 ] - [INFO    ] - root - Deleting old files if any....
+[ 2019-02-02 11:34:29,292 ] - [DEBUG   ] - root - Deleting old DAT files (if any)
+[ 2019-02-02 11:34:29,293 ] - [DEBUG   ] - root - Deleting old IMG file (if any)
+[ 2019-02-02 11:34:33,950 ] - [INFO    ] - root - Getting Info about last build & release...
+[ 2019-02-02 11:34:33,950 ] - [DEBUG   ] - root - Downloading OLD release.json
+[ 2019-02-02 11:34:33,950 ] - [INFO    ] - root - Attempting to download : old_release.json
+[ 2019-02-02 11:34:33,950 ] - [INFO    ] - root - From URL: https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-hammerhead.json
+[ 2019-02-02 11:34:33,950 ] - [INFO    ] - root - Downloading file.....
+[ 2019-02-02 11:34:33,953 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): raw.githubusercontent.com:443
+[ 2019-02-02 11:34:34,067 ] - [DEBUG   ] - urllib3.connectionpool - https://raw.githubusercontent.com:443 "GET /tprasadtp/lineageos-apk-extractor/gh-pages/release-hammerhead.json HTTP/1.1" 200 348
+[ 2019-02-02 11:34:34,068 ] - [DEBUG   ] - root - Response code is 200
+[ 2019-02-02 11:34:34,070 ] - [DEBUG   ] - root - Reading old release.json file...
+[ 2019-02-02 11:34:34,070 ] - [INFO    ] - root - Last Build was 15480000
+[ 2019-02-02 11:34:34,070 ] - [INFO    ] - root - Last Release Tag was 0000
+[ 2019-02-02 11:34:34,070 ] - [INFO    ] - root - Last Release TS was 01 Feb at 21:13
+[ 2019-02-02 11:34:34,070 ] - [INFO    ] - root - Preparing Metadata....
+[ 2019-02-02 11:34:34,071 ] - [INFO    ] - root - This release is New. GH Releases will be enabled if on MASTER
+[ 2019-02-02 11:34:34,071 ] - [INFO    ] - root - Generating Release Notes...
+[ 2019-02-02 11:34:34,071 ] - [DEBUG   ] - root - Generated Release Notes.
+[ 2019-02-02 11:34:34,071 ] - [INFO    ] - root - Generating release-hammerhead.json
+[ 2019-02-02 11:34:34,071 ] - [DEBUG   ] - root - Writing release-hammerhead.json
+[ 2019-02-02 11:34:34,071 ] - [DEBUG   ] - root - JSON Dump is : {"version": 4, "ci": {"build_date": 1549107183, "build_date_human": "02 Feb at 11:33", "build_number": "116", "node_name": "travis-job-b4e54f54-ffc0-4e93-b835-ad1d759e3b04", "deployed": "Yes"}, "lineage": {"version": "14.1", "build": "2019-01-26", "build_type": "nightly", "zip_file": "https://mirrorbits.lineageos.org/full/hammerhead/20190126/lineage-14.1-20190126-nightly-hammerhead-signed.zip"}, "release": {"tag": "14.1.2019-01-26", "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/14.1.2019-01-26", "human_ts": "02 Feb at 11:33"}}
+[ 2019-02-02 11:34:34,071 ] - [INFO    ] - root - Writing exporter script...
+[ 2019-02-02 11:34:34,071 ] - [DEBUG   ] - root - Writing flags.sh
+[ 2019-02-02 11:34:40,220 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2019-02-02 11:34:40,220 ] - [INFO    ] - root - Reading json data from file.
+[ 2019-02-02 11:34:40,220 ] - [INFO    ] - root - Copying Metadata
+[ 2019-02-02 11:34:40,221 ] - [INFO    ] - root - Creating Metadata Folder...
+[ 2019-02-02 11:34:40,221 ] - [INFO    ] - root - Copying release-hammerhead.json
+[ 2019-02-02 11:34:40,222 ] - [INFO    ] - root - Copying Readme.md
+[ 2019-02-02 11:34:40,222 ] - [INFO    ] - root - Checking Mount point
+[ 2019-02-02 11:34:40,223 ] - [DEBUG   ] - root - Creating Releases Folder
+[ 2019-02-02 11:34:40,223 ] - [INFO    ] - root - Copying Email from /mnt/lineage/app/Email/Email.apk
+[ 2019-02-02 11:34:40,239 ] - [INFO    ] - root - Copying Gallery from /mnt/lineage/priv-app/Gallery2/Gallery2.apk
+[ 2019-02-02 11:34:40,258 ] - [INFO    ] - root - Copying Music from /mnt/lineage/priv-app/Eleven/Eleven.apk
+[ 2019-02-02 11:34:40,270 ] - [INFO    ] - root - Copying Calendar from /mnt/lineage/app/Calendar/Calendar.apk
+[ 2019-02-02 11:34:40,277 ] - [INFO    ] - root - Copying Jelly from /mnt/lineage/app/Jelly/Jelly.apk
+[ 2019-02-02 11:34:40,280 ] - [INFO    ] - root - Copying Trebuchet from /mnt/lineage/priv-app/Trebuchet/Trebuchet.apk
+[ 2019-02-02 11:34:40,286 ] - [INFO    ] - root - Copying Recorder from /mnt/lineage/priv-app/Recorder/Recorder.apk
+[ 2019-02-02 11:34:40,290 ] - [INFO    ] - root - Copying Messaging from /mnt/lineage/app/messaging/messaging.apk
+[ 2019-02-02 11:34:40,308 ] - [INFO    ] - root - Copying DeskClock from /mnt/lineage/app/DeskClock/DeskClock.apk
+[ 2019-02-02 11:34:40,318 ] - [INFO    ] - root - GH Releases is not enabled. Not Copying Release Notes.
