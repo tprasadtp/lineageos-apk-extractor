@@ -33,9 +33,10 @@ from utils import get_file as dl
 from utils import write_json
 
 # Settings
-DEVICE_NAME = "bullhead"
+DEVICE_NAME = os.environ.get('LOS_DEVICE_CODENAME', "bullhead")
+
 RELEASE_NOTES = "Release_Notes.md"
-RELEASE_JSON = "release.json"
+RELEASE_JSON = f'release-{DEVICE_NAME}.json'
 OLD_RELEASE_JSON = "old_release.json"
 REL_TAG_BASE_URL = "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/"
 # Files
@@ -253,7 +254,7 @@ def set_metadata_and_get_release_flag(current_ts, last_build_ts, last_build_tag,
     ts_human = time.strftime('%d %b at %H:%M',  time.gmtime(UTC_TS))
     # If running on TRAVIS-CI get build number else, set it to NA
     build_num = os.environ.get('TRAVIS_BUILD_NUMBER', "NA")
-    METADATA.update({ 'version' : 3,
+    METADATA.update({ 'version' : 4,
                       'ci': {
                             'build_date' : current_ts,
                             'build_date_human'  :  ts_human,
@@ -300,7 +301,7 @@ def get_old_jason_data():
     Returns : A tuple (int last_build_ts, str last_build_tag, str last_release_date)
     """
     log.debug('Downloading OLD release.json')
-    dl(file_name=OLD_RELEASE_JSON, file_url="https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release.json")
+    dl(file_name=OLD_RELEASE_JSON, file_url=f'https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/{RELEASE_JSON}.json')
     log.debug("Reading old release.json file...")
     if os.path.isfile(OLD_RELEASE_JSON):
         with open(OLD_RELEASE_JSON, 'r') as oldjson:

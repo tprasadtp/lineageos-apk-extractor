@@ -2,6 +2,9 @@ sudo: required
 language: python
 python:
 - '3.6'
+env:
+  - LOS_DEVICE_CODENAME=bullhead
+  - LOS_DEVICE_CODENAME=hammerhead
 branches:
   except:
   - gh-pages
@@ -10,6 +13,8 @@ branches:
   - 16.0.*.*
   - 16.1.*.*
   - 17.0.*.*
+  - 14.*.*
+  - /^untagged/
 before_install:
 # Lets not break build if script is not executable.
 - chmod +x ./*.py ./*.sh
@@ -33,6 +38,7 @@ script:
 before_deploy:
 # Git Tag, Copy logs, copy metadata files
 - ./pre-deploy.sh
+- export TRAVIS_TAG="${BUILD_TAG}"
 deploy:
 - provider: pages
   skip_cleanup: true
