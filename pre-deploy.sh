@@ -37,6 +37,7 @@ else
 
         # Tree to gh-pages
         # only on Deploy
+        mkdir -p ./metadata/info
         tree /mnt/lineage/ > ./metadata/info/tree-${LOS_REL_VERSION}.txt
     else
         # We cond deploy to github releases

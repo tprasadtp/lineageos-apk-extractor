@@ -226,6 +226,7 @@ def generate_release_notes(time_stamp):
     with open(RELEASE_NOTES, 'w+') as release_notes:
             release_notes.write('# Release notes for Tag lineage -' + REL_TAG + '\n\n')
             release_notes.write('- Release notes generated on : ' + str(time_stamp) + '\n')
+            release_notes.write('- Device name : ' + DEVICE_NAME + '\n')
             release_notes.write('- Lineage OS Version : ' + LOS_REL_VERSION[0] + '\n')
             release_notes.write('- Lineage OS Type : ' + LOS_REL_TYPE[0] + '\n', )
             release_notes.write('- Zip file used : [ZIPfile]('+ LOS_REL_URL[0] + ')' + '\n')
@@ -242,7 +243,7 @@ def generate_release_notes(time_stamp):
                                 + 'as assets or available in logs folder under `gh-pages` branch.\n')
     log.debug("Generated Release Notes.")
 
-def set_metadata_and_get_release_flag(current_ts, last_build_ts, last_build_tag, last_release_date):
+def set_metadata_and_get_release_flag(current_ts, last_build_ts, last_build_tag, last_release_date, last_release_bnum):
     """
     Define common Metadata like build time etc.
     Args:
@@ -250,6 +251,7 @@ def set_metadata_and_get_release_flag(current_ts, last_build_ts, last_build_tag,
         last_build_date - (int) unix epoch during last build
         last_relase_ts  - (str) date and time of last release on github releases.
         last_build_tag  - (str) last build tag
+        last_release_ci_bnum - (int) build number for last release
     Returns:
         bool - GH_RELEASE_FLAG
         Modifies global Dictionary METADATA.
@@ -257,7 +259,7 @@ def set_metadata_and_get_release_flag(current_ts, last_build_ts, last_build_tag,
 
     # Convert to Human Readable TS
     ts_human = time.strftime('%d %b at %H:%M',  time.gmtime(UTC_TS))
-    METADATA.update({ 'version' : 4,
+    METADATA.update({ 'version' : 5,
                       'ci': {
                             'build_date' : current_ts,
                             'build_date_human'  :  ts_human,
@@ -268,7 +270,8 @@ def set_metadata_and_get_release_flag(current_ts, last_build_ts, last_build_tag,
                             'version' : LOS_REL_VERSION[0],
                             'build' : LOS_REL_DATE[0],
                             'build_type' : LOS_REL_TYPE[0],
-                            'zip_file': LOS_REL_URL[0]
+                            'zip_file': LOS_REL_URL[0],
+                            'device': DEVICE_NAME
                             }
                       })
     # If build timestamp for old build is less than current timestamp and
@@ -287,7 +290,8 @@ def set_metadata_and_get_release_flag(current_ts, last_build_ts, last_build_tag,
         METADATA.update({ 'release' : {
                                 'tag' : REL_TAG,
                                 'human_ts' : ts_human,
-                                'link': REL_TAG_BASE_URL + REL_TAG
+                                'link': REL_TAG_BASE_URL + REL_TAG,
+                                'ci_bnum': TRAVIS_BUILD_NUMBER
                                 }
                         })
         # Generate Release Notes
@@ -301,7 +305,8 @@ def set_metadata_and_get_release_flag(current_ts, last_build_ts, last_build_tag,
         METADATA.update({ 'release' : {
                                 'tag' : last_build_tag,
                                 'human_ts' : last_release_date,
-                                'link': REL_TAG_BASE_URL + last_build_tag
+                                'link': REL_TAG_BASE_URL + last_build_tag,
+                                'ci_bnum': last_release_bnum
                                 }
                         })
         return False
@@ -310,7 +315,7 @@ def get_old_jason_data():
     """
     Download and parse old release json
     Args: None
-    Returns : A tuple (int last_build_ts, str last_build_tag, str last_release_date)
+    Returns : A tuple (int last_build_ts, str last_build_tag, str last_release_date, last_release_ci_bnum)
     """
     log.debug('Downloading OLD release.json')
     dl(file_name=OLD_RELEASE_JSON, file_url=f'https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/{RELEASE_JSON}')
@@ -328,8 +333,11 @@ def get_old_jason_data():
                 # Also Get last Release Date
                 last_release_ts = last_metadata['release']['human_ts']
                 log.info('Last Release TS was %s', last_release_ts)
+
+                last_release_ci_bnum = last_metadata['release']['ci_bnum']
+                log.info('Last Release Build was %s', last_release_ci_bnum)
                 # Return tuple
-                return ( int(last_build_date), str(last_build_tag), str(last_release_ts))
+                return ( int(last_build_date), str(last_build_tag), str(last_release_ts), int(last_release_ci_bnum))
             except KeyError as e:
                 log.critical('JSON file from repository seems to be old. update it manually to latest schema.')
                 log.exception(e)
@@ -390,13 +398,14 @@ def main():
 
     # Release Notes & Metadata
     log.info("Getting Info about last build & release...")
-    last_build_ts, last_build_tag, last_relase_date = get_old_jason_data()
+    last_build_ts, last_build_tag, last_relase_date, last_release_ci_bnum = get_old_jason_data()
 
     log.info('Preparing Metadata....')
     GH_RELEASE_FLAG = set_metadata_and_get_release_flag(current_ts=UTC_TS,
                                                         last_build_ts=last_build_ts,
                                                         last_build_tag=last_build_tag,
-                                                        last_release_date=last_relase_date )
+                                                        last_release_date=last_relase_date,
+                                                        last_release_bnum=last_release_ci_bnum )
 
     log.info("Generating %s", RELEASE_JSON)
     write_json(dict=METADATA, file_name=RELEASE_JSON)
