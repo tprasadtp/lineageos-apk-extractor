@@ -1,21 +1,21 @@
 {
     "version": 4,
     "ci": {
-        "build_date": 1548055633,
-        "build_date_human": "01 Feb at 21:13",
-        "build_number": "100",
-        "node_name": "travis-job-820347f8-e697-41a6-a3b8-c35ee441a697",
+        "build_date": 1549108518,
+        "build_date_human": "02 Feb at 11:55",
+        "build_number": "119",
+        "node_name": "travis-job-c2a1837e-1d8f-4a03-ae14-4b42d5de9510",
         "deployed": "Yes"
     },
     "lineage": {
         "version": "15.1",
-        "build": "2019-02-00",
+        "build": "2019-02-02",
         "build_type": "nightly",
-        "zip_file": "https://mirrorbits.lineageos.org/full/bullhead/20190201/lineage-15.1-20190201-nightly-bullhead-signed.zip"
+        "zip_file": "https://mirrorbits.lineageos.org/full/bullhead/20190202/lineage-15.1-20190202-nightly-bullhead-signed.zip"
     },
     "release": {
-        "tag": "0000",
-        "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2019-02-01",
-        "human_ts": "01 Feb at 21:13"
+        "tag": "15.1.2019-02-02",
+        "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2019-02-02",
+        "human_ts": "02 Feb at 11:55"
     }
 }

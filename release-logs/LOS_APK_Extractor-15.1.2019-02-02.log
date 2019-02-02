@@ -1,0 +1,92 @@
+[ 2019-02-02 11:55:18,132 ] - [DEBUG   ] - root - ------------------------System Info------------------------------
+[ 2019-02-02 11:55:18,134 ] - [DEBUG   ] - root - Platform : Linux, Version: #124~14.04.1-Ubuntu SMP Fri Nov 10 19:05:36 UTC 2017
+[ 2019-02-02 11:55:18,134 ] - [DEBUG   ] - root - Hostname : travis-job-c2a1837e-1d8f-4a03-ae14-4b42d5de9510
+[ 2019-02-02 11:55:18,135 ] - [DEBUG   ] - root - Python Version : 3.6.3
+[ 2019-02-02 11:55:18,150 ] - [DEBUG   ] - root - Platform Arch : ('64bit', 'ELF')
+[ 2019-02-02 11:55:18,150 ] - [DEBUG   ] - root - -----------------------------------------------------------------
+[ 2019-02-02 11:55:18,150 ] - [INFO    ] - root - Getting LOS Download page for bullhead ...
+[ 2019-02-02 11:55:18,151 ] - [DEBUG   ] - root - Getting Download Page for bullhead
+[ 2019-02-02 11:55:18,151 ] - [INFO    ] - root - Attempting to download : LineageOS_Downlad_Page.html
+[ 2019-02-02 11:55:18,151 ] - [INFO    ] - root - From URL: https://download.lineageos.org/bullhead
+[ 2019-02-02 11:55:18,152 ] - [INFO    ] - root - Downloading file.....
+[ 2019-02-02 11:55:18,157 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): download.lineageos.org:443
+[ 2019-02-02 11:55:18,333 ] - [DEBUG   ] - urllib3.connectionpool - https://download.lineageos.org:443 "GET /bullhead HTTP/1.1" 200 None
+[ 2019-02-02 11:55:18,334 ] - [DEBUG   ] - root - Response code is 200
+[ 2019-02-02 11:55:18,336 ] - [DEBUG   ] - root - LineageOS_Downlad_Page.html file exists.
+[ 2019-02-02 11:55:18,336 ] - [INFO    ] - root - Parsing HTML page...
+[ 2019-02-02 11:55:18,391 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2019-02-02 11:55:18,391 ] - [DEBUG   ] - root - ------------------Parsed Variables------------------------
+[ 2019-02-02 11:55:18,391 ] - [DEBUG   ] - root - LOS_REL_TYPE = ['nightly', 'nightly', 'nightly', 'nightly', 'nightly', 'nightly', 'nightly', 'nightly', 'nightly', 'nightly', 'nightly']
+[ 2019-02-02 11:55:18,391 ] - [DEBUG   ] - root - LOS_REL_VERSION = ['15.1', '15.1', '15.1', '15.1', '15.1', '15.1', '15.1', '15.1', '15.1', '15.1', '15.1']
+[ 2019-02-02 11:55:18,391 ] - [DEBUG   ] - root - LOS_REL_URL = ['https://mirrorbits.lineageos.org/full/bullhead/20190202/lineage-15.1-20190202-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20190201/lineage-15.1-20190201-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20190131/lineage-15.1-20190131-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20190130/lineage-15.1-20190130-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20190129/lineage-15.1-20190129-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20190128/lineage-15.1-20190128-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20190127/lineage-15.1-20190127-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20190126/lineage-15.1-20190126-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20190124/lineage-15.1-20190124-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20190123/lineage-15.1-20190123-nightly-bullhead-signed.zip', 'https://mirrorbits.lineageos.org/full/bullhead/20190122/lineage-15.1-20190122-nightly-bullhead-signed.zip']
+[ 2019-02-02 11:55:18,391 ] - [DEBUG   ] - root - LOS_REL_SIZE = ['417.52 MB', '417.52 MB', '417.52 MB', '417.53 MB', '417.52 MB', '417.51 MB', '417.51 MB', '417.51 MB', '417.52 MB', '417.51 MB', '417.52 MB']
+[ 2019-02-02 11:55:18,391 ] - [DEBUG   ] - root - LOS_REL_DATE = ['2019-02-02', '2019-02-01', '2019-01-31', '2019-01-30', '2019-01-29', '2019-01-28', '2019-01-27', '2019-01-26', '2019-01-24', '2019-01-23', '2019-01-22']
+[ 2019-02-02 11:55:18,391 ] - [DEBUG   ] - root - REL_TAG is 15.1.2019-02-02
+[ 2019-02-02 11:55:18,391 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2019-02-02 11:55:18,391 ] - [DEBUG   ] - root - ----------------------------------------------------------
+[ 2019-02-02 11:55:18,391 ] - [INFO    ] - root - Downloading ZIP File ...
+[ 2019-02-02 11:55:18,392 ] - [INFO    ] - root - Attempting to download : LineageOS.zip
+[ 2019-02-02 11:55:18,392 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/bullhead/20190202/lineage-15.1-20190202-nightly-bullhead-signed.zip
+[ 2019-02-02 11:55:18,392 ] - [INFO    ] - root - Downloading file.....
+[ 2019-02-02 11:55:18,396 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2019-02-02 11:55:18,919 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/bullhead/20190202/lineage-15.1-20190202-nightly-bullhead-signed.zip HTTP/1.1" 302 143
+[ 2019-02-02 11:55:18,923 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirror.math.princeton.edu:443
+[ 2019-02-02 11:55:19,060 ] - [DEBUG   ] - urllib3.connectionpool - https://mirror.math.princeton.edu:443 "GET /pub/lineageos/full/bullhead/20190202/lineage-15.1-20190202-nightly-bullhead-signed.zip HTTP/1.1" 200 437804032
+[ 2019-02-02 11:55:19,062 ] - [DEBUG   ] - root - Response code is 200
+[ 2019-02-02 11:55:53,724 ] - [INFO    ] - root - Getting Checksum File...
+[ 2019-02-02 11:55:53,725 ] - [INFO    ] - root - Attempting to download : LineageOS_ZIP_SHA256.txt
+[ 2019-02-02 11:55:53,725 ] - [INFO    ] - root - From URL: https://mirrorbits.lineageos.org/full/bullhead/20190202/lineage-15.1-20190202-nightly-bullhead-signed.zip?sha256
+[ 2019-02-02 11:55:53,725 ] - [INFO    ] - root - Downloading file.....
+[ 2019-02-02 11:55:53,727 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): mirrorbits.lineageos.org:443
+[ 2019-02-02 11:55:54,183 ] - [DEBUG   ] - urllib3.connectionpool - https://mirrorbits.lineageos.org:443 "GET /full/bullhead/20190202/lineage-15.1-20190202-nightly-bullhead-signed.zip?sha256 HTTP/1.1" 200 115
+[ 2019-02-02 11:55:54,183 ] - [DEBUG   ] - root - Response code is 200
+[ 2019-02-02 11:55:54,185 ] - [INFO    ] - root - Verifying ZIP file checksums...
+[ 2019-02-02 11:55:54,185 ] - [DEBUG   ] - root - File's LineageOS_ZIP_SHA256.txt present on FS.
+[ 2019-02-02 11:55:54,185 ] - [DEBUG   ] - root - File LineageOS.zip is present on the FS.
+[ 2019-02-02 11:55:56,225 ] - [DEBUG   ] - root - SHA256 hash for LineageOS.zip is : 3d94928148ee819cb119ec49e43a84df832c6b84ba022261c562119be348289f
+[ 2019-02-02 11:55:56,225 ] - [DEBUG   ] - root - SHA256 hash SHOULD BE : 3d94928148ee819cb119ec49e43a84df832c6b84ba022261c562119be348289f
+[ 2019-02-02 11:55:56,225 ] - [DEBUG   ] - root - File Hashes Match.
+[ 2019-02-02 11:55:56,225 ] - [INFO    ] - root - Woohooo.. ZIP File's Checksum matches.
+[ 2019-02-02 11:55:56,226 ] - [INFO    ] - root - Extracting from ZIP File ....
+[ 2019-02-02 11:55:56,226 ] - [INFO    ] - root - Deleting old files if any....
+[ 2019-02-02 11:55:56,226 ] - [DEBUG   ] - root - Deleting old DAT files (if any)
+[ 2019-02-02 11:55:56,226 ] - [DEBUG   ] - root - Deleting old IMG file (if any)
+[ 2019-02-02 11:55:57,465 ] - [INFO    ] - root - Getting Info about last build & release...
+[ 2019-02-02 11:55:57,465 ] - [DEBUG   ] - root - Downloading OLD release.json
+[ 2019-02-02 11:55:57,465 ] - [INFO    ] - root - Attempting to download : old_release.json
+[ 2019-02-02 11:55:57,465 ] - [INFO    ] - root - From URL: https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json
+[ 2019-02-02 11:55:57,465 ] - [INFO    ] - root - Downloading file.....
+[ 2019-02-02 11:55:57,468 ] - [DEBUG   ] - urllib3.connectionpool - Starting new HTTPS connection (1): raw.githubusercontent.com:443
+[ 2019-02-02 11:55:57,616 ] - [DEBUG   ] - urllib3.connectionpool - https://raw.githubusercontent.com:443 "GET /tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json HTTP/1.1" 200 353
+[ 2019-02-02 11:55:57,617 ] - [DEBUG   ] - root - Response code is 200
+[ 2019-02-02 11:55:57,618 ] - [DEBUG   ] - root - Reading old release.json file...
+[ 2019-02-02 11:55:57,619 ] - [INFO    ] - root - Last Build was 1548055633
+[ 2019-02-02 11:55:57,619 ] - [INFO    ] - root - Last Release Tag was 0000
+[ 2019-02-02 11:55:57,619 ] - [INFO    ] - root - Last Release TS was 01 Feb at 21:13
+[ 2019-02-02 11:55:57,619 ] - [INFO    ] - root - Preparing Metadata....
+[ 2019-02-02 11:55:57,619 ] - [INFO    ] - root - This release is New. GH Releases will be enabled if on MASTER
+[ 2019-02-02 11:55:57,619 ] - [INFO    ] - root - Generating Release Notes...
+[ 2019-02-02 11:55:57,620 ] - [DEBUG   ] - root - Generated Release Notes.
+[ 2019-02-02 11:55:57,620 ] - [INFO    ] - root - Generating release-bullhead.json
+[ 2019-02-02 11:55:57,620 ] - [DEBUG   ] - root - Writing release-bullhead.json
+[ 2019-02-02 11:55:57,620 ] - [DEBUG   ] - root - JSON Dump is : {"version": 4, "ci": {"build_date": 1549108518, "build_date_human": "02 Feb at 11:55", "build_number": "119", "node_name": "travis-job-c2a1837e-1d8f-4a03-ae14-4b42d5de9510", "deployed": "Yes"}, "lineage": {"version": "15.1", "build": "2019-02-02", "build_type": "nightly", "zip_file": "https://mirrorbits.lineageos.org/full/bullhead/20190202/lineage-15.1-20190202-nightly-bullhead-signed.zip"}, "release": {"tag": "15.1.2019-02-02", "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2019-02-02", "human_ts": "02 Feb at 11:55"}}
+[ 2019-02-02 11:55:57,620 ] - [INFO    ] - root - Writing exporter script...
+[ 2019-02-02 11:55:57,621 ] - [DEBUG   ] - root - Writing flags.sh
+[ 2019-02-02 11:56:46,399 ] - [DEBUG   ] - root - Setting TAG Variable
+[ 2019-02-02 11:56:46,399 ] - [INFO    ] - root - Reading json data from file.
+[ 2019-02-02 11:56:46,399 ] - [INFO    ] - root - Copying Metadata
+[ 2019-02-02 11:56:46,399 ] - [INFO    ] - root - Creating Metadata Folder...
+[ 2019-02-02 11:56:46,399 ] - [INFO    ] - root - Copying release-bullhead.json
+[ 2019-02-02 11:56:46,400 ] - [INFO    ] - root - Copying Readme.md
+[ 2019-02-02 11:56:46,400 ] - [INFO    ] - root - Checking Mount point
+[ 2019-02-02 11:56:46,400 ] - [DEBUG   ] - root - Creating Releases Folder
+[ 2019-02-02 11:56:46,401 ] - [INFO    ] - root - Copying Email from /mnt/lineage/app/Email/Email.apk
+[ 2019-02-02 11:56:46,411 ] - [INFO    ] - root - Copying Gallery from /mnt/lineage/priv-app/Gallery2/Gallery2.apk
+[ 2019-02-02 11:56:46,433 ] - [INFO    ] - root - Copying Music from /mnt/lineage/priv-app/Eleven/Eleven.apk
+[ 2019-02-02 11:56:46,443 ] - [INFO    ] - root - Copying Calendar from /mnt/lineage/app/Calendar/Calendar.apk
+[ 2019-02-02 11:56:46,450 ] - [INFO    ] - root - Copying Jelly from /mnt/lineage/app/Jelly/Jelly.apk
+[ 2019-02-02 11:56:46,452 ] - [INFO    ] - root - Copying Trebuchet from /mnt/lineage/priv-app/Trebuchet/Trebuchet.apk
+[ 2019-02-02 11:56:46,457 ] - [INFO    ] - root - Copying Recorder from /mnt/lineage/priv-app/Recorder/Recorder.apk
+[ 2019-02-02 11:56:46,459 ] - [INFO    ] - root - Copying Messaging from /mnt/lineage/app/messaging/messaging.apk
+[ 2019-02-02 11:56:46,478 ] - [INFO    ] - root - Copying DeskClock from /mnt/lineage/app/DeskClock/DeskClock.apk
+[ 2019-02-02 11:56:46,488 ] - [INFO    ] - root - Copying Release Notes...
