@@ -1,0 +1,10 @@
+# Linters and Checkers
+-c requirements.txt
+black
+flake8
+flake8-bugbear
+flake8-isort
+isort[requirements]
+pip-tools
+pytest
+safety

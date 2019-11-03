@@ -1,0 +1,17 @@
+{
+    "Copyright-Python": {
+        "prefix": [
+            "pythonscriptheader"
+        ],
+        "body": [
+            "#!/usr/bin/env python",
+            "# -*- coding: utf-8 -*-",
+            "#  Copyright (c) 2018-$CURRENT_YEAR.",
+            "#  Prasad Tengse",
+            "#",
+            "",
+        ],
+        "description": "Adds the copyright to python scripts...",
+        "scope": "python"
+    }
+}

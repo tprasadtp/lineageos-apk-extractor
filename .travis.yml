@@ -1,59 +1,87 @@
-sudo: required
+dist: bionic
 language: python
-python:
-- '3.6'
-env:
-  - LOS_DEVICE_CODENAME=bullhead
-  - LOS_DEVICE_CODENAME=hammerhead
+cache: pip
+os: linux
 branches:
   only:
   - master
   - dev
-  - testing
+
+#Use 3.6 for now
+python:
+- '3.6'
+
+# Device codenames
+env:
+  - LOS_DEVICE_CODENAME=bullhead
+  - LOS_DEVICE_CODENAME=gucamole
+
+# install brotli
 addons:
   apt:
     packages:
     - tree
+    - brotli
+
 before_install:
 # Lets not break build if script is not executable.
-- chmod +x ./*.py ./*.sh
-- sudo mkdir -p /mnt/lineage
-- rm -rf ./metadata/ ./releases/ ./flags.sh
-- git clone --branch=gh-pages    https://github.com/tprasadtp/lineageos-apk-extractor gh-pages 2>&1 > /dev/null
+- chmod +x ./*.py ./scripts/*.sh vendor/*.py
+
 install:
 # Keep for now. As soon as Travis updates to xenial, use apt-get.
-- ./install-brotli.sh
-- pip3 install -q -r requirements.txt
+- make install-all
+
+# Ensure all directories are present
 before_script:
 - brotli --version
+- mkdir -p build
+- mkdir -p metadata
+- mkdir -p releases
+- sudo mkdir -p /mnt/lineage
+
 script:
-- ./los_extractor.py
-- ./brotli-decompress.sh
-- ./sdat2img.py
-- sudo mount -t ext4 system.img /mnt/lineage
-- ./copy_files.py
+- ./los_extractor.py --device ${LOS_DEVICE_CODENAME}
+- brotli --decompress --force --verbose --output=build/system.new.dat build/system.new.dat.br
+- ./vendor/sdat2img.py
+- sudo mount -t ext4 build/system.img /mnt/lineage
+- ./copy_files.py --device ${LOS_DEVICE_CODENAME}
+
 # We need to source flags prior to "before_deploy"
-- chmod +x ./flags.sh && source ./flags.sh
+- chmod +x ./build/flags.sh && source ./build/flags.sh
+
 before_deploy:
 # Git Tag, Copy logs, copy metadata files
-- ./pre-deploy.sh
-- export TRAVIS_TAG="${BUILD_TAG}"
+- source ./scripts/pre-deploy.sh
+
+# Metadata to pages
 deploy:
-- provider: script
-  script: deploy-metadata.sh
+- provider: pages
+  deployment_file: false
+  verbose: true
+  local_dir: _site
+  cleanup: false
+  keep_history: true
+  commit_message: ${GH_PAGES_COMMIT_MSG_PREFIX} ${TRAVIS_COMMIT:0:7} for ${BUILD_TAG}
+  target_branch: gh-pages
+  token: ${GH_TOKEN}
   on:
     branch: master
+  edge: true
+
 - provider: releases
-  api_key: ${GH_TOKEN}
+  token: ${GH_TOKEN}
   file_glob: true
   file: releases/*
-  skip_cleanup: true
-  prerelease: true
-  name: Lineage - ${BUILD_TAG}
-  body: Automatically released. Build is ${TRAVIS_BUILD_NUMBER}. For [Release Notes](https://github.com/tprasadtp/lineageos-apk-extractor/tree/gh-pages/release-notes) see [here](https://github.com/tprasadtp/lineageos-apk-extractor/tree/gh-pages/release-notes/Release-Notes-${BUILD_TAG}.md). Logs can be found [here](https://github.com/tprasadtp/lineageos-apk-extractor/tree/gh-pages/release-logs/Log-B-${TRAVIS_BUILD_NUMBER}-${BUILD_TAG}.log). Non tagged logs can be found [here](https://github.com/tprasadtp/lineageos-apk-extractor/tree/gh-pages/logs).
+  cleanup: false
+  tag_name: ${BUILD_TAG}
+  name: LineageOS - ${BUILD_TAG}
+  release_notes_file: metadata/Release-Notes.md
   overwrite: true
+  edge: true
   on:
     branch: master
     condition: ${DEPLOY} = true
+
+# no notify
 notifications:
   email: false

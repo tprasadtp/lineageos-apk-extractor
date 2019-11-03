@@ -119,8 +119,8 @@ def main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE):
     print('Done! Output image: %s' % os.path.realpath(output_img.name))
 
 if __name__ == '__main__':
-    TRANSFER_LIST_FILE = "system.transfer.list"
-    NEW_DATA_FILE = "system.new.dat"
-    OUTPUT_IMAGE_FILE = 'system.img'
+    TRANSFER_LIST_FILE = "build/system.transfer.list"
+    NEW_DATA_FILE = "build/system.new.dat"
+    OUTPUT_IMAGE_FILE = 'build/system.img'
 
     main(TRANSFER_LIST_FILE, NEW_DATA_FILE, OUTPUT_IMAGE_FILE)

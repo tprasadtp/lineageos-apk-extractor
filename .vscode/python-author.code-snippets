@@ -1,0 +1,11 @@
+{
+    "Copyright-Python": {
+        "prefix": [
+            "pyauthor",
+            "pyauth"
+        ],
+        "body": "__author__      = \"Prasad Tengse\"\n__email__       = \"code.tp@outlook.de\"\n",
+        "description": "Adds the author to python files...",
+        "scope": "python,ipynb"
+    }
+}

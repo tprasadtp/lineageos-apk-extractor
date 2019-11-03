@@ -254,7 +254,6 @@ dmypy.json
 [Ll]ib
 [Ll]ib64
 [Ll]ocal
-[Ss]cripts
 pyvenv.cfg
 pip-selfcheck.json
 
@@ -319,6 +318,7 @@ flags.sh
 metadata.json
 *release.*
 gh-deploy
+build/*
 metadata/*
 releases/*
 *LineageOS_ZIP_SHA256*
