@@ -11,5 +11,10 @@ coloredlogs==10.0
 humanfriendly==4.18       # via coloredlogs
 idna==2.7                 # via requests
 lxml==4.2.5
+protobuf==3.10.0
 requests==2.20.0
+six==1.12.0               # via protobuf
 urllib3==1.24.3           # via requests
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools==41.6.0        # via protobuf
