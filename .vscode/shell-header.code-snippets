@@ -1,0 +1,16 @@
+{
+    "Copyright-Python": {
+        "prefix": [
+            "shellscript"
+        ],
+        "body": [
+            "#!/usr/bin/env bash",
+            "#  Copyright (c) 2018-$CURRENT_YEAR. Prasad Tengse",
+            "#  ",
+            "#",
+            "set -eo pipefail",
+        ],
+        "description": "Adds the copyright to python files...",
+        "scope": "shellscript"
+    }
+}

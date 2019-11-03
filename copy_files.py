@@ -8,169 +8,156 @@ you can find it at the link below.
 https://opensource.org/licenses/MIT
 """
 
-import os
-import sys
-import platform
-import logging, logging.handlers
-import shutil
+# Standard Library Imports
+import argparse
 import json
+import logging
+import os
 from pathlib import Path
-try:
-    from utils import get_file as dl
-except ImportError as e:
-    print(str(e))
-    sys.exit(1)
+import platform
+import shutil
+import sys
+
+# Intenal Imports from project
+from utils import get_file as dl
+from utils import get_log_level, set_logger, write_json
 
 MOUNT_POINT = "/mnt/lineage/"
-RELEASE_DIR = Path('releases')
-METADATA_DIR = Path('metadata')
-LOG_FILE = "LOS_APK_Extractor.logs"
-DEVICE_NAME = os.environ.get('LOS_DEVICE_CODENAME', "bullhead")
+RELEASE_DIR = Path("releases")
+METADATA_DIR = Path("metadata")
+DEVICE_NAME = os.environ.get("LOS_DEVICE_CODENAME", "bullhead")
 
-RELEASE_NOTES = "Release-Notes.md"
-RELEASE_JSON = f'release-{DEVICE_NAME}.json'
+RELEASE_NOTES = "metadata/Release-Notes.md"
 
-#if os.environ.get('TRAVIS') == "true" or os.environ.get('CI') == "true":
+# if os.environ.get('TRAVIS') == "true" or os.environ.get('CI') == "true":
 #    print("Running on TRAVIS or other CI.")
 #    TRANSFER_JSON = "transfer.json"
-TRANSFER_JSON = "transfer.json"
-#else:
+TRANSFER_JSON = "data/transfer.json"
+# else:
 #    TRANSFER_JSON = "test_transfer.json"
 
-log = logging.getLogger()
-log.setLevel(logging.DEBUG)
-# Create Rotating file handler
-log_file_handler = logging.FileHandler(LOG_FILE)
-log_file_handler.setLevel(logging.DEBUG)
-# Create console handler with a higher log level
-log_console_handler = logging.StreamHandler()
-log_console_handler.setLevel(logging.INFO)
-# Formatters
-log_file_handler.setFormatter(logging.Formatter('[ %(asctime)s ] - [%(levelname)-8s] - %(name)s - %(message)s'))
-log_console_handler.setFormatter(logging.Formatter('[ %(levelname)-8s] - %(message)s'))
-# Add the handlers to the logger
-log.addHandler(log_file_handler)
-log.addHandler(log_console_handler)
+# Logs
+# create logger
+log = set_logger()
 
-# Copy Files from Mount Point /system
 
-def define_tag_from_json():
+def define_tag_from_json(release_json):
     """
     Read release.json to set TAG variable
     """
     log.debug("Setting TAG Variable")
-    if os.path.isfile(RELEASE_JSON):
+    if os.path.isfile(release_json):
         try:
-            log.info('Reading json data from file.')
-            with open(RELEASE_JSON) as r:
+            log.info("Reading json data from file.")
+            with open(release_json) as r:
                 jsondata = json.loads(r.read())
-                global TAG, GH_RELEASES_DEPLOY_FLAG
-                TAG = jsondata['release']['tag']
-                GH_RELEASES_DEPLOY_FLAG = jsondata['ci']['deployed']
+                global TAG
+                TAG = jsondata["release"]["tag"]
                 if str(TAG) == "":
-                    log.critical('TAG is empty!.')
-                    sys.exit(10)
-                if str(GH_RELEASES_DEPLOY_FLAG).lower() != "yes" and str(GH_RELEASES_DEPLOY_FLAG).lower() != "no" :
-                    log.critical('Invalid deploy flag. It can either be <yes> or <no>')
+                    log.critical("TAG is empty!.")
                     sys.exit(10)
         except Exception as e:
-            log.critical('Failed to read from %s', RELEASE_JSON)
+            log.critical("Failed to read from %s", release_json)
             log.exception(e)
             sys.exit(1)
     else:
-        log.critical('%s is not found on the FS', RELEASE_JSON)
+        log.critical("%s is not found on the FS", release_json)
         sys.exit(1)
 
-def copy_release_files():
+
+def copy_release_files(mount_point, transfer_json):
     """"
     Checks if mount point is available. If true,
-    Copies APKS and other release assets to ./release folder
+    Copies APKS and other release assets to ./releases folder
     """
     log.info("Checking Mount point")
-    if os.path.ismount(MOUNT_POINT) or os.path.isdir(MOUNT_POINT):
+    if os.path.ismount(mount_point) or os.path.isdir(mount_point):
         if Path(RELEASE_DIR).exists():
-            log.debug('%s already present. deleting it..', RELEASE_DIR)
+            log.debug("%s folder is already present. deleting it..", RELEASE_DIR)
             try:
                 shutil.rmtree(RELEASE_DIR)
             except Exception:
                 log.critical("Failed to delete already existing %s", RELEASE_DIR)
                 sys.exit(1)
         try:
-            log.debug('Creating Releases Folder')
+            log.debug("Creating releases folder")
             os.makedirs(RELEASE_DIR)
         except Exception as e:
             log.critical("Failed to create %s directory.", RELEASE_DIR)
             log.exception(e)
             sys.exit(1)
-        if os.path.isfile(TRANSFER_JSON):
-            with open(TRANSFER_JSON) as t:
+        if os.path.isfile(transfer_json):
+            with open(transfer_json) as t:
                 transfer = json.loads(t.read())
             for app, path in transfer.items():
-                fname = app + '-' + TAG + os.path.splitext(path)[1]
+                fname = app + "-" + TAG + os.path.splitext(path)[1]
                 try:
                     log.info("Copying %s from %s", app, path)
                     shutil.copy2(path, RELEASE_DIR / fname)
                 except Exception as e:
                     log.error("Failed to Copy %s", app)
                     log.exception(e)
-            # Copy Release Notes
-            if str(GH_RELEASES_DEPLOY_FLAG).lower() == "yes":
-                log.info('Copying Release Notes...')
-                try:
-                    shutil.copy2(RELEASE_NOTES, RELEASE_DIR / RELEASE_NOTES)
-                except Exception as e:
-                    log.critical("Failed to copy Release Notes to upload folder.")
-                    log.exception(e)
-                    sys.exit(1)
-            else:
-                log.info("GH Releases is not enabled. Not Copying Release Notes.")
         else:
-            log.critical("%s is not present. Cannot determine file list.", TRANSFER_JSON)
+            log.critical(
+                "%s is not present. Cannot determine file list.", transfer_json
+            )
             sys.exit(1)
+
 
 def copy_metadata_files():
     log.info("Copying Metadata")
-    if Path(METADATA_DIR).exists():
-        try:
-            log.info("Deleting already existing folder..")
-            shutil.rmtree(METADATA_DIR)
-        except Exception as e:
-            log.critical("Failed to delete %s", METADATA_DIR)
-            log.exception(e)
-            sys.exit(1)
     try:
-        log.info("Creating Metadata Folder...")
-        os.makedirs(METADATA_DIR)
-    except Exception as e:
-        log.critical("Failed to create metadata directory.")
-        log.exception(e)
-        sys.exit(1)
-    try:
-        log.info('Copying %s', RELEASE_JSON)
-        shutil.copy2(RELEASE_JSON, METADATA_DIR / RELEASE_JSON)
-    except Exception as e:
-        log.critical("Failed to copy %s.", RELEASE_JSON)
-        log.exception(e)
-        sys.exit(1)
-    try:
-        log.info('Copying Readme.md')
-        shutil.copy2('Readme.md', METADATA_DIR /'Readme.md')
+        log.info("Copying README.md")
+        shutil.copy2("README.md", METADATA_DIR / "README.md")
     except Exception as e:
         log.critical("Failed to copy Readme.md")
         log.exception(e)
         sys.exit(1)
 
-def main():
+
+def main(device, transfer_json, test_mode):
     """
     Main
     """
-    define_tag_from_json()
-    copy_metadata_files()
-    copy_release_files()
+    release_josn = f"metadata/release-{device}.json"
 
-if __name__ == '__main__':
-    try:
-        main()
-    finally:
-        log.removeHandler(log_file_handler)
-        log.removeHandler(log_console_handler)
+    if test_mode:
+        log.warn("Test mode is active")
+        mount_point = "test/"
+    else:
+        mount_point = MOUNT_POINT
+
+    define_tag_from_json(release_josn)
+    copy_metadata_files()
+    copy_release_files(mount_point, transfer_json)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        add_help=True,
+    )
+    parser.add_argument(
+        "-d", "--device", required=True, type=str, help="Device Codename"
+    )
+    parser.add_argument(
+        "-l", "--list", required=True, type=str, help="Json list mapping"
+    )
+    parser.add_argument(
+        "-q",
+        "--quiet",
+        action="count",
+        help="Decrease output verbosity \
+                           Default level is INFO",
+    )
+    parser.add_argument(
+        "-t",
+        "--test-mode",
+        required=False,
+        action="store_true",
+        help="Use Test Mode without mounting img",
+    )
+    args = parser.parse_args()
+    log.setLevel(get_log_level(args.quiet))
+    main(args.device, args.list, args.test_mode)
