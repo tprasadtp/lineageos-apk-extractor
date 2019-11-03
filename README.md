@@ -24,18 +24,7 @@
 
 ### LineageOS 16 APKs
 
-[![Device][L16-device]][L16-dl-page]
-![Lineage-Version][L16-version]
-![Lineage15-Build][L16-build]
-[![Release][L16-last-release-date]][gh-releases]
-![CI-Build-Num][L16-last-release-bnum]
-
-#### Last build status
-
-![Travis-Build][L16-ci-bnum]
-![Travis Build Date][L16-ci-bdate]
-![Travis-Deployed][L16-ci-bdeployed]
-
+Currently unavailable.
 
 ## Bugs
 
@@ -49,6 +38,8 @@ If you have a problems **other than** released APKs being corrupt or not extract
 
 - Original `sdat2img.py` by [Andrei Conache](https://github.com/xpirt/sdat2img). Please note that license information is missing from original repository.
 - Some builds use `brotli` to decompress `system.new.dat.br`.
+- New AB scheme images are extracted using [this](https://github.com/cyxx/extract_android_ota_payload) Please note that license information is missing from original repository.
+- Protobufs were recompiled using protobuf3
 
 ## APKs
 
@@ -86,21 +77,21 @@ If you have a problems **other than** released APKs being corrupt or not extract
 
 
 <!-- LOS 16 References -->
-[L16-device]: https://img.shields.io/badge/dynamic/json.svg?label=device&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-gucamole.json&query=$.lineage.device
+[L16-device]: https://img.shields.io/badge/dynamic/json.svg?label=device&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.lineage.device
 
-[L16-version]: https://img.shields.io/badge/dynamic/json.svg?label=version&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-gucamole.json&query=$.lineage.version
+[L16-version]: https://img.shields.io/badge/dynamic/json.svg?label=version&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.lineage.version
 
-[L16-build]: https://img.shields.io/badge/dynamic/json.svg?label=build&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-gucamole.json&query=$.lineage.build&colorB=brightgreen
+[L16-build]: https://img.shields.io/badge/dynamic/json.svg?label=build&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.lineage.build&colorB=brightgreen
 
-[L16-ci-bdate]: https://img.shields.io/badge/dynamic/json.svg?label=at&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-gucamole.json&query=$.ci.build_date_human&colorB=brightgreen
+[L16-ci-bdate]: https://img.shields.io/badge/dynamic/json.svg?label=at&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.ci.build_date_human&colorB=brightgreen
 
-[L16-ci-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-gucamole.json&query=$.ci.build_number&colorB=green
+[L16-ci-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.ci.build_number&colorB=green
 
-[L16-ci-bdeployed]: https://img.shields.io/badge/dynamic/json.svg?label=deployed&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-gucamole.json&query=$.ci.deployed&logo&colorB=yellow
+[L16-ci-bdeployed]: https://img.shields.io/badge/dynamic/json.svg?label=deployed&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.ci.deployed&logo&colorB=yellow
 
-[L16-last-release-date]: https://img.shields.io/badge/dynamic/json.svg?label=on&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-gucamole.json&query=$.release.human_ts
+[L16-last-release-date]: https://img.shields.io/badge/dynamic/json.svg?label=on&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.release.human_ts
 
-[L16-last-release-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-gucamole.json&query=$.release.ci_bnum&colorB=green
+[L16-last-release-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.release.ci_bnum&colorB=green
 
 
 
@@ -109,7 +100,7 @@ If you have a problems **other than** released APKs being corrupt or not extract
 [license]: https://github.com/tprasadtp//blob/master/LICENSE.md "View License"
 [travis-badge]: https://travis-ci.com/tprasadtp/lineageos-apk-extractor.svg?branch=master
 [travis]: https://travis-ci.com/tprasadtp/lineageos-apk-extractor "Travis CI page"
-[L16-dl-page]: https://download.lineageos.org/gucamole "Download Lineage 16"
+[L16-dl-page]: https://download.lineageos.org/guacamole "Download Lineage 16"
 [L15-dl-page]: https://download.lineageos.org/bullhead "Download Lineage 15"
 [black]: https://github.com/psf/black "Black"
 

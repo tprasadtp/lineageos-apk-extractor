@@ -14,7 +14,7 @@ python:
 # Device codenames
 env:
   - LOS_DEVICE_CODENAME=bullhead
-  - LOS_DEVICE_CODENAME=gucamole
+  - LOS_DEVICE_CODENAME=guacamole
 
 # install brotli
 addons:
@@ -41,8 +41,7 @@ before_script:
 
 script:
 - ./los_extractor.py --device ${LOS_DEVICE_CODENAME}
-- brotli --decompress --force --verbose --output=build/system.new.dat build/system.new.dat.br
-- ./vendor/sdat2img.py
+- ./scripts/extract.sh "${LOS_DEVICE_CODENAME}"
 - sudo mount -t ext4 build/system.img /mnt/lineage
 - ./copy_files.py --device ${LOS_DEVICE_CODENAME}
 
@@ -75,7 +74,7 @@ deploy:
   cleanup: false
   tag_name: ${BUILD_TAG}
   name: LineageOS - ${BUILD_TAG}
-  release_notes_file: metadata/Release-Notes.md
+  release_notes_file: build/Release-Notes.md
   overwrite: true
   edge: true
   on:

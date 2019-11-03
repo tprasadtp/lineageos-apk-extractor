@@ -115,7 +115,7 @@ def copy_metadata_files():
         sys.exit(1)
 
 
-def main(device, test_mode):
+def main(device, transfer_json, test_mode):
     """
     Main
     """
@@ -124,10 +124,8 @@ def main(device, test_mode):
     if test_mode:
         log.warn("Test mode is active")
         mount_point = "test/"
-        transfer_json = "data/transfer-test.json"
     else:
         mount_point = MOUNT_POINT
-        transfer_json = TRANSFER_JSON
 
     define_tag_from_json(release_josn)
     copy_metadata_files()
@@ -142,6 +140,9 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "-d", "--device", required=True, type=str, help="Device Codename"
+    )
+    parser.add_argument(
+        "-l", "--list", required=True, type=str, help="Json list mapping"
     )
     parser.add_argument(
         "-q",
@@ -159,4 +160,4 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     log.setLevel(get_log_level(args.quiet))
-    main(args.device, args.test_mode)
+    main(args.device, args.list, args.test_mode)

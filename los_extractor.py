@@ -73,10 +73,11 @@ def log_sysinfo():
     Logs Basic system info
     """
     log.debug("------------------------System Info--------------------------")
-    log.debug("Platform : %s, Version: %s", platform.system(), platform.version())
-    log.debug("Hostname : %s", platform.node())
-    log.debug("Python Version : %s", platform.python_version())
-    log.debug("Platform Arch : %s", platform.architecture())
+    log.debug(f"Platform : %s, {platform.system()}")
+    log.debug(f"Version : {platform.version()}")
+    log.debug(f"Hostname : {platform.node()}")
+    log.debug(f"Python Version : {platform.python_version()}")
+    log.debug(f"Platform Arch : {platform.architecture()}")
     log.debug("-------------------------------------------------------------")
 
 
@@ -303,7 +304,7 @@ def set_metadata_and_get_release_flag(
     else:
         log.info("Release is already latest. No need to deploy.")
         log.info("Last tag was %s", last_build_tag)
-        METADATA["ci"].update({"deployed": "No"})
+        METADATA["ci"].update({"deployed": "no"})
         # Keep old release date as is.
         METADATA.update(
             {
@@ -395,17 +396,22 @@ def main(codename, skip_download=False):
 
     release_json = f"release-{codename}.json"
 
-    if not METADATA_DIR.exists:
-        log.info("Creating Metadata directory")
-        os.makedirs(METADATA_DIR)
+    if METADATA_DIR.is_dir():
+        log.info("metadata directory alredy exists")
     else:
-        log.info("Metadata directory alredy exists")
+        if METADATA_DIR.exists():
+            METADATA_DIR.unlink()
+        log.info("Creating metadata directory")
+        METADATA_DIR.mkdir(parents=True, exist_ok=True)
 
-    if not BUILD_DIR.exists:
-        log.info("Creating build directory")
-        os.makedirs(BUILD_DIR)
-    else:
+    if BUILD_DIR.is_dir():
         log.info("build directory alredy exists")
+    else:
+        if BUILD_DIR.exists():
+            BUILD_DIR.unlink()
+        log.info("Creating build directory")
+        BUILD_DIR.mkdir(parents=True, exist_ok=True)
+
 
     # Extract URLs
     log.info("Getting LOS Download page for %s ...", codename)
