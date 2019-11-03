@@ -412,7 +412,6 @@ def main(codename, skip_download=False):
         log.info("Creating build directory")
         BUILD_DIR.mkdir(parents=True, exist_ok=True)
 
-
     # Extract URLs
     log.info("Getting LOS Download page for %s ...", codename)
     extract_los_urls(device_name=codename)
