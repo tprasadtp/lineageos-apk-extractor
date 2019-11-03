@@ -57,7 +57,7 @@ deploy:
 - provider: pages
   deployment_file: false
   verbose: true
-  local_dir: _site
+  local_dir: metadata
   cleanup: false
   keep_history: true
   commit_message: ${GH_PAGES_COMMIT_MSG_PREFIX} ${TRAVIS_COMMIT:0:7} for ${BUILD_TAG}
