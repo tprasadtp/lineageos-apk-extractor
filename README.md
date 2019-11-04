@@ -40,9 +40,22 @@ Currently LineageOS 15.1 and LineageOS 16 are supported.
 
 ## Bugs
 
-- If you are looking for an APK which is not in releases, just edit the json in data folder and submit a PR.
+- If you are looking for an LineageOS APK which is not in releases, just edit open an issue and we can reolve this. Its just a mattter of editing a json in `data`.
 - There is no easy way to mount ext4 image without using sudo. so, I have kept it outside python scripts.
 
+## Using this locally
+
+Well, it was not exaclty designed for this, but you can with little effort.
+
+- Create and activate virtualenv
+- `make install-all`
+- `FORCE_GH_RELEASE=true ./los_extractor.py -d guacamole`
+- `sudo mkdir -p /mnt/lineage`
+- `DEPLOY=true ./scripts/extract.sh`
+- `sudo umount /mnt/lineage`
+
+You will find the APKs extracted in releases folder. If you want to extract oter APKs, pleas edit corrensponding json
+file in data or create a new one.
 
 ## Credits
 
@@ -66,6 +79,8 @@ Currently LineageOS 15.1 and LineageOS 16 are supported.
     "DeskClock": "/mnt/lineage/app/DeskClock/DeskClock.apk"
 }
 ```
+
+![Analytics](https://ga-beacon.prasadt.com/UA-101760811-3/github/lineageos-apk-extractor?pink&useReferer)
 
 <!-- LOS 15 References -->
 [L15-device]: https://img.shields.io/badge/dynamic/json.svg?label=device&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.lineage.device

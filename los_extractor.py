@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Copyright 2018, Prasad Tengse
-This Project is Licensed under MIT License.
-If you have not received a copy of the license,
-you can find it at the link below.
-https://opensource.org/licenses/MIT
+Download latest LineageOS ZIP and extract it.
 """
 
 # Standard Library Imports

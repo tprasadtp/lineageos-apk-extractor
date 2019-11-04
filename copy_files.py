@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Copyright 2018, Prasad Tengse
-This Project is Licensed under MIT License.
-If you have not received a copy of the license,
-you can find it at the link below.
-https://opensource.org/licenses/MIT
+Copy files from /mnt/lineage
+to releases folder and rename them according to tag.
+Must be executed after ./los_extractor.py
+This does not mount/extract the the image.
+Use scripts/extract.sh
+
+Uses a json file to map filenames to paths.
 """
 
 # Standard Library Imports
