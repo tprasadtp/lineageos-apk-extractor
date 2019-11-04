@@ -111,7 +111,7 @@ safety-check: ## Check Package safety
 	@echo -e "\033[34m Checking Requirements...\033[0m"
 	@safety check -r requirements.txt --bare
 	@echo -e "\033[34m Checking Dev Requirements...\033[0m"
-	@safety check -r requirements.txt --bare
+	@safety check -r requirements-dev.txt --bare
 
 .PHONY: flake8
 flake8: ## Run flake8

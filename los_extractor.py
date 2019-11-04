@@ -220,9 +220,6 @@ def generate_release_notes(time_stamp, device_name):
     )
     with open("build/" + RELEASE_NOTES, "w+") as release_notes:
         release_notes.write("## Release notes for lineage - " + REL_TAG + "\n\n")
-        release_notes.write(
-            "This Release note was generated on : " + str(time_stamp) + "\n\n\n"
-        )
         release_notes.write("| Lineage OS | Value |\n")
         release_notes.write("| -------- | ----- |\n")
         release_notes.write("| device   | " + device_name + "\n")
@@ -244,6 +241,7 @@ def generate_release_notes(time_stamp, device_name):
             + "- Every release is tagged as"
             + "[lineage-version].[los-build-date]\n\n"
         )
+        release_notes.write("> Generated on : " + str(time_stamp) + "\n\n")
     log.debug("Generated Release Notes.")
 
 
