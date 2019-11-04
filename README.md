@@ -49,12 +49,28 @@ Well, it was not exaclty designed for this, but you can with little effort.
 
 - Create and activate virtualenv
 - `make install-all`
-- `FORCE_GH_RELEASE=true ./los_extractor.py -d guacamole`
+- `FORCE_GH_RELEASE=true ./los_extractor.py -d {device_codename}`
 - `sudo mkdir -p /mnt/lineage`
-- `DEPLOY=true ./scripts/extract.sh`
-- `sudo umount /mnt/lineage`
+-  If using brotli compressed image,
 
-You will find the APKs extracted in releases folder. If you want to extract oter APKs, pleas edit corrensponding json
+    ```console
+    sudo apt-get install brotli
+    brotli --decompress --force --verbose --output=build/system.new.dat build/system.new.dat.br
+    python ./vendor/sdat2img.py
+    ```
+
+- If using new A/B scheme with payload.bin
+
+    ```console
+    python3 vendor/extract-payload-bin.py build/payload.bin build/
+    ```
+
+- Edit/create data.json(samples in data folder)
+- `copy_files.py -d {device_codename} -l {json_list_file}`
+
+- Unmount the image `sudo umount /mnt/lineage`
+
+You will find the APKs extracted in releases folder. If you want to extract other APKs, please edit corrensponding json
 file in data or create a new one.
 
 ## Credits
