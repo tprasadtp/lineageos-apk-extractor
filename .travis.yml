@@ -53,7 +53,6 @@ script:
 before_deploy:
 # Git Tag, Copy logs, copy metadata files
 - source ./scripts/pre-deploy.sh
-- ./scripts/set-git-config.sh
 # Metadata to pages
 deploy:
 - provider: pages
@@ -62,6 +61,8 @@ deploy:
   local_dir: metadata
   cleanup: false
   keep_history: true
+  name: valarie-ci-bot
+  email: ${GH_EMAIL}
   commit_message: ${GH_PAGES_COMMIT_MSG_PREFIX} ${TRAVIS_COMMIT:0:7} for ${BUILD_TAG}
   target_branch: gh-pages
   token: ${GH_TOKEN}
