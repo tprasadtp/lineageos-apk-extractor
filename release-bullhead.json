@@ -14,7 +14,7 @@
         "device": "bullhead"
     },
     "release": {
-        "tag": "15.1.2019-10-28",
+        "tag": "15.1.2019-10-27",
         "human_ts": "03 Nov at 23:13",
         "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2019-10-28",
         "ci_bnum": "184"
