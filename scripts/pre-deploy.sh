@@ -26,8 +26,9 @@ else
             echo "Tag is already present"
         else
             echo "Creating Tag : ${BUILD_TAG}"
-            #git tag "${BUILD_TAG}"
+            git tag "${BUILD_TAG}"
             export TRAVIS_TAG="${BUILD_TAG}"
+            git push --tags --quiet https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG} > /dev/null 2>&1
         fi
 
         export GH_PAGES_COMMIT_MSG_PREFIX="release"

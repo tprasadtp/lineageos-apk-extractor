@@ -74,7 +74,6 @@ deploy:
   file_glob: true
   file: releases/*
   cleanup: false
-  tag_name: ${BUILD_TAG}
   name: LineageOS - ${BUILD_TAG}
   release_notes_file: build/Release-Notes.md
   overwrite: true

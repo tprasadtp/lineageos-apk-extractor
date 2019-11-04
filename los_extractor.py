@@ -217,7 +217,7 @@ def generate_release_notes(time_stamp, device_name):
     _build_url = os.environ.get("TRAVIS_JOB_WEB_URL", "https://travis-ci.com/tprasadtp/lineageos-apk-extractor/builds")
     with open("build/" + RELEASE_NOTES, "w+") as release_notes:
         release_notes.write("## Release notes for lineage - " + REL_TAG + "\n\n")
-        release_notes.write("This Release note was generated on : " + str(time_stamp) + "\n")
+        release_notes.write("This Release note was generated on : " + str(time_stamp) + "\n\n\n")
         release_notes.write("| Lineage OS | Value |\n")
         release_notes.write("| -------- | ----- |\n")
         release_notes.write("| device   | " + device_name + "\n")
