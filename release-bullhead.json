@@ -8,7 +8,7 @@
     },
     "lineage": {
         "version": "15.1",
-        "build": "2019-10-28",
+        "build": "2019-10-27",
         "build_type": "nightly",
         "zip_file": "https://mirrorbits.lineageos.org/full/bullhead/20191028/lineage-15.1-20191028-nightly-bullhead-signed.zip",
         "device": "bullhead"
