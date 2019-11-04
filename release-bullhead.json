@@ -1,10 +1,10 @@
 {
     "version": 5,
     "ci": {
-        "build_date": 1572831716,
-        "build_date_human": "04 Nov at 01:41",
-        "build_number": "188",
-        "deployed": "yes"
+        "build_date": 1572866672,
+        "build_date_human": "04 Nov at 11:24",
+        "build_number": "191",
+        "deployed": "no"
     },
     "lineage": {
         "version": "15.1",
@@ -17,6 +17,6 @@
         "tag": "15.1.2019-10-28",
         "human_ts": "04 Nov at 01:41",
         "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/15.1.2019-10-28",
-        "ci_bnum": "188"
+        "ci_bnum": 188
     }
 }
