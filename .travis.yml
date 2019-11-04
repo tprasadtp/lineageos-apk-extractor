@@ -43,13 +43,9 @@ before_script:
 
 script:
 - ./los_extractor.py --device ${LOS_DEVICE_CODENAME}
-- ./scripts/extract.sh "${LOS_DEVICE_CODENAME}"
-- sudo mount -t ext4 build/system.img /mnt/lineage
-- ./copy_files.py --device ${LOS_DEVICE_CODENAME} --list data/"${LOS_DEVICE_CODENAME}".json
-
 # We need to source flags prior to "before_deploy"
 - chmod +x ./build/flags.sh && source ./build/flags.sh
-
+- ./scripts/extract.sh "${LOS_DEVICE_CODENAME}"
 before_deploy:
 # Git Tag, Copy logs, copy metadata files
 - source ./scripts/pre-deploy.sh
@@ -61,13 +57,13 @@ deploy:
   local_dir: metadata
   cleanup: false
   keep_history: true
-  name: valarie-ci-bot
-  email: ${GH_EMAIL}
-  commit_message: ${GH_PAGES_COMMIT_MSG_PREFIX} ${TRAVIS_COMMIT:0:7} for ${BUILD_TAG}
+  committer_from_gh: true
+  commit_message: release ${TRAVIS_COMMIT:0:7} for LineageOS ${BUILD_TAG}
   target_branch: gh-pages
   token: ${GH_TOKEN}
   on:
     branch: master
+    condition: ${DEPLOY} = true
   edge: true
 
 - provider: releases

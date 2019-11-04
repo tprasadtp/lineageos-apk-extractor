@@ -17,12 +17,6 @@ Currently LineageOS 15.1 and LineageOS 16 are supported.
 [![Release][L15-last-release-date]][gh-releases]
 ![CI-Build-Num][L15-last-release-bnum]
 
-#### Last build status
-
-![Travis-Build][L15-ci-bnum]
-![Travis Build Date][L15-ci-bdate]
-![Travis-Released][L15-ci-bdeployed]
-
 
 ### LineageOS 16 APKs
 
@@ -31,12 +25,6 @@ Currently LineageOS 15.1 and LineageOS 16 are supported.
 ![Lineage15-Build][L16-build]
 [![Release][L16-last-release-date]][gh-releases]
 ![CI-Build-Num][L16-last-release-bnum]
-
-#### Last build status
-
-![Travis-Build][L16-ci-bnum]
-![Travis Build Date][L16-ci-bdate]
-![Travis-Released][L16-ci-bdeployed]
 
 
 ## Development
@@ -86,15 +74,10 @@ Currently LineageOS 15.1 and LineageOS 16 are supported.
 
 [L15-build]: https://img.shields.io/badge/dynamic/json.svg?label=build&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.lineage.build&colorB=darkcyan
 
-[L15-ci-bdate]: https://img.shields.io/badge/dynamic/json.svg?label=on&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.ci.build_date_human&colorB=brightgreen
-
-[L15-ci-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.ci.build_number&colorB=green
-
-[L15-ci-bdeployed]: https://img.shields.io/badge/dynamic/json.svg?label=released&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.ci.deployed&logo&colorB=ff69b4
 
 [L15-last-release-date]: https://img.shields.io/badge/dynamic/json.svg?label=on&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.release.human_ts&colorB=darkcyan
 
-[L15-last-release-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.release.ci_bnum&colorB=green
+[L15-last-release-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.release.ci_build_number&colorB=green
 
 
 
@@ -105,15 +88,9 @@ Currently LineageOS 15.1 and LineageOS 16 are supported.
 
 [L16-build]: https://img.shields.io/badge/dynamic/json.svg?label=build&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.lineage.build&colorB=darkcyan
 
-[L16-ci-bdate]: https://img.shields.io/badge/dynamic/json.svg?label=on&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.ci.build_date_human&colorB=brightgreen
-
-[L16-ci-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.ci.build_number&colorB=green
-
-[L16-ci-bdeployed]: https://img.shields.io/badge/dynamic/json.svg?label=released&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.ci.deployed&logo&colorB=ff69b4
-
 [L16-last-release-date]: https://img.shields.io/badge/dynamic/json.svg?label=on&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.release.human_ts&colorB=darkcyan
 
-[L16-last-release-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.release.ci_bnum&colorB=green
+[L16-last-release-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.release.ci_build_number&colorB=green
 
 
 

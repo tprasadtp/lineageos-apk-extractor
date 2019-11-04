@@ -246,21 +246,15 @@ def generate_release_notes(time_stamp, device_name):
 
 
 def set_metadata_and_get_release_flag(
-    current_ts,
-    last_build_ts,
-    last_build_tag,
-    last_release_date,
-    last_release_bnum,
-    device_name,
+    current_ts, last_build_tag, last_release_date, last_release_bnum, device_name,
 ):
     """
     Define common Metadata like build time etc.
     Args:
         current_ts      - (int) current unix epoch
-        last_build_date - (int) unix epoch during last build
-        last_relase_ts  - (str) date and time of last release on github releases.
+        last_relase_data  - (str) date and time of last release on github releases.
         last_build_tag  - (str) last build tag
-        last_release_ci_bnum - (int) build number for last release
+        last_release_ci_build_number - (int) build number for last release
     Returns:
         bool - GH_RELEASE_FLAG
         Modifies global Dictionary METADATA.
@@ -270,12 +264,7 @@ def set_metadata_and_get_release_flag(
     ts_human = time.strftime("%d %b at %H:%M", time.gmtime(UTC_TS))
     METADATA.update(
         {
-            "version": 5,
-            "ci": {
-                "build_date": current_ts,
-                "build_date_human": ts_human,
-                "build_number": os.environ.get("TRAVIS_BUILD_NUMBER", "NA"),
-            },
+            "version": 6,
             "lineage": {
                 "version": LOS_REL_VERSION[0],
                 "build": LOS_REL_DATE[0],
@@ -297,14 +286,13 @@ def set_metadata_and_get_release_flag(
     if (str(REL_TAG) != str(last_build_tag)) or FORCE_GH_RELEASE:
         log.info("GH Releases will be enabled if on MASTER")
         log.info("Last tag was %s", last_build_tag)
-        METADATA["ci"].update({"deployed": "yes"})
         METADATA.update(
             {
                 "release": {
                     "tag": REL_TAG,
                     "human_ts": ts_human,
                     "link": REL_TAG_BASE_URL + REL_TAG,
-                    "ci_bnum": os.environ.get("TRAVIS_BUILD_NUMBER", "NA"),
+                    "ci_build_number": os.environ.get("TRAVIS_BUILD_NUMBER", "NA"),
                 }
             }
         )
@@ -314,7 +302,6 @@ def set_metadata_and_get_release_flag(
     else:
         log.info("Release is already latest. No need to deploy.")
         log.info("Last tag was %s", last_build_tag)
-        METADATA["ci"].update({"deployed": "no"})
         # Keep old release date as is.
         METADATA.update(
             {
@@ -322,7 +309,7 @@ def set_metadata_and_get_release_flag(
                     "tag": last_build_tag,
                     "human_ts": last_release_date,
                     "link": REL_TAG_BASE_URL + last_build_tag,
-                    "ci_bnum": last_release_bnum,
+                    "ci_build_number": last_release_bnum,
                 }
             }
         )
@@ -333,7 +320,7 @@ def get_old_jason_data(release_json):
     """
     Download and parse old release json
     Args: None
-    Returns : A tuple (int last_build_ts, str last_build_tag, str last_release_date, last_release_ci_bnum)
+    Returns : A tuple ( str last_build_tag, str last_release_date, int last_release_ci_build_number)
     """
     log.debug("Downloading OLD release.json")
     dl(
@@ -345,9 +332,6 @@ def get_old_jason_data(release_json):
         with open(OLD_RELEASE_JSON, "r") as oldjson:
             last_metadata = json.loads(oldjson.read())
             try:
-                # Get Last build TS unix epoch
-                last_build_date = last_metadata["ci"]["build_date"]
-                log.info("Last Build was %s", last_build_date)
                 # Get Last Release Tag
                 last_build_tag = last_metadata["release"]["tag"]
                 log.info("Last Release Tag was %s", last_build_tag)
@@ -355,14 +339,15 @@ def get_old_jason_data(release_json):
                 last_release_ts = last_metadata["release"]["human_ts"]
                 log.info("Last Release TS was %s", last_release_ts)
 
-                last_release_ci_bnum = last_metadata["release"]["ci_bnum"]
-                log.info("Last Release Build was %s", last_release_ci_bnum)
+                last_release_ci_build_number = last_metadata["release"][
+                    "ci_build_number"
+                ]
+                log.info("Last Release Build was %s", last_release_ci_build_number)
                 # Return tuple
                 return (
-                    int(last_build_date),
                     str(last_build_tag),
                     str(last_release_ts),
-                    int(last_release_ci_bnum),
+                    int(last_release_ci_build_number),
                 )
             except KeyError as e:
                 log.critical(
@@ -426,56 +411,20 @@ def main(codename, skip_download=False):
     log.info("Getting LOS Download page for %s ...", codename)
     extract_los_urls(device_name=codename)
 
-    # Download Zip
-    log.info("Downloading ZIP File ...")
-    los_zip_file = f"build/LineageOS_{codename}.zip"
-
-    if not skip_download:
-        dl(los_zip_file, LOS_REL_URL[0])
-    else:
-        log.warn("Skipping ZIP download")
-    # Download Checksum
-    log.info("Getting checksum File...")
-    los_sha256_file = f"build/LineageOS_{codename}_ZIP_SHA256.txt"
-
-    if not skip_download:
-        dl(los_sha256_file, f"{LOS_REL_URL[0]}?sha256")
-    else:
-        log.warn("Skip downloading checksums")
-
-    # Verify Checksums
-    log.info("Verifying ZIP file checksums...")
-    if verify_sha256_checksum(
-        los_zip_file, extract_checksum_from_file(los_sha256_file)
-    ):
-        log.info("Woohooo.. ZIP File's Checksum matches.")
-    else:
-        log.error("Oh dear! ZIP File is corrupt. Please try again.")
-        sys.exit(1)
-
-    # Extract Files
-    log.info("Extracting from ZIP File ....")
-    # Delete Files from Last Run
-    delete_old_files()
-    # Extract files
-    extract_zip_contents(zip_file=los_zip_file, destination="build/")
-
     # Release Notes & Metadata
     log.info("Getting Info about last build & release...")
     (
-        last_build_ts,
         last_build_tag,
         last_relase_date,
-        last_release_ci_bnum,
+        last_release_ci_build_number,
     ) = get_old_jason_data(release_json)
 
     log.info("Preparing Metadata....")
     GH_RELEASE_FLAG = set_metadata_and_get_release_flag(
         current_ts=UTC_TS,
-        last_build_ts=last_build_ts,
         last_build_tag=last_build_tag,
         last_release_date=last_relase_date,
-        last_release_bnum=last_release_ci_bnum,
+        last_release_bnum=last_release_ci_build_number,
         device_name=codename,
     )
 
@@ -488,6 +437,45 @@ def main(codename, skip_download=False):
         release_tag=REL_TAG,
         time_stamp=UTC_TS,
     )
+
+    if GH_RELEASE_FLAG:
+        log.info("This build will be released, downloading assets...")
+
+        # Download Zip
+        log.info("Downloading ZIP File ...")
+        los_zip_file = f"build/LineageOS_{codename}.zip"
+
+        if not skip_download:
+            dl(los_zip_file, LOS_REL_URL[0])
+        else:
+            log.warn("Skipping ZIP download")
+        # Download Checksum
+        log.info("Getting checksum File...")
+        los_sha256_file = f"build/LineageOS_{codename}_ZIP_SHA256.txt"
+
+        if not skip_download:
+            dl(los_sha256_file, f"{LOS_REL_URL[0]}?sha256")
+        else:
+            log.warn("Skip downloading checksums")
+
+        # Verify Checksums
+        log.info("Verifying ZIP file checksums...")
+        if verify_sha256_checksum(
+            los_zip_file, extract_checksum_from_file(los_sha256_file)
+        ):
+            log.info("Woohooo.. ZIP File's Checksum matches.")
+        else:
+            log.error("Oh dear! ZIP File is corrupt. Please try again.")
+            sys.exit(1)
+
+        # Extract Files
+        log.info("Extracting from ZIP File ....")
+        # Delete Files from Last Run
+        delete_old_files()
+        # Extract files
+        extract_zip_contents(zip_file=los_zip_file, destination="build/")
+    else:
+        log.info("No need to download and release its already latest.")
 
 
 if __name__ == "__main__":

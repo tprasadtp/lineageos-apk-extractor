@@ -26,10 +26,7 @@ else
             git push --tags --quiet https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG} > /dev/null 2>&1
         fi
 
-        export GH_PAGES_COMMIT_MSG_PREFIX="release"
-
     else
-        export GH_PAGES_COMMIT_MSG_PREFIX="metadata"
         echo "This Build will not be released."
     fi
 fi
