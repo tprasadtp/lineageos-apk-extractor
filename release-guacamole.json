@@ -1,22 +1,22 @@
 {
-    "version": 4,
+    "version": 5,
     "ci": {
-        "build_date": 1549127141,
-        "build_date_human": "02 Feb at 17:05",
-        "build_number": "120",
-        "node_name": "travis-job-30e15f83-5454-4f70-b9c1-23e8e30a9cf6",
-        "deployed": "No"
+        "build_date": 1572829792,
+        "build_date_human": "04 Nov at 01:09",
+        "build_number": "187",
+        "deployed": "yes"
     },
     "lineage": {
-        "version": "14.1",
-        "build": "2019-01-26",
+        "version": "16.0",
+        "build": "2019-11-02",
         "build_type": "nightly",
-        "zip_file": "https://mirrorbits.lineageos.org/full/hammerhead/20190126/lineage-14.1-20190126-nightly-hammerhead-signed.zip"
+        "zip_file": "https://mirrorbits.lineageos.org/full/guacamole/20191102/lineage-16.0-20191102-nightly-guacamole-signed.zip",
+        "device": "guacamole"
     },
     "release": {
-        "tag": "14.1.2019-01-26",
-        "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/14.1.2019-01-26",
-        "human_ts": "02 Feb at 11:33",
-        "ci_bnum": "00"
+        "tag": "16.0.2019-11-02",
+        "human_ts": "04 Nov at 01:09",
+        "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/16.0.2019-11-02",
+        "ci_bnum": "187"
     }
 }
