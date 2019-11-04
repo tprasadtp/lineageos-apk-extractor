@@ -17,5 +17,5 @@ jobs:
         uses: tprasadtp/labels@master
         with:
           owner: "tprasadtp"
-          repo: "FIX-ME"
+          repo: "lineageos-apk-extractor"
           token: ${{ secrets.GITHUB_TOKEN }}

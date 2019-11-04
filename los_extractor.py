@@ -213,22 +213,27 @@ def generate_release_notes(time_stamp, device_name):
         None
     """
     log.info("Generating Release Notes...")
+    _build_number = os.environ.get('TRAVIS_BUILD_NUMBER', 'NA')
+    _build_url = os.environ.get("TRAVIS_JOB_WEB_URL", "https://travis-ci.com/tprasadtp/lineageos-apk-extractor/builds")
     with open("build/" + RELEASE_NOTES, "w+") as release_notes:
-        release_notes.write("# Release notes for tag lineage - " + REL_TAG + "\n\n")
-        release_notes.write("- Release notes generated on : " + str(time_stamp) + "\n")
-        release_notes.write("- Device name : " + device_name + "\n")
-        release_notes.write("- Lineage OS Version : " + LOS_REL_VERSION[0] + "\n")
-        release_notes.write("- Lineage OS Type : " + LOS_REL_TYPE[0] + "\n",)
-        release_notes.write(
-            "- Zip file used : [ZIPfile](" + LOS_REL_URL[0] + ")" + "\n"
-        )
-        release_notes.write("- Lineage OS build date : " + LOS_REL_DATE[0] + "\n")
-        release_notes.write("- CI Node name : " + platform.node() + "\n")
-        release_notes.write("- Release Link : " + REL_TAG_BASE_URL + REL_TAG + "\n\n\n")
-        release_notes.write("## Tags and Downloads\n\n")
+        release_notes.write("## Release notes for lineage - " + REL_TAG + "\n\n")
+        release_notes.write("This Release note was generated on : " + str(time_stamp) + "\n")
+        release_notes.write("| Lineage OS | Value |\n")
+        release_notes.write("| -------- | ----- |\n")
+        release_notes.write("| device   | " + device_name + "\n")
+        release_notes.write("| version  | " + LOS_REL_VERSION[0] + "\n")
+        release_notes.write("| type     | " + LOS_REL_TYPE[0] + "\n",)
+        release_notes.write("| Zip file | [Link](" + LOS_REL_URL[0] + ")" + "\n")
+        release_notes.write("| build    | " + LOS_REL_DATE[0] + "\n\n")
+        release_notes.write("### Builder \n\n")
+        release_notes.write(f"- Builder  : Python {platform.python_version()}, Arch - {platform.architecture()}\n")
+        release_notes.write(f"- Build Number : [{_build_number}]({_build_url}) \n")
+        release_notes.write(f"- CI Node name : " + platform.node() + "\n")
+        release_notes.write(f"- Release :  [Link]({REL_TAG_BASE_URL}{REL_TAG}) \n\n\n")
+        release_notes.write("### Tags and Downloads\n\n")
         release_notes.write(
             "- This file is generated automatically.\n"
-            + "- Tags correspond to build date.\n"
+            + "- Tags correspond to lineage os build date.\n"
             + "- Every release is tagged as"
             + "[lineage-version].[los-build-date]\n\n"
         )

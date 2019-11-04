@@ -9,9 +9,9 @@ update_configs:
       - "Actor: Dependabot"
       - "Type: Dependencies"
       - "Deps: Python"
-    automerged_updates:
-      - match:
-          update_type: "all"
+    # automerged_updates:
+    #   - match:
+    #       update_type: "semver:patch"
     commit_message:
       prefix: "chore"
       include_scope: true

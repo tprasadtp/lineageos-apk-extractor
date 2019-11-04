@@ -11,8 +11,8 @@ echo "BUILD_TAG is set to ${BUILD_TAG}"
 echo "LOS_REL_VERSION is ${LOS_REL_VERSION}"
 
 echo "Setting Up Git Email & User"
-#git config --global user.name "valarie-ci-bot"
-#git config --global user.email "${GH_EMAIL}"
+git config --global user.name "valarie-ci-bot"
+git config --global user.email "${GH_EMAIL}"
 
 
 if [ "${BUILD_TAG}" == "" ] || [ "${DEPLOY}" == "" ]; then

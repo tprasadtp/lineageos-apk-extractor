@@ -22,6 +22,8 @@ addons:
     packages:
     - tree
     - brotli
+  hosts:
+  - travis.ci
 
 before_install:
 # Lets not break build if script is not executable.
