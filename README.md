@@ -17,12 +17,6 @@ Currently LineageOS 15.1 and LineageOS 16 are supported.
 [![Release][L15-last-release-date]][gh-releases]
 ![CI-Build-Num][L15-last-release-bnum]
 
-#### Last build status
-
-![Travis-Build][L15-ci-bnum]
-![Travis Build Date][L15-ci-bdate]
-![Travis-Released][L15-ci-bdeployed]
-
 
 ### LineageOS 16 APKs
 
@@ -31,12 +25,6 @@ Currently LineageOS 15.1 and LineageOS 16 are supported.
 ![Lineage15-Build][L16-build]
 [![Release][L16-last-release-date]][gh-releases]
 ![CI-Build-Num][L16-last-release-bnum]
-
-#### Last build status
-
-![Travis-Build][L16-ci-bnum]
-![Travis Build Date][L16-ci-bdate]
-![Travis-Released][L16-ci-bdeployed]
 
 
 ## Development
@@ -52,9 +40,38 @@ Currently LineageOS 15.1 and LineageOS 16 are supported.
 
 ## Bugs
 
-- If you are looking for an APK which is not in releases, just edit the json in data folder and submit a PR.
+- If you are looking for an LineageOS APK which is not in releases, just edit open an issue and we can reolve this. Its just a mattter of editing a json in `data`.
 - There is no easy way to mount ext4 image without using sudo. so, I have kept it outside python scripts.
 
+## Using this locally
+
+Well, it was not exaclty designed for this, but you can with little effort.
+
+- Create and activate virtualenv
+- `make install-all`
+- `FORCE_GH_RELEASE=true ./los_extractor.py -d {device_codename}`
+- `sudo mkdir -p /mnt/lineage`
+-  If using brotli compressed image,
+
+    ```console
+    sudo apt-get install brotli
+    brotli --decompress --force --verbose --output=build/system.new.dat build/system.new.dat.br
+    python ./vendor/sdat2img.py
+    ```
+
+- If using new A/B scheme with payload.bin
+
+    ```console
+    python3 vendor/extract-payload-bin.py build/payload.bin build/
+    ```
+
+- Edit/create data.json(samples in data folder)
+- `copy_files.py -d {device_codename} -l {json_list_file}`
+
+- Unmount the image `sudo umount /mnt/lineage`
+
+You will find the APKs extracted in releases folder. If you want to extract other APKs, please edit corrensponding json
+file in data or create a new one.
 
 ## Credits
 
@@ -79,6 +96,8 @@ Currently LineageOS 15.1 and LineageOS 16 are supported.
 }
 ```
 
+![Analytics](https://ga-beacon.prasadt.com/UA-101760811-3/github/lineageos-apk-extractor?pink&useReferer)
+
 <!-- LOS 15 References -->
 [L15-device]: https://img.shields.io/badge/dynamic/json.svg?label=device&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.lineage.device
 
@@ -86,15 +105,10 @@ Currently LineageOS 15.1 and LineageOS 16 are supported.
 
 [L15-build]: https://img.shields.io/badge/dynamic/json.svg?label=build&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.lineage.build&colorB=darkcyan
 
-[L15-ci-bdate]: https://img.shields.io/badge/dynamic/json.svg?label=on&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.ci.build_date_human&colorB=brightgreen
-
-[L15-ci-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.ci.build_number&colorB=green
-
-[L15-ci-bdeployed]: https://img.shields.io/badge/dynamic/json.svg?label=released&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.ci.deployed&logo&colorB=ff69b4
 
 [L15-last-release-date]: https://img.shields.io/badge/dynamic/json.svg?label=on&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.release.human_ts&colorB=darkcyan
 
-[L15-last-release-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.release.ci_bnum&colorB=green
+[L15-last-release-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-bullhead.json&query=$.release.ci_build_number&colorB=green
 
 
 
@@ -105,15 +119,9 @@ Currently LineageOS 15.1 and LineageOS 16 are supported.
 
 [L16-build]: https://img.shields.io/badge/dynamic/json.svg?label=build&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.lineage.build&colorB=darkcyan
 
-[L16-ci-bdate]: https://img.shields.io/badge/dynamic/json.svg?label=on&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.ci.build_date_human&colorB=brightgreen
-
-[L16-ci-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.ci.build_number&colorB=green
-
-[L16-ci-bdeployed]: https://img.shields.io/badge/dynamic/json.svg?label=released&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.ci.deployed&logo&colorB=ff69b4
-
 [L16-last-release-date]: https://img.shields.io/badge/dynamic/json.svg?label=on&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.release.human_ts&colorB=darkcyan
 
-[L16-last-release-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.release.ci_bnum&colorB=green
+[L16-last-release-bnum]: https://img.shields.io/badge/dynamic/json.svg?label=%23&url=https://raw.githubusercontent.com/tprasadtp/lineageos-apk-extractor/gh-pages/release-guacamole.json&query=$.release.ci_build_number&colorB=green
 
 
 
