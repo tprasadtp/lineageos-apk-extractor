@@ -52,17 +52,6 @@ docker: ## Create the docker image from the Dockerfile.
 		docker tag $(DOCKER_USER)/$(NAME) $(DOCKER_USER)/$(NAME):$(BRANCH); \
 	fi
 
-.PHONY: docker-lint
-docker-lint: Dockerfile ## Lint Dockerfile
-	@echo -e "\033[92m+ $@ \033[0m"
-	@echo -e "\033[34m Checking Dockerfile ...\033[0m"
-	@docker run --rm -i \
-		hadolint/hadolint:latest-debian \
-		hadolint \
-		--ignore DL3003 \
-  		--ignore DL3008 \
-  		--ignore SC1010 - < Dockerfile
-
 # Python Stuff
 .PHONY: requirements
 requirements: ## Generate requirements.txt
