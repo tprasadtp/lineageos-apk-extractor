@@ -145,7 +145,7 @@ def extract_los_urls(device_name):
                     LOS_REL_SIZE.append(td[3].string)
                     LOS_REL_DATE.append(td[4].string)
         global REL_TAG
-        REL_TAG = f"{LOS_REL_VERSION[0]}.{LOS_REL_DATE[0]}"
+        REL_TAG = f"{LOS_REL_DATE[0]}.{LOS_REL_VERSION[0]}"
         # Debugging stuff
         log.debug("------------------Parsed Variables------------------------")
         log.debug("LOS_REL_TYPE = %s", LOS_REL_TYPE)
@@ -235,7 +235,7 @@ def generate_release_notes(time_stamp, device_name):
             "- This file is generated automatically.\n"
             + "- Tags correspond to lineage os build date.\n"
             + "- Every release is tagged as"
-            + "[lineage-version].[los-build-date]\n\n"
+            + "[los-build-date].[lineage-version]\n\n"
         )
         release_notes.write("> Generated on : " + str(time_stamp) + "\n\n")
     log.debug("Generated Release Notes.")

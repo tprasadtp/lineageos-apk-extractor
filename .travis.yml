@@ -49,6 +49,8 @@ script:
 before_deploy:
 # Git Tag, Copy logs, copy metadata files
 - source ./scripts/pre-deploy.sh
+# Set Git config
+- source ./scripts/set-git-config.sh
 # Metadata to pages
 deploy:
 - provider: pages
@@ -57,7 +59,6 @@ deploy:
   local_dir: metadata
   cleanup: false
   keep_history: true
-  committer_from_gh: true
   commit_message: release ${TRAVIS_COMMIT:0:7} for LineageOS ${BUILD_TAG}
   target_branch: gh-pages
   token: ${GH_TOKEN}

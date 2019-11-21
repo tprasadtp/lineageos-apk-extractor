@@ -21,4 +21,5 @@
     "python.analysis.watchSearchPaths": false,
     "python.venvPath": "",
     "python.formatting.provider": "black",
+    "python.pythonPath": ".venv/bin/python3.6",
 }
