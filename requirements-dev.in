@@ -6,5 +6,4 @@ flake8-bugbear
 flake8-isort
 isort[requirements]
 pip-tools
-pytest
 safety
