@@ -4,14 +4,14 @@ version: 1
 update_configs:
   - package_manager: "python"
     directory: "/"
-    update_schedule: "live"
+    update_schedule: "weekly"
     default_labels:
       - "Actor: Dependabot"
       - "Type: Dependencies"
       - "Deps: Python"
-    # automerged_updates:
-    #   - match:
-    #       update_type: "semver:patch"
+    automerged_updates:
+      - match:
+          update_type: "semver:patch"
     commit_message:
       prefix: "chore"
       include_scope: true
