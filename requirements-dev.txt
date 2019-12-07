@@ -12,9 +12,9 @@ docopt==0.6.2             # via pipreqs
 dparse==0.4.1             # via safety
 entrypoints==0.3          # via flake8
 flake8-bugbear==19.8.0
-flake8-isort==2.7.0
+flake8-isort==2.8.0
 flake8==3.7.9
-isort[requirements]==4.3.21
+isort[pyproject,requirements]==4.3.21
 mccabe==0.6.1             # via flake8
 packaging==19.2           # via dparse, safety
 pathspec==0.6.0           # via black
@@ -30,10 +30,10 @@ requests==2.22.0          # via safety, yarg
 safety==1.8.5
 six==1.12.0               # via dparse, packaging, pip-tools
 testfixtures==6.10.1      # via flake8-isort
-toml==0.10.0              # via black
+toml==0.10.0              # via black, isort
 typed-ast==1.4.0          # via black
 yarg==0.1.9               # via pipreqs
 
 # The following packages are considered to be unsafe in a requirements file:
-# pip==19.3.1               # via pip-api
-# setuptools==42.0.1        # via safety
+# pip
+# setuptools
