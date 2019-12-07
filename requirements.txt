@@ -5,17 +5,11 @@
 #    make requirements
 #
 beautifulsoup4==4.8.1
-certifi==2019.9.11        # via requests
-chardet==3.0.4            # via requests
 coloredlogs==10.0
-humanfriendly==4.18       # via coloredlogs
-idna==2.8                 # via requests
 lxml==4.4.2
-protobuf==3.11.0
+protobuf==3.11.1
 requests==2.22.0
 six==1.12.0               # via protobuf
-soupsieve==1.9.5          # via beautifulsoup4
-urllib3==1.25.6           # via requests
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
