@@ -4,7 +4,7 @@
 #
 #    make requirements
 #
-beautifulsoup4==4.8.1
+beautifulsoup4==4.8.2
 certifi==2019.11.28       # via requests
 chardet==3.0.4            # via requests
 coloredlogs==10.0
