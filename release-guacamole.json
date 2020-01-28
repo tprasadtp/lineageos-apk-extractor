@@ -2,15 +2,15 @@
     "version": 6,
     "lineage": {
         "version": "16.0",
-        "build": "2019-12-27",
+        "build": "2020-01-24",
         "build_type": "nightly",
-        "zip_file": "https://mirrorbits.lineageos.org/full/guacamole/20191227/lineage-16.0-20191227-nightly-guacamole-signed.zip",
+        "zip_file": "https://mirrorbits.lineageos.org/full/guacamole/20200124/lineage-16.0-20200124-nightly-guacamole-signed.zip",
         "device": "guacamole"
     },
     "release": {
-        "tag": "2019-12-27.16.0",
-        "human_ts": "27 Dec at 21:41",
-        "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/2019-12-27.16.0",
-        "ci_build_number": "222"
+        "tag": "2020-01-24.16.0",
+        "human_ts": "28 Jan at 10:05",
+        "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/2020-01-24.16.0",
+        "ci_build_number": "228"
     }
 }
