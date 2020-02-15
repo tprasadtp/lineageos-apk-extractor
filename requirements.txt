@@ -7,8 +7,8 @@
 beautifulsoup4==4.8.2
 certifi==2019.11.28       # via requests
 chardet==3.0.4            # via requests
-coloredlogs==10.0
-humanfriendly==4.18       # via coloredlogs
+coloredlogs==11.3
+humanfriendly==6.1        # via coloredlogs
 idna==2.8                 # via requests
 lxml==4.4.2
 protobuf==3.11.3
