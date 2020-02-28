@@ -2,15 +2,15 @@
     "version": 6,
     "lineage": {
         "version": "15.1",
-        "build": "2020-01-21",
+        "build": "2020-02-24",
         "build_type": "nightly",
-        "zip_file": "https://mirrorbits.lineageos.org/full/bullhead/20200121/lineage-15.1-20200121-nightly-bullhead-signed.zip",
+        "zip_file": "https://mirrorbits.lineageos.org/full/bullhead/20200224/lineage-15.1-20200224-nightly-bullhead-signed.zip",
         "device": "bullhead"
     },
     "release": {
-        "tag": "2020-01-21.15.1",
-        "human_ts": "28 Jan at 10:05",
-        "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/2020-01-21.15.1",
-        "ci_build_number": "228"
+        "tag": "2020-02-24.15.1",
+        "human_ts": "28 Feb at 10:05",
+        "link": "https://github.com/tprasadtp/lineageos-apk-extractor/releases/tag/2020-02-24.15.1",
+        "ci_build_number": "239"
     }
 }
