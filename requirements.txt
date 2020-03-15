@@ -10,7 +10,7 @@ chardet==3.0.4            # via requests
 coloredlogs==14.0         # via -r requirements.in
 humanfriendly==8.1        # via coloredlogs
 idna==2.8                 # via requests
-lxml==4.4.2               # via -r requirements.in
+lxml==4.5.0               # via -r requirements.in
 protobuf==3.11.3          # via -r requirements.in
 requests==2.23.0          # via -r requirements.in
 six==1.12.0               # via protobuf
