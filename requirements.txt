@@ -4,7 +4,7 @@
 #
 #    make requirements
 #
-beautifulsoup4==4.8.2     # via -r requirements.in
+beautifulsoup4==4.9.0     # via -r requirements.in
 certifi==2019.11.28       # via requests
 chardet==3.0.4            # via requests
 coloredlogs==14.0         # via -r requirements.in
