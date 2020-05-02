@@ -11,7 +11,7 @@ certifi==2019.11.28       # via -c requirements.txt, requests
 chardet==3.0.4            # via -c requirements.txt, requests
 click==7.0                # via black, pip-tools, safety
 docopt==0.6.2             # via pipreqs
-dparse==0.4.1             # via safety
+dparse==0.5.1             # via safety
 entrypoints==0.3          # via flake8
 flake8-bugbear==19.8.0    # via -r requirements-dev.in
 flake8-isort==2.8.0       # via -r requirements-dev.in
@@ -30,10 +30,10 @@ pyparsing==2.4.2          # via packaging
 pyyaml==5.1.2             # via dparse
 regex==2019.11.1          # via black
 requests==2.23.0          # via -c requirements.txt, safety
-safety==1.8.7             # via -r requirements-dev.in
-six==1.12.0               # via -c requirements.txt, dparse, packaging, pip-tools
+safety==1.9.0             # via -r requirements-dev.in
+six==1.12.0               # via -c requirements.txt, packaging, pip-tools
 testfixtures==6.10.1      # via flake8-isort
-toml==0.10.0              # via black, isort
+toml==0.10.0              # via black, dparse, isort
 typed-ast==1.4.0          # via black
 urllib3==1.25.7           # via -c requirements.txt, requests
 yarg==0.1.9               # via pipreqs
