@@ -22,7 +22,7 @@ mccabe==0.6.1             # via flake8
 packaging==19.2           # via dparse, safety
 pathspec==0.6.0           # via black
 pip-api==0.0.13           # via isort
-pip-tools==4.3.0          # via -r requirements-dev.in
+pip-tools==5.1.1          # via -r requirements-dev.in
 pipreqs==0.4.9            # via isort
 pycodestyle==2.5.0        # via flake8
 pyflakes==2.1.1           # via flake8
