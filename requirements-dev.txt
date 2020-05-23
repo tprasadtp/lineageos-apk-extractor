@@ -12,10 +12,9 @@ chardet==3.0.4            # via -c requirements.txt, requests
 click==7.0                # via black, pip-tools, safety
 docopt==0.6.2             # via pipreqs
 dparse==0.4.1             # via safety
-entrypoints==0.3          # via flake8
 flake8-bugbear==19.8.0    # via -r requirements-dev.in
 flake8-isort==2.8.0       # via -r requirements-dev.in
-flake8==3.7.9             # via -r requirements-dev.in, flake8-bugbear, flake8-isort
+flake8==3.8.2             # via -r requirements-dev.in, flake8-bugbear, flake8-isort
 idna==2.8                 # via -c requirements.txt, requests
 isort[pyproject,requirements]==4.3.21  # via -r requirements-dev.in, flake8-isort
 mccabe==0.6.1             # via flake8
@@ -24,8 +23,8 @@ pathspec==0.6.0           # via black
 pip-api==0.0.13           # via isort
 pip-tools==4.3.0          # via -r requirements-dev.in
 pipreqs==0.4.9            # via isort
-pycodestyle==2.5.0        # via flake8
-pyflakes==2.1.1           # via flake8
+pycodestyle==2.6.0        # via flake8
+pyflakes==2.2.0           # via flake8
 pyparsing==2.4.2          # via packaging
 pyyaml==5.1.2             # via dparse
 regex==2019.11.1          # via black
