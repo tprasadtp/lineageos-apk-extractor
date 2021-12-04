@@ -1,0 +1,13 @@
+{
+    "name": "Pixel",
+    "image": "product.img",
+    "transfer": {
+        "Email": "app/Email/Email.apk",
+        "Camera": "priv-app/Snap/Snap.apk",
+        "Gallery": "priv-app/Gallery2/Gallery2.apk",
+        "Music": "priv-app/Eleven/Eleven.apk",
+        "Jelly": "app/Jelly/Jelly.apk",
+        "Messaging": "app/messaging/messaging.apk",
+        "DeskClock": "app/DeskClock/DeskClock.apk"
+    }
+}

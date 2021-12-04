@@ -1,0 +1,365 @@
+#!/usr/bin/env python3
+
+# -*- coding: utf-8 -*-
+"""
+Download latest LineageOS ZIP, verify integrity and authenticity,
+and extract it.
+"""
+
+# Standard Library Imports
+# Imports
+import argparse
+import datetime
+import hashlib
+import json
+import logging
+import os
+import platform
+import shutil
+import sys
+from pathlib import Path
+
+import requests
+from bs4 import BeautifulSoup
+import coloredlogs
+
+CLF_STYLE = coloredlogs.DEFAULT_FIELD_STYLES
+CLF_STYLE.update(
+    {
+        "programname": {"color": "magenta"},
+    }
+)
+
+coloredlogs.install(
+    level=logging.DEBUG,
+    fmt="%(asctime)s %(programname)15s %(levelname)8s  %(lineno)3d  %(message)s",
+    field_styles=CLF_STYLE,
+)
+
+# Settings
+RELEASE_NOTES = "RELEASE_NOTES.md"
+# Files
+FLAGS_SCRIPT = "build/VERSION.txt"
+
+# Use chunk size of 128K
+FILE_HASH_BUFFER = 131072
+
+# Arrays for LOS ZIP Data & Dict for Metadata
+LOS_REL_TYPE = []
+LOS_REL_VERSION = []
+LOS_REL_URL = []
+LOS_REL_SIZE = []
+LOS_REL_DATE = []
+
+METADATA = {}
+
+
+def extract_checksum_from_file(file_name):
+    """
+    Extract Checksum from the File.
+    Returns Checksum in HeX
+    """
+    if os.path.isfile(file_name):
+        with open(file_name, "r") as checksum_file:
+            return checksum_file.readline().split(" ", 1)[0]
+    else:
+        logging.error("Checksum File %s not found.", file_name)
+        sys.exit(1)
+
+
+def verify_sha256_checksum(file_name, checksum):
+    """
+    Verify checksum of a file.
+    Filename        : File to Verify
+    checksum        : SHA256SUM
+    Returns Boolean : True if matches, False if fails.
+    """
+    if os.path.isfile(file_name):
+        logging.debug("File %s is present on the FS.", file_name)
+        sha256hash = hashlib.sha256()
+        with open(file_name, "rb") as f:
+            while True:
+                data = f.read(FILE_HASH_BUFFER)
+                if not data:
+                    break
+                sha256hash.update(data)
+        logging.debug("Got hash      : %s", sha256hash.hexdigest())
+        logging.debug("Expected hash : %s", checksum.lower())
+    else:
+        logging.critical("OOOPS! File not found.")
+        sys.exit(1)
+    if checksum.lower() == sha256hash.hexdigest():
+        logging.debug("File Hashes Match.")
+        return True
+    else:
+        logging.error("File hashes do not match.")
+        return False
+
+
+def dl(file_name, file_url, checksum_file=None):
+    """
+    Download the file
+    """
+    dest = Path(file_name)
+    if dest.is_file():
+        if checksum_file is not None:
+            sha256_hash = extract_checksum_from_file(checksum_file)
+            if verify_sha256_checksum(file_name, sha256_hash):
+                logging.info(
+                    "Existing file matches expected checksum, skipped download"
+                )
+                return
+            else:
+                logging.info("Existing file does not match expected hash, removing it")
+                try:
+                    os.remove(file_name)
+                except OSError as e:
+                    logging.critical("Failed to remove existing file : %s", file_name)
+                    logging.error("Error was %s", e.strerror)
+                    sys.exit(1)
+        else:
+            try:
+                logging.info("Removing existing file - %s", dest.name)
+                dest.unlink()
+            except (OSError, PermissionError) as e:
+                logging.critical("Failed to remove existing file : %s", file_name)
+                logging.error("Error was %s", e.strerror)
+                sys.exit(1)
+
+    elif dest.exists():
+        logging.critical("Existing path is not a file - %s", dest.name)
+        sys.exit(1)
+
+    logging.info("Attempting to download : %s", file_name)
+    logging.info("From URL: %s", file_url)
+    with requests.get(file_url, stream=True, timeout=10) as response:
+        logging.debug("Response code is %s", response.status_code)
+        response.raise_for_status()
+        with open(file_name, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+    if checksum_file is not None:
+        logging.info("Verifying ZIP file checksums...")
+        if verify_sha256_checksum(file_name, extract_checksum_from_file(checksum_file)):
+            logging.info("Woohooo.. ZIP File's Checksum matches.")
+        else:
+            logging.error("Oh dear! ZIP File is corrupt. Please try again.")
+            sys.exit(1)
+
+
+def log_sysinfo():
+    """
+    Logs Basic system info
+    """
+    logging.debug("------------------------System Info--------------------------")
+    logging.debug(f"Platform : {platform.system()}")
+    logging.debug(f"Version : {platform.version()}")
+    logging.debug(f"Hostname : {platform.node()}")
+    logging.debug(f"Python Version : {platform.python_version()}")
+    logging.debug(f"Platform Arch : {platform.architecture()}")
+    logging.debug("-------------------------------------------------------------")
+
+
+def extract_los_urls(device_name, url_file):
+    """
+    Scrap Zip file URLs and data from lineage os download page.
+    """
+    logging.debug("Getting Download Page for %s", device_name)
+    dl(
+        file_name=url_file,
+        file_url=f"https://download.lineageos.org/{device_name}",
+    )
+    if os.path.isfile(url_file):
+        logging.debug("%s file exists.", url_file)
+        with open(url_file, encoding="utf-8") as los_dl_page_url:
+            logging.info("Parsing HTML page...")
+            soup = BeautifulSoup(los_dl_page_url.read(), features="lxml")
+            table = soup.find("table")
+            for tr in table.find_all("tr"):
+                td = tr.find_all("td")
+                if len(td) == 7:  # Making sure not to grab header
+                    LOS_REL_TYPE.append(td[0].string)
+                    LOS_REL_VERSION.append(td[1].string)
+                    LOS_REL_URL.append((td[2].a).get("href"))
+                    LOS_REL_SIZE.append(td[3].string)
+                    LOS_REL_DATE.append(td[6].string)
+        global REL_TAG
+        REL_TAG = f"{LOS_REL_VERSION[0]}.{LOS_REL_DATE[0]}"
+        # Debugging stuff
+        logging.debug("------------------Parsed Variables------------------------")
+        logging.debug("LOS_REL_TYPE = %s", LOS_REL_TYPE)
+        logging.debug("LOS_REL_VERSION = %s", LOS_REL_VERSION)
+        logging.debug("LOS_REL_URL = %s", LOS_REL_URL)
+        logging.debug("LOS_REL_SIZE = %s", LOS_REL_SIZE)
+        logging.debug("LOS_REL_DATE = %s", LOS_REL_DATE)
+        logging.debug("REL_TAG is %s", REL_TAG)
+        logging.debug("----------------------------------------------------------")
+    else:
+        logging.error("File %s not found.", url_file)
+        sys.exit(1)
+
+
+def generate_release_notes(device_name, output_file):
+    """
+    Release Notes Generator.
+    Use Extracted info to generate Release notes.
+    Args:
+        codename - (str) Device codename.
+    Returns :
+        None
+    """
+    logging.info(f"Release notes will be saved to - {output_file}")
+    _build_number = os.environ.get("GITHUB_RUN_NUMBER", "0")
+    _build_id = os.environ.get("GITHUB_RUN_ID", "")
+    with open(output_file, "w+") as release_notes:
+        release_notes.write("## Release notes for lineage - " + REL_TAG + "\n\n")
+        release_notes.write("| Lineage OS | Value |\n")
+        release_notes.write("| -------- | ----- |\n")
+        release_notes.write("| device   | " + device_name + "\n")
+        release_notes.write("| version  | " + LOS_REL_VERSION[0] + "\n")
+        release_notes.write(
+            "| type     | " + LOS_REL_TYPE[0] + "\n",
+        )
+        release_notes.write("| Zip file | [Link](" + LOS_REL_URL[0] + ")" + "\n")
+        release_notes.write("| build    | " + LOS_REL_DATE[0] + "\n\n")
+        release_notes.write("### Builder \n\n")
+        release_notes.write(
+            f"- Builder  : Python {platform.python_version()}, Arch - {platform.architecture()}\n"
+        )
+        release_notes.write(
+            f"- Build Number : [{_build_number}](https://github.com/tprasadtp/lineageos-apk-extractor/actions/runs/{_build_id})\n"
+        )
+        release_notes.write(f"- CI Node name : " + platform.node() + "\n")
+        release_notes.write("### Tags and Downloads\n\n")
+        release_notes.write(
+            "- This file is generated automatically.\n"
+            + "- Tags correspond to lineage os build date.\n"
+            + "- Every release is tagged as"
+            + "[lineage-version].[los-build-date]\n"
+        )
+        release_notes.write(
+            "> Generated on : "
+            + str(datetime.datetime.now(datetime.timezone.utc))
+            + "\n\n"
+        )
+    logging.info("Generated Release Notes.")
+
+
+def generate_metadata_files(device_name, output_dir):
+    """
+    Generate metadata files
+    """
+    logging.info(f"Metadata files will be written to - {output_dir}")
+    # Get major/minor version
+    version_split = str.split(LOS_REL_VERSION[0], '.')
+    version_split_major = LOS_REL_VERSION[0]
+    version_split_minor = 0
+    if len(version_split) == 1:
+        version_split_major = version_split[0]
+        version_split_minor = 0
+    elif len(version_split) == 2:
+        version_split_major = version_split[0]
+        version_split_minor = version_split[1]
+
+    METADATA.update(
+        {
+            "version": 1,
+            "lineage": {
+                "version": {
+                    "full": LOS_REL_VERSION[0],
+                    "minor": version_split_major,
+                    "major": version_split_minor
+                },
+                "build": LOS_REL_DATE[0],
+                "device": device_name,
+            },
+        }
+    )
+    logging.info(
+        "Writing Metadata",
+    )
+    try:
+        out_path = Path(output_dir)
+        json_file = out_path / Path("metadata.json")
+        version_file = out_path / Path("VERSION.txt")
+        release_repo_file = out_path / Path("REL_REPO.txt")
+        device_file = out_path / Path("DEVICE.txt")
+        logging.info("Create - %s", json_file)
+        with open(json_file, "w+") as jsonfile_ptr:
+            logging.debug("JSON Dump is : %s", json.dumps(METADATA))
+            jsonfile_ptr.write(json.dumps(METADATA, indent=4))
+
+        logging.info("Create - %s", version_file)
+        with open(version_file, "w+") as v:
+            version_tag = f"{LOS_REL_VERSION[0]}.{LOS_REL_DATE[0]}"
+            logging.debug("VERSION Dump is : %s.", version_tag)
+            v.write(version_tag)
+
+        logging.info("Create - %s", device_file)
+        with open(device_file, "w+") as d:
+            logging.debug("DEVICE Dump is : %s", device_name)
+            d.write(device_name)
+
+        logging.info("Create - %s", release_repo_file)
+        with open(release_repo_file, "w+") as rr:
+            release_repo = f"los-{version_split_major}-apks"
+            logging.debug("REL_REPO Dump is : %s", release_repo)
+            rr.write(release_repo)
+
+    except Exception as e:
+        logging.critical("Failed to write Metadata files")
+        logging.exception(e)
+        sys.exit(1)
+
+
+def main(codename, output_file):
+
+    log_sysinfo()
+    out_path = Path(output_file)
+    out_path_base = out_path.parent
+    if not out_path_base.exists():
+        logging.info(f"Creating build directory - {out_path_base}")
+        out_path_base.mkdir(parents=True)
+    elif out_path_base.is_dir():
+        logging.info(f"Output directory - {out_path_base} already exists")
+    else:
+        logging.critical(f"{out_path_base} directory exists, but is not a directory!")
+        sys.exit(1)
+
+    # Extract URLs
+    extract_los_urls(device_name=codename, url_file=f"{output_file}.html")
+
+    # Download Checksum
+    logging.info("Getting checksum File...")
+    los_sha256_file = f"{output_file}.sha256"
+    dl(los_sha256_file, f"{LOS_REL_URL[0]}?sha256")
+
+    # Download Zip
+    logging.info("Downloading ZIP File ...")
+    dl(output_file, LOS_REL_URL[0], los_sha256_file)
+
+    # Release notes
+    generate_release_notes(
+        device_name=codename, output_file=out_path_base / Path("RELEASE-NOTES.md")
+    )
+    generate_metadata_files(device_name=codename, output_dir=out_path_base.absolute())
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        add_help=True,
+    )
+    parser.add_argument(
+        "-d", "--device", required=True, type=str, help="Lineage OS Device Codename"
+    )
+    parser.add_argument(
+        "-o",
+        "--output-file",
+        required=True,
+        type=str,
+        help="Output filename",
+    )
+    args = parser.parse_args()
+    main(codename=args.device, output_file=args.output_file)

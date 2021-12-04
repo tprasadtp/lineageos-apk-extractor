@@ -1,0 +1,130 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Copy files from /mnt/lineage
+to releases folder and rename them according to tag.
+Must be executed after ./los_extractor.py
+This does not mount/extract the the image.
+Use scripts/extract.sh
+
+Uses a json file to map filenames to paths.
+"""
+
+# Standard Library Imports
+import argparse
+import json
+import logging
+import shutil
+import sys
+import logging
+from pathlib import Path
+
+import coloredlogs
+
+CLF_STYLE = coloredlogs.DEFAULT_FIELD_STYLES
+CLF_STYLE.update(
+    {
+        "programname": {"color": "magenta"},
+    }
+)
+
+coloredlogs.install(
+    level=logging.DEBUG,
+    fmt="%(asctime)s %(programname)15s %(levelname)8s  %(lineno)3d  %(message)s",
+    field_styles=CLF_STYLE,
+)
+
+
+def purge(dir, pattern):
+    """
+    Delete files in specified dir by pattern
+    Args:
+        dir : directory to scan
+        pattern : regex to match
+    """
+    for p in Path(dir).glob(pattern):
+        logging.debug(f"Deleting - {p}")
+        p.unlink()
+
+
+def copy_release_files(mount_point, transfer_json, dest_dir, keep_apks=True):
+    """"
+    Checks if mount point is available. If true,
+    Copies APKS and other release assets to ./releases folder
+    """
+    logging.info("Checking Mount point")
+    mount_point_path = Path(mount_point)
+    dest_path = Path(dest_dir)
+    transfer_json_path = Path(transfer_json)
+
+    if mount_point_path.is_dir() or mount_point_path.is_mount():
+        if dest_path.is_dir():
+            if not keep_apks:
+                logging.info("%s folder is already present. deleting apks", dest_path.absolute())
+                try:
+                    purge(dir=dest_dir, pattern="*.apk")
+                    purge(dir=dest_dir, pattern="*.apks")
+                except Exception:
+                    logging.critical("Failed to delete already existing APKs", dest_path.name)
+                    sys.exit(1)
+
+        elif not dest_path.exists():
+            try:
+                logging.debug(f"Creating directory - {dest_path}")
+                dest_path.mkdir(parents=True)
+            except Exception as e:
+                logging.exception(e)
+                logging.critical("Failed to create %s directory.", dest_path.name)
+                sys.exit(1)
+
+        else:
+            logging.critical("Destination exists and is not directory - %s", dest_path.name)
+            sys.exit(1)
+
+
+        # Read transfer list and copy
+        if transfer_json_path.is_file():
+            with open(transfer_json_path) as t:
+                transfer = json.loads(t.read())
+            for app, path in transfer["transfer"].items():
+                try:
+                    logging.info("Copying %s from %s", app, path)
+                    app_src_path = mount_point_path / Path(path)
+                    app_dest_path = dest_path / Path(f"{app}.apk")
+                    shutil.copy2(app_src_path.absolute(), app_dest_path.absolute())
+                except Exception as e:
+                    logging.exception("Failed to Copy %s", app)
+        else:
+            logging.critical(
+                "%s is not present or invalid. Cannot determine file list.", transfer_json
+            )
+            sys.exit(1)
+    else:
+        logging.critical("%s is not a dir or mountpoint", mount_point)
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        add_help=True,
+    )
+    parser.add_argument(
+        "-m", "--mount-path", required=True, type=str, help="Mount Path for system.img"
+    )
+    parser.add_argument(
+        "-t", "--transfer-list", required=True, type=str, help="Transfer list JSON"
+    )
+    parser.add_argument(
+        "-d",
+        "--dest-dir",
+        required=True,
+        type=str,
+        help="Destination directory",
+    )
+    parser.add_argument(
+        "-k", "--keep-apks", required=False, action='store_true', help="Keep existing APKs"
+    )
+    args = parser.parse_args()
+    copy_release_files(args.mount_path, args.transfer_list, args.dest_dir, args.keep_apks)

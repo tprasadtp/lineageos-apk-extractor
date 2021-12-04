@@ -1,0 +1,69 @@
+#!/bin/bash
+
+set -euo pipefail
+
+if [[ -n ${1} ]]; then
+    DEVICE_CODENAME="${DEVICE}"
+elif [[ -n ${DEVICE} ]]; then
+    DEVICE_CODENAME="${1}"
+else
+    echo "Error! Device codename not defined!"
+    exit 1
+fi
+
+echo "DEVICE ................ ${DEVICE_CODENAME}"
+
+# Repo
+if [[ ! -f build/${DEVICE_CODENAME}/REL_REPO.txt ]]; then
+    echo "Error! build/${DEVICE_CODENAME}/REL_REPO.txt file not found!"
+    exit 1
+fi
+REL_REPO="$(cat build/${DEVICE_CODENAME}/REL_REPO.txt | tr -dc '[:print:]')"
+echo "REPO   ................ ${REL_REPO}"
+
+if [[ -z $REL_REPO ]]; then
+    echo "Error! build/${DEVICE_CODENAME}/REL_REPO.txt file is empty!"
+    exit 1
+fi
+
+# Version Build
+if [[ ! -f build/${DEVICE_CODENAME}/VERSION.txt ]]; then
+    echo "Error! VERSION.txt file not found!"
+    exit 1
+fi
+
+BUILD_VERSION="$(cat build/${DEVICE_CODENAME}/VERSION.txt | tr -dc '[:print:]')"
+echo "BUILD ................. ${BUILD_VERSION}"
+
+if [[ -z $BUILD_VERSION ]]; then
+    echo "Error! build/${DEVICE_CODENAME}/VERSION.txt file is empty!"
+    exit 1
+fi
+
+# Version latest
+LATEST_RELEASE="$(gh api "repos/tprasadtp/${REL_REPO}/releases/latest" --jq '.tag_name')"
+echo "LATEST ................ ${LATEST_RELEASE}"
+
+if [[ -z $LATEST_RELEASE ]]; then
+    echo "Error! Failed to get latest tag (tprasadtp/${REL_REPO}) from GitHub!"
+    exit 1
+fi
+
+if [[ $BUILD_VERSION == "$LATEST_RELEASE" ]]; then
+    echo "All Good! No need to create a new release"
+    echo "Latest release version is same as build!"
+else
+    echo "Build Version : $BUILD_VERSION"
+    echo "Latest Release: $LATEST_RELEASE"
+
+    echo "Create: Checksums"
+    sha256sum build/${DEVICE_CODENAME}/*.apk > build/${DEVICE_CODENAME}/apk/SHA256SUMS.txt
+
+    echo "Create: GH-Release"
+    gh release create \
+        --notes-file build/${DEVICE_CODENAME}/RELEASE_NOTES.md \
+        --title "APKs for $BUILD_VERSION" \
+        "$BUILD_VERSION" \
+        build/${DEVICE_CODENAME}/apk/*.apk \
+        build/${DEVICE_CODENAME}/apk/SHA256SUMS.txt
+fi

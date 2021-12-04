@@ -1,0 +1,8 @@
+{
+    "name": "OnePlus8",
+    "image": "product.img",
+    "transfer": {
+        "Gallery": "priv-app/Gallery2/Gallery2.apk",
+        "Camera": "priv-app/Snap/Snap.apk"
+    }
+}

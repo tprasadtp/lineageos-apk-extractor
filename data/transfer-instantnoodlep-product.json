@@ -1,0 +1,11 @@
+{
+    "name": "OnePlus8",
+    "image": "product.img",
+    "transfer": {
+        "Jelly": "app/Jelly/Jelly.apk",
+        "Calculator": "app/ExactCalculator/ExactCalculator.apk",
+        "Contacts": "priv-app/Contacts/Contacts.apk",
+        "messaging": "app/messaging/messaging.apk",
+        "Recorder": "app/Recorder/Recorder.apk"
+    }
+}
