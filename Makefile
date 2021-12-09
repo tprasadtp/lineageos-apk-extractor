@@ -30,7 +30,7 @@ install: ## Installs python dependencies
 .PHONY: build-payload
 build-payload: ## Download and unpack (payload.bin OTA based)
 	@echo -e "\033[92m+ $@ \033[0m"
-	@if [[ -z $(DEVICE) ]]; then echo "DEVICE is not defined"; exit 1; fi
+	@if test -z $(DEVICE); then echo "DEVICE is not defined!"; exit 1; fi
 	$(REPO_ROOT)/scripts/fetch -d $(DEVICE) -o $(REPO_ROOT)/build/$(DEVICE)/lineageos-$(DEVICE).zip
 	@echo ""
 	$(REPO_ROOT)/scripts/verify -k $(REPO_ROOT)/data/lineageos.pem -z $(REPO_ROOT)/build/$(DEVICE)/lineageos-$(DEVICE).zip

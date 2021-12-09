@@ -164,7 +164,7 @@ def extract_los_urls(device_name, url_file):
     """
     Scrap Zip file URLs and data from lineage os download page.
     """
-    logging.debug("Getting Download Page for %s", device_name)
+    logging.debug("Fetching download Page for %s", device_name)
     dl(
         file_name=url_file,
         file_url=f"https://download.lineageos.org/{device_name}",
@@ -330,7 +330,7 @@ def main(codename, output_file):
     extract_los_urls(device_name=codename, url_file=f"{output_file}.html")
 
     # Download Checksum
-    logging.info("Getting checksum File...")
+    logging.info("Downloading checksum File...")
     los_sha256_file = f"{output_file}.sha256"
     dl(los_sha256_file, f"{LOS_REL_URL[0]}?sha256")
 
